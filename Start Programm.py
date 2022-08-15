@@ -1,3 +1,3 @@
 import Haupt
 Haupt.mainloop()
-Haupt
+Haupt.Abendmahlslied
