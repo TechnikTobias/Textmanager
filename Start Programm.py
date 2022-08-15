@@ -1,3 +1,4 @@
 import Haupt
 Haupt.mainloop()
-Haupt.Abendmahlslied
+Haupt.Abendmahlslied()
+Haupt.Schlusslied()
