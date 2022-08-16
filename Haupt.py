@@ -1,8 +1,8 @@
 import os
+from threading import Thread
+import threading
 from tkinter import *
-import tkinter
-from tkinter import scrolledtext
-from tkinter.scrolledtext import ScrolledText
+import chromesteuereinheit
 Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
@@ -30,7 +30,7 @@ Buch_Listen = [
     "Sonderheft"]
 
 
-
+os.waitstatus_to_exitcode
 
 Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen")
 klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
@@ -359,9 +359,13 @@ def Textmamager_erstellen():
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
     Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
+    klick.place(x=800,y=500)
+    klick.config(command=start01)
     Textwortentry.place(x=0,y=620)
 
-
+def start01():
+    start01 = Thread(target=chromesteuereinheit.Test01)
+    start01.start()
 
 def zusaetzlicheslied3():
     global Wie_viele_zusatzlieder, Zusatzlied4, Zusatzlied4_obwahr
