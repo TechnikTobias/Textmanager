@@ -7,6 +7,7 @@ Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
 Textmanager.geometry("1040x800")
+Textmanager.minsize(width=1040, height=800)
 Textmanager.iconbitmap("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.geometry("1920x1080+1920+0")
@@ -30,7 +31,6 @@ Buch_Listen = [
     "Sonderheft"]
 
 
-os.waitstatus_to_exitcode
 
 Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen")
 klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
@@ -396,6 +396,7 @@ def zusaetzlicheslied2():
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder1
     Zusatzlied3_obwahr = True
     Textmanager.geometry("1040x990")
+    Textmanager.minsize(width=1040, height=990)
     zusaetzliches_lied.config(command=zusaetzlicheslied3)
     Aktualiesierung_Grafick()
     zusaetzliches_liedzerstörer.config(command=zusaetzlichesliedzerstörer2)
@@ -484,7 +485,7 @@ def Hintergrund_aktualisieren():
         Textwortentry.config(bg="green")
     else:
         Textwortentry.config(bg="red")
-    Einganslied.Lied.after(50, lambda: Hintergrund_aktualisieren())
+    Einganslied.Lied.after(40, lambda: Hintergrund_aktualisieren())
 
 
 def Eingabe_loeschen():
