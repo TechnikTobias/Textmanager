@@ -1,16 +1,17 @@
+import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 import win32clipboard
 import time 
 import Haupt
-import selenium
 import os
 import Einstellungen
 def Test01():
     print("halo welt")
     time.sleep(5)
     print("programm ist zuende")
+selenium
 Dateiort = os.getlogin()
 ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
 Chromöffnen = ChromeDatei.read()
@@ -20,7 +21,7 @@ try:
         options = Options()
         options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
         driver = webdriver.Chrome("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver", chrome_options=options)
-        driver.get("https://studio.youtube.com/channel/UCGY6xNWgO4SllosjWtovjOQ/livestreaming/manage")
+        driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
         VideobeschreibungDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Videobeschreibung.txt", 'r',
                                     encoding='utf8')
         Videobeschreibungaktionvarable = VideobeschreibungDatei.read()
@@ -135,15 +136,13 @@ def Videobeschreibung():
 
 
 def stream_planen():
-    Haupt.Ladeanzeige.config(bg="red")
-    Haupt.root.update()
     if Chromöffnen == "Wahr":
         Streamheute = open ("C:\\Users\\"+Haupt.Dateiort+"\\Desktop\\Lieder\\"+Einstellungen.Datum+".txt", 'r',encoding='utf8')
         Stream = Streamheute.read()
         if Stream == "True":
             print("stream exestiert")
         else:
-            einagbe8 = driver.find_element_by_xpath(
+            einagbe8 = driver.find_element(By
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[1]/ytcp-button")
             einagbe8.click()
             time.sleep(2)

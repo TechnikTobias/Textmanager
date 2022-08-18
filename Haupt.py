@@ -32,7 +32,7 @@ Buch_Listen = [
 
 
 
-Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen")
+Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command=chromesteuereinheit.stream_planen)
 klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
 zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück")
 Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation")
@@ -362,6 +362,7 @@ def Textmamager_erstellen():
     klick.place(x=800,y=500)
     klick.config(command=start01)
     Textwortentry.place(x=0,y=620)
+    Stream_erstell_button.place(x=800, y=450)
 
 def start01():
     start01 = Thread(target=chromesteuereinheit.Test01)
