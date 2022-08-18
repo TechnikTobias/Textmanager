@@ -1,6 +1,7 @@
 import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 import win32clipboard
 import time 
@@ -38,14 +39,14 @@ def Videobeschreibung():
     Stream = Streamheute.read()
     try:
         if Stream == "True":
-            eingabe = driver.find_element_by_xpath(
+            eingabe = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/a")
             eingabe.click()
-            eingabe2 = driver.find_element_by_xpath(
+            eingabe2 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[1]/ytls-live-control-room-renderer/div[1]/div[1]/div/ytls-broadcast-metadata/div[2]/ytcp-button/div")
             eingabe2.click()
             time.sleep(2)
-            eingabe3 = driver.find_element_by_xpath(
+            eingabe3 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[2]/ytcp-navigation/div[2]/iron-pages/ytcp-video-metadata-editor/div/ytcp-video-metadata-editor-basics/div[2]/ytcp-social-suggestions-textbox/ytcp-form-input-container/div[1]/div[2]/div/ytcp-social-suggestion-input/div")
             time.sleep(1)
             eingabe3.clear()
@@ -114,11 +115,11 @@ def Videobeschreibung():
                     Dateinen.Texttietel6) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe6)
             eingabe3.send_keys(Haupt.Textwortentry.get() + "\n" + Haupt.Textwortentry2.get())
-            eingabe4 = driver.find_element_by_xpath(
+            eingabe4 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[3]/div/ytcp-button[2]/div")
             eingabe4.click()
             time.sleep(1)
-            eingabe5 = driver.find_element_by_xpath(
+            eingabe5 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
             eingabe5.click()
     except NoSuchElementException:
@@ -146,73 +147,73 @@ def stream_planen():
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[1]/ytcp-button")
             einagbe8.click()
             time.sleep(2)
-            eingabe9 = driver.find_element_by_xpath(
+            eingabe9 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-popup-container/tp-yt-paper-dialog/ytls-duplicate-broadcast-renderer/div[4]/ytcp-button[2]/div")
             eingabe9.click()
             time.sleep(2)
-            eingabe10 = driver.find_element_by_xpath(
+            eingabe10 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
             eingabe10.click()
             time.sleep(2)
-            eingabe11 = driver.find_element_by_xpath(
+            eingabe11 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
             eingabe11.click()
             time.sleep(2)
-            eingabe111 = driver.find_element_by_xpath("/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/ytcp-video-visibility-select/div/tp-yt-paper-radio-group/tp-yt-paper-radio-button[2]/div[2]")
+            eingabe111 = driver.find_element(By.XPATH,"/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/ytcp-video-visibility-select/div/tp-yt-paper-radio-group/tp-yt-paper-radio-button[2]/div[2]")
             eingabe111.click()
             time.sleep(1)
-            eingabe12 = driver.find_element_by_xpath(
+            eingabe12 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div/ytcp-text-dropdown-trigger/ytcp-dropdown-trigger/div/div[3]")
             eingabe12.click()
             time.sleep(2)
-            eingabe13 = driver.find_element_by_xpath(
+            eingabe13 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-date-picker/tp-yt-paper-dialog/div/form/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
             eingabe13.clear()
             time.sleep(2)
             eingabe13.send_keys(Einstellungen.Datum)
             time.sleep(2)
-            eingabe14 = driver.find_element_by_xpath("/html/body/tp-yt-iron-overlay-backdrop")
+            eingabe14 = driver.find_element(By.XPATH,"/html/body/tp-yt-iron-overlay-backdrop")
             eingabe14.click()
             time.sleep(2)
-            eingabe15 = driver.find_element_by_xpath(
+            eingabe15 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/form/ytcp-form-input-container/div[1]/div/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
             eingabe15.clear()
             time.sleep(2)
             eingabe15.send_keys(Einstellungen.Uhrzeit)
             time.sleep(2)
-            eingabe17 = driver.find_element_by_xpath(
+            eingabe17 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[3]/div")
             eingabe17.click()
             time.sleep(4)
-            eingabe18 = driver.find_element_by_xpath(
+            eingabe18 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
             eingabe18.click()
             time.sleep(1)
-            eingabe19 = driver.find_element_by_xpath(
+            eingabe19 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row[1]/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/div")
             eingabe19.click()
             time.sleep(1)
-            eingabe20 = driver.find_element_by_xpath(
+            eingabe20 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-text-menu/tp-yt-paper-dialog/tp-yt-paper-listbox/tp-yt-paper-item[2]/ytcp-ve")
             eingabe20.click()
             time.sleep(1)
             driver.get("https://rebrandly.com/links")
             time.sleep(10)
-            eingabe21 = driver.find_element_by_xpath(
+            eingabe21 = driver.find_element(By.XPATH,
                 "/html/body/div[1]/div[2]/div[3]/div[2]/ul/li/div/div/div[1]/div/div[1]/div/a")
             eingabe21.click()
             time.sleep(1)
-            eingabe22 = driver.find_element_by_xpath("/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/span/p")
+            eingabe22 = driver.find_element(By.XPATH,"/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/span/p")
             eingabe22.click()
             time.sleep(1)
             win32clipboard.OpenClipboard()
             data = win32clipboard.GetClipboardData()
             win32clipboard.CloseClipboard()
-            eingabe23 = driver.find_element_by_xpath(
+            eingabe23 = driver.find_element(By.XPATH,
                 "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/label/div/div/textarea")
             eingabe23.clear()
             eingabe23.send_keys(data)
-            eingabe24 = driver.find_element_by_xpath(
+            eingabe24 = driver.find_element(By.XPATH,
                 "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
             eingabe24.click()
             time.sleep(4)
