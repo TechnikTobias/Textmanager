@@ -6,6 +6,7 @@ import time
 import Haupt
 import selenium
 import os
+import Einstellungen
 def Test01():
     print("halo welt")
     time.sleep(5)
