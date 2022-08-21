@@ -1,13 +1,15 @@
+from threading import Thread
 import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
+import tkinter
 import win32clipboard
 import time 
 import Haupt
 import os
-import Einstellungen
+import Zeitgeber
 def Test01():
     print("halo welt")
     time.sleep(5)
@@ -32,9 +34,11 @@ except WebDriverException:
     print("Error")
     Videobeschreibungaktionvarable = "Falsch"
 
-
+def Videobeschreibung_Thread():
+    Videobeschreibungthread = Thread(target=Videobeschreibung)
+    Videobeschreibungthread.start()
 def Videobeschreibung():
-    Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Einstellungen.Datum + ".txt", 'r',
+    Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt", 'r',
                        encoding='utf8')
     Stream = Streamheute.read()
     try:
@@ -50,71 +54,70 @@ def Videobeschreibung():
                 "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[2]/ytcp-navigation/div[2]/iron-pages/ytcp-video-metadata-editor/div/ytcp-video-metadata-editor-basics/div[2]/ytcp-social-suggestions-textbox/ytcp-form-input-container/div[1]/div[2]/div/ytcp-social-suggestion-input/div")
             time.sleep(1)
             eingabe3.clear()
-            if len(Haupt.Eingansliedentry2.get()) >= 1:
+            if len(Haupt.Einganslied.Liedversefest) >= 1:
                 Texteingabe = str(
-                    "Lieder \nE " + Buch + " " + Dateinen.Einganslied + " Vers " + " " + Dateinen.Eingansliedverse + "\n" + str(
-                        Dateinen.Texttietel) + "\n\n\n")
+                    "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedverse + "\n" + str(
+                        Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe)
             else:
                 Texteingabe = str(
-                    "Lieder \nE " + Buch + " " + Dateinen.Einganslied + "\n" + str(Dateinen.Texttietel) + "\n\n\n")
+                    "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest +"\n" + str(Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe)
-            if len(Haupt.Textwortliedentry2.get()) >= 1:
-                Texteingabe2 = str(
-                    "TW " + Buch2 + " " + Dateinen.Textwortlied + " Vers " + " " + Dateinen.Textwortliedverse + "\n" + str(
-                        Dateinen.Texttietel2) + "\n\n\n")
-                eingabe3.send_keys(Texteingabe2)
+            if len(Haupt.Textwortlied.Liedversefest) >= 1:
+                Texteingabe = str(
+                    "TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + " Vers " + " " + Haupt.Textwortlied.Liedversefest + "\n" + str(
+                        Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
+                eingabe3.send_keys(Texteingabe)
             else:
-                Texteingabe2 = str("TW " + Buch2 + " " + Dateinen.Textwortlied + "\n" + str(
-                    Dateinen.Texttietel2) + "\n\n\n")
-                eingabe3.send_keys(Texteingabe2)
-            if len(Haupt.Amtswechselentry2.get()) >= 1:
-                Texteingabe3 = str(
-                    "AW " + Buch3 + " " + Dateinen.Amtswechsel + " Vers " + " " + Dateinen.Amtswechselverse + "\n" + str(
-                        Dateinen.Texttietel3) + "\n\n\n")
-                eingabe3.send_keys(Texteingabe3)
+                Texteingabe = str("TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + "\n" + str(
+                    Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
+                eingabe3.send_keys(Texteingabe)
+            if len(Haupt.Amtswechsellied.Liedversefest) >= 1:
+                Texteingabe = str(
+                    "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext.get()) + "\n\n\n")
+                eingabe3.send_keys(Texteingabe)
             else:
-                Texteingabe3 = str("AW " + Buch3 + " " + Dateinen.Amtswechsel + "\n" + str(
-                    Dateinen.Texttietel3) + "\n\n\n")
-                eingabe3.send_keys(Texteingabe3)
-            if Haupt.Kinder == "True":
-                if len(Haupt.Kinderentry2.get()) >= 1:
-                    Texteingabe7 = str(
-                        "Kinder " + Buch8 + " " + Dateinen.Kinder + " Vers " + " " + Dateinen.Kinderverse + "\n" + str(
-                            Dateinen.Texttietel7) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe7)
+                Texteingabe = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
+                    Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
+                eingabe3.send_keys(Texteingabe)
+            if Haupt.Kinderlied.aktualisieren_wahl == "True":
+                if len(Haupt.Kinderlied.Liedversefest) >= 1:
+                    Texteingabe = str(
+                        "Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + " Vers " + " " + Haupt.Kinderlied.Liedversefest + "\n" + str(
+                            Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                    eingabe3.send_keys(Texteingabe)
                 else:
-                    Texteingabe7 = str("AW " + Buch8 + " " + Dateinen.Kinder + "\n" + str(
-                        Dateinen.Texttietel7) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe7)
-            if len(Haupt.Bußliedentry2.get()) >= 1:
+                    Texteingabe = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
+                        Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                    eingabe3.send_keys(Texteingabe)
+            if len(Haupt.Bussslied.Liedversefest) >= 1:
                 Texteingabe4 = str(
-                    "B " + Buch4 + " " + Dateinen.Bußlied + " Vers " + " " + Dateinen.Bußliedverse + "\n" + str(
-                    Dateinen.Texttietel4) + "\n\n\n")
+                    "B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + " Vers " + " " + Haupt.Bussslied.Liedversefest + "\n" + str(
+                    Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe4)
             else:
-                Texteingabe4 = str("B " + Buch4 + " " + Dateinen.Bußlied + "\n" + str(
-                    Dateinen.Texttietel4) + "\n\n\n")
+                Texteingabe4 = str("B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + "\n" + str(
+                    Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe4)
-            if len(Haupt.Abendmahliedentry2.get()) >= 1:
+            if len(Haupt.Abendmahlslied.Liedversefest) >= 1:
                 Texteingabe5 = str(
-                    "A " + Buch5 + " " + Dateinen.Abendmahlslied + " Vers " + " " + Dateinen.Abendmahlsliedverse + "\n" + str(
-                        Dateinen.Texttietel5) + "\n\n\n")
+                    "A " + Haupt.Abendmahlslied.Buch + " " + Haupt.Abendmahlslied.Liednummerfest + " Vers " + " " + Haupt.Abendmahlslied.Liedversefest + "\n" + str(
+                        Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe5)
             else:
-                Texteingabe5 = str("A " + Buch5 + " " + Dateinen.Abendmahlslied + "\n" + str(
-                    Dateinen.Texttietel5) + "\n\n\n")
+                Texteingabe5 = str("A " + Haupt.Abendmahlslied.Buch + " " +Haupt.Abendmahlslied.Liednummerfest + "\n" + str(
+                    Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe5)
-            if len(Haupt.Schlussliedentry2.get()) >= 1:
+            if len(Haupt.Schlusslied.Liedversefest) >= 1:
                 Texteingabe6 = str(
-                    "S " + Buch6 + " " + Dateinen.Schlusslied + " Vers " + " " + Dateinen.Schlussliedverse + "\n" + str(
-                            Dateinen.Texttietel6) + "\n\n\n")
+                    "S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + " Vers " + " " + Haupt.Schlusslied.Liedversefest + "\n" + str(
+                            Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe6)
             else:
-                Texteingabe6 = str("S " + Buch6 + " " + Dateinen.Schlusslied + "\n" + str(
-                    Dateinen.Texttietel6) + "\n\n\n")
+                Texteingabe6 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(
+                    Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
                 eingabe3.send_keys(Texteingabe6)
-            eingabe3.send_keys(Haupt.Textwortentry.get() + "\n" + Haupt.Textwortentry2.get())
+            eingabe3.send_keys(Haupt.Textwortentry.get("1.0","end-1c"))
             eingabe4 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[3]/div/ytcp-button[2]/div")
             eingabe4.click()
@@ -123,22 +126,24 @@ def Videobeschreibung():
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
             eingabe5.click()
     except NoSuchElementException:
-        Errorbild = Toplevel(Haupt.root)
+        Errorbild = tkinter.Toplevel(Haupt.Textmanager)
         Errorbild.geometry("560x350+500+400")
         Errorbild.config(bg="black")
-        Error = Label(Errorbild, font=("Helvetica", 40),
+        Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
                       text="Error", bg="black",
                       fg="green", wraplength=560)
         Error.place(x=210, y=0)
-        ErrorLabel = Label(Errorbild, font=("Helvetica", 20),
+        ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
                            text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black",
                            fg="green", wraplength=560)
         ErrorLabel.place(x=0, y=80)
-
-
+    
+def stream_planen_Thread():
+    stream_erstellen= Thread(target=stream_planen)
+    stream_erstellen.start()
 def stream_planen():
     if Chromöffnen == "Wahr":
-        Streamheute = open ("C:\\Users\\"+Haupt.Dateiort+"\\Desktop\\Lieder\\"+Einstellungen.Datum+".txt", 'r',encoding='utf8')
+        Streamheute = open ("C:\\Users\\"+Haupt.Dateiort+"\\Desktop\\Lieder\\"+Zeitgeber.Datum+".txt", 'r',encoding='utf8')
         Stream = Streamheute.read()
         if Stream == "True":
             print("stream exestiert")
@@ -170,16 +175,16 @@ def stream_planen():
                 "/html/body/ytcp-date-picker/tp-yt-paper-dialog/div/form/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
             eingabe13.clear()
             time.sleep(2)
-            eingabe13.send_keys(Einstellungen.Datum)
+            eingabe13.send_keys(Zeitgeber.Datum)
             time.sleep(2)
             eingabe14 = driver.find_element(By.XPATH,"/html/body/tp-yt-iron-overlay-backdrop")
             eingabe14.click()
             time.sleep(2)
             eingabe15 = driver.find_element(By.XPATH,
-                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/form/ytcp-form-input-container/div[1]/div/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
+                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div[2]/form/ytcp-form-input-container/div[1]/div/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
             eingabe15.clear()
             time.sleep(2)
-            eingabe15.send_keys(Einstellungen.Uhrzeit)
+            eingabe15.send_keys(Zeitgeber.Uhrzeit)
             time.sleep(2)
             eingabe17 = driver.find_element(By.XPATH,
                 "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[3]/div")
@@ -218,15 +223,15 @@ def stream_planen():
             eingabe24.click()
             time.sleep(4)
             driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
-            Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Einstellungen.Datum + ".txt",
+            Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt",
                                'w', encoding='utf8')
             Streamheute.write("True")
-            Streamnechst = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Einstellungen.Datum2 + ".txt",
+            Streamnechst = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum2 + ".txt",
                                'w', encoding='utf8')
             Streamnechst.write("False")
-            Streamnechst2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Einstellungen.Datum3 + ".txt",
+            Streamnechst2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum3 + ".txt",
                                'w', encoding='utf8')
             Streamnechst2.write("False")
-            Streamnechst3 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Einstellungen.Datum4 + ".txt",
+            Streamnechst3 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum4 + ".txt",
                                'w', encoding='utf8')
             Streamnechst3.write("False")
