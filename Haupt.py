@@ -4,6 +4,9 @@ import threading
 from tkinter import *
 import chromesteuereinheit
 import Textanzeiger
+
+Warum = 0
+
 Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
@@ -18,6 +21,8 @@ Aktueller_Text = ""
 Text_Anzeige_Label.config(text=Aktueller_Text)
 Text_Anzeige_Label["justify"] = "left"
 Text_Anzeige_Label.place(x=0, y=0)
+Kopietext = AnzeigeText
+Kopietext.geometry("500x300+1530+600")
 Wie_viele_zusatzlieder = 0
 Buch_Listen = [
     "Gesangbuch",
@@ -235,6 +240,7 @@ class Grafigfuer_ein_Lied:
 
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname):
+        global Warum
         if self.aktualisieren_wahl == "True":
             Lied_Textueberabe = open(
                 "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + self.clicked.get() + "\\l" +
@@ -262,8 +268,9 @@ class Grafigfuer_ein_Lied:
             Livestream_Text.close()
             self.Liednummerfest = self.Liednummer.get()
             self.Liedversefest = self.Liedverse.get()
-            Liedposition = "1"
+            Liedposition = 1 + Warum
             self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
+            Warum = Warum + 1
 
     # Löscht alle Eingaben für ein Lied
     def Eingabe_loeschen(self):

@@ -137,21 +137,26 @@ def übergabeTextandiewand(Liedposition):
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         global Datenfürliedanderwand, Wieoft
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
-        Wieoft = 0
-        print(Datenfürliedanderwand)
+        
 
 
 
 
 def Nächstelied():
+    global Wieoftlied, Datenfürliedanderwand, Wieoft
     Wieoftlied = Wieoftlied +1
+    Wieoft = 0
     übergabeTextandiewand(Wieoftlied)
     if Haupt.Einganslied.Daten_fürTextanderwand[0] == Wieoftlied:
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
     if Haupt.Amtswechsellied.Daten_fürTextanderwand[0] == Wieoftlied:
         Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
     if Haupt.Textwortlied.Daten_fürTextanderwand[0] == Wieoftlied:
         Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
+
 
 def Voeherlied():
     global Wieoftlied
@@ -161,8 +166,8 @@ def Voeherlied():
 def Liedgebe():
     global Wieoft
     übergabeTextandiewand(Wieoftlied)
-    print(Datenfürliedanderwand[4])
     Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
+    print(AusganneVerse)
     Aktuelllervers = len(AusganneVerse)
     if int(Wieoft) == int(Aktuelllervers):
         AkutellerText = ""
@@ -177,6 +182,8 @@ def Liedgebe():
         Wieoft = Wieoft - 1
     else:
         Verse(Datenfürliedanderwand[3],AusganneVerse[Wieoft],Datenfürliedanderwand[2])
+        print(AusganneVerse[Wieoft])
+        print(Wieoft)
         Wieoft = Wieoft + 1
         Haupt.Textmanager.update()
 
