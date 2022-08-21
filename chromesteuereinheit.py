@@ -143,7 +143,7 @@ def stream_planen():
         if Stream == "True":
             print("stream exestiert")
         else:
-            einagbe8 = driver.find_element(By
+            einagbe8 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[1]/ytcp-button")
             einagbe8.click()
             time.sleep(2)
