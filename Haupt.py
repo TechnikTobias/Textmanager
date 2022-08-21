@@ -3,6 +3,7 @@ from threading import Thread
 import threading
 from tkinter import *
 import chromesteuereinheit
+import Textanzeiger
 Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
@@ -32,7 +33,7 @@ Buch_Listen = [
 
 
 
-Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command=chromesteuereinheit.stream_planen)
+Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command=chromesteuereinheit.stream_planen_Thread)
 klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
 zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück")
 Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation")
@@ -53,6 +54,10 @@ class Grafigfuer_ein_Lied:
     Dateiliedtext = None
     aktualisieren_wahl = "False"
     Buchzahl_clicked = None
+    Liednummerfest = None
+    Liedversefest = None
+    Daten_fürTextanderwand = []
+
 
     def __init__(self, Position, Liedname, Wahl, Hintergrund, Vordergrund):
         if Wahl == "True":
@@ -255,6 +260,10 @@ class Grafigfuer_ein_Lied:
             else:
                 Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + "\n" + Lied_Text)
             Livestream_Text.close()
+            self.Liednummerfest = self.Liednummer.get()
+            self.Liedversefest = self.Liedverse.get()
+            Liedposition = "1"
+            self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
 
     # Löscht alle Eingaben für ein Lied
     def Eingabe_loeschen(self):
@@ -360,7 +369,7 @@ def Textmamager_erstellen():
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
     Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
     klick.place(x=800,y=500)
-    klick.config(command=start01)
+    klick.config(command=Textanzeiger.Liedgebe)
     Textwortentry.place(x=0,y=620)
     Stream_erstell_button.place(x=800, y=450)
 
@@ -467,6 +476,7 @@ def Button_command():
     Zusatzlied4.Knopf_Druecken("Zusatzlied4")
     Textwortreinschreiben = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
     Textwortreinschreiben.write(Textwortentry.get("1.0","end-1c"))
+    chromesteuereinheit.Videobeschreibung_Thread()
 
 
 def Hintergrund_aktualisieren():
