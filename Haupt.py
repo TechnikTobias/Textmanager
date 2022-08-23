@@ -1,4 +1,3 @@
-from distutils.cmd import Command
 import os
 from threading import Thread
 import threading
@@ -14,7 +13,7 @@ Textmanager.minsize(width=1040, height=800)
 Textmanager.iconbitmap("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
-AnzeigeText.geometry("1920x1080+1920+0")
+AnzeigeText.geometry("1920x1080+1220+0")
 AnzeigeText.overrideredirect(True)
 Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
 Aktueller_Text = ""
@@ -324,6 +323,10 @@ class Grafigfuer_ein_Lied:
             self.Liedtextanzeige.place(x=495, y=15 + Position)
             self.Liedverse.place(x=150, y=40 + Position)
             self.Verse.place(y=40 + Position)
+    
+    def Grafikresetten(self):
+        if self.aktualisieren_wahl == "True":
+            self.Liedtextanzeige.config(bg=Textmanager_Hintergrund)
 
 
 def Einstellungen_Laden():
@@ -497,6 +500,7 @@ def Button_command():
     Zusatzlied4.Knopf_Druecken("Zusatzlied4")
     Textwortreinschreiben = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
     Textwortreinschreiben.write(Textwortentry.get("1.0","end-1c"))
+    Einganslied.Liedtextanzeige.config(bg="yellow")
     Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
     Textanzeiger.Wieoft = 0
     chromesteuereinheit.Videobeschreibung_Thread()
