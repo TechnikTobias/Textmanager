@@ -2,6 +2,8 @@ import Haupt
 import tkinter
 
 Wieoft = 0
+Wieoftlied = 1
+voherliedzwischensehne = False
 def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
     try:
         global AusganneVerse
@@ -16,7 +18,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                     "r",
                     encoding="utf-8")
                 Maxzahl = Verzanzahl.read()
-                if Wieoft == int(Maxzahl):
+                if Wieoft == int(Maxzahl) + 1:
                     break
                 AusganneVerse = AusganneVerse + [Wieoft]
                 Wieoft = int(Wieoft) + 1
@@ -129,63 +131,132 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                            fg="green", wraplength=560)
         ErrorLabel.place(x=0, y=80)
 
-Wieoftlied = 1
 
-
-def übergabeTextandiewand(Liedposition):
-
+def vorherübergabeTextandiewand(Liedposition):
+    global Datenfürliedanderwand, Wieoft, voherliedzwischensehne
+    Datenfürliedanderwand = []
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Liedposition):
-        global Datenfürliedanderwand, Wieoft
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
-        
-
-
+    elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
 
 
 def Nächstelied():
     global Wieoftlied, Datenfürliedanderwand, Wieoft
-    Wieoftlied = Wieoftlied +1
     Wieoft = 0
-    übergabeTextandiewand(Wieoftlied)
-    if Haupt.Einganslied.Daten_fürTextanderwand[0] == Wieoftlied:
+    Datenfürliedanderwand = []
+    if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
-    if Haupt.Amtswechsellied.Daten_fürTextanderwand[0] == Wieoftlied:
+    elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
-    if Haupt.Textwortlied.Daten_fürTextanderwand[0] == Wieoftlied:
+    elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Bussslied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Abendmahlslied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Schlusslied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Kinderlied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Zusatzlied1.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Zusatzlied2.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Zusatzlied3.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
 
 
 def Voeherlied():
-    global Wieoftlied
-    Wieoftlied = Wieoftlied - 1
-    übergabeTextandiewand(Wieoftlied)
+    global Wieoftlied, Wieoft, voherliedzwischensehne, AusganneVerse, Datenfürliedanderwand
+    print (Wieoftlied)
+    if Wieoftlied > 1:
+        Wieoftlied = Wieoftlied - 1
+        vorherübergabeTextandiewand(Wieoftlied)
+        Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
+        Wieoft = len(AusganneVerse) + 1
+        Wieoft = Wieoft - 2
+        Verse(Datenfürliedanderwand[3],AusganneVerse[Wieoft],Datenfürliedanderwand[2])
+        Wieoft = Wieoft + 1
+    
+
+        
+
+def Versvorher():
+    global Wieoft, voherliedzwischensehne
+    if voherliedzwischensehne == False:
+        Wieoft = Wieoft - 2
+        Liedgebe()
+    voherliedzwischensehne = False
 
 def Liedgebe():
-    global Wieoft
-    übergabeTextandiewand(Wieoftlied)
+    global Wieoft, Wieoftlied, Datenfürliedanderwand, voherliedzwischensehne
+    if voherliedzwischensehne == True:
+        Wieoftlied = Wieoftlied + 1
+        Nächstelied()
+    if Wieoftlied == 0:
+        Wieoft = 0
+        Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
+        Wieoftlied = 1
     Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
-    print(AusganneVerse)
     Aktuelllervers = len(AusganneVerse)
     if int(Wieoft) == int(Aktuelllervers):
+        Wieoftlied = Wieoftlied + 1
         AkutellerText = ""
         Haupt.Text_Anzeige_Label.config(text=AkutellerText)
         Nächstelied()
         Haupt.Textmanager.update()
-
-    elif int(Wieoft) == -1:
+    elif int(Wieoft) == - 1:
         AkutellerText = ""
         Haupt.Text_Anzeige_Label.config(text=AkutellerText)
-    elif int(Wieoft) == -2:
-        Wieoft = Wieoft - 1
+        Wieoft = 0
+        Voeherlied()
+    elif int(Wieoft) == - 2:
+        Wieoft = 0
+        Voeherlied()
     else:
         Verse(Datenfürliedanderwand[3],AusganneVerse[Wieoft],Datenfürliedanderwand[2])
-        print(AusganneVerse[Wieoft])
-        print(Wieoft)
         Wieoft = Wieoft + 1
         Haupt.Textmanager.update()
+
+def new_func():
+    global Datenfürliedanderwand
 
 def Verse(Hallo123,Wieoft,WelchesBuch):
     try:

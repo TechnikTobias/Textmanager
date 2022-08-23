@@ -1,11 +1,10 @@
+from distutils.cmd import Command
 import os
 from threading import Thread
 import threading
 from tkinter import *
 import chromesteuereinheit
 import Textanzeiger
-
-Warum = 0
 
 Dateiort = os.getlogin()
 Textmanager = Tk()
@@ -14,6 +13,7 @@ Textmanager.geometry("1040x800")
 Textmanager.minsize(width=1040, height=800)
 Textmanager.iconbitmap("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
+AnzeigeText.config(bg="black")
 AnzeigeText.geometry("1920x1080+1920+0")
 AnzeigeText.overrideredirect(True)
 Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
@@ -21,8 +21,6 @@ Aktueller_Text = ""
 Text_Anzeige_Label.config(text=Aktueller_Text)
 Text_Anzeige_Label["justify"] = "left"
 Text_Anzeige_Label.place(x=0, y=0)
-Kopietext = AnzeigeText
-Kopietext.geometry("500x300+1530+600")
 Wie_viele_zusatzlieder = 0
 Buch_Listen = [
     "Gesangbuch",
@@ -39,8 +37,6 @@ Buch_Listen = [
 
 
 Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command=chromesteuereinheit.stream_planen_Thread)
-klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
-zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück")
 Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation")
 AnfangHaupt = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Anfang")
 
@@ -61,7 +57,7 @@ class Grafigfuer_ein_Lied:
     Buchzahl_clicked = None
     Liednummerfest = None
     Liedversefest = None
-    Daten_fürTextanderwand = []
+    Daten_fürTextanderwand = [0]
 
 
     def __init__(self, Position, Liedname, Wahl, Hintergrund, Vordergrund):
@@ -74,7 +70,7 @@ class Grafigfuer_ein_Lied:
             self.Lied = Label(Textmanager, font=("Helvetica", 15), pady=5, text=Liedname, bg=Hintergrund,
                               fg=Vordergrund)
             self.Verse = Label(Textmanager, font=("Helvetica", 15), text="Verse", bg=Hintergrund, fg=Vordergrund)
-            self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10,xscrollcommand=False)
+            self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10)
             self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
             self.Liedtextanzeige = Button(Textmanager, font=12, pady=5, bg=Hintergrund, border=0, fg=Vordergrund)
             self.Liedtextanzeige["justify"] = "left"
@@ -84,6 +80,8 @@ class Grafigfuer_ein_Lied:
             self.Verse.place(y=40 + Position)
             self.Liednummer.place(x=150, y=0 + Position)
             self.Liedverse.place(x=150, y=40 + Position)
+            self.Liedposiotion = Entry(Textmanager, font=("Helvetica", 24), width=1)
+            self.Liedposiotion.place(x=720,y= 20 + Position)
             self.Buch = None
             self.ErrorLabel = None
             self.aktualisieren_wahl = "True"
@@ -100,6 +98,7 @@ class Grafigfuer_ein_Lied:
             self.Dateiliedtext = None
             self.aktualisieren_wahl = "False"
             self.Buchzahl_clicked = None
+            self.Daten_fürTextanderwand = [0]
         Textmanager.update()
 
     # Lädt den Namen des Liedes für den Livestream und Livestream vorschau
@@ -260,6 +259,10 @@ class Grafigfuer_ein_Lied:
                                        ".txt", 'w', encoding='utf8')
             Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
             Lied_Buch_Uebergabe.close()
+            Lied_Position_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition"+Liedname +
+                                       ".txt", 'w', encoding='utf8')
+            Lied_Position_Uebergabe.write(str(self.Liedposiotion.get()))
+            Lied_Position_Uebergabe.close()
             if len(self.Liedverse.get()) >= 1:
                 Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + " Vers " + str(
                     self.Liedverse.get()) + "\n" + Lied_Text)
@@ -268,9 +271,9 @@ class Grafigfuer_ein_Lied:
             Livestream_Text.close()
             self.Liednummerfest = self.Liednummer.get()
             self.Liedversefest = self.Liedverse.get()
-            Liedposition = 1 + Warum
+            Liedposition = self.Liedposiotion.get()
             self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
-            Warum = Warum + 1
+
 
     # Löscht alle Eingaben für ein Lied
     def Eingabe_loeschen(self):
@@ -278,24 +281,31 @@ class Grafigfuer_ein_Lied:
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
             self.clicked.set(Buch_Listen[0])
+            self.Liedposiotion.delete(0, "end")
 
     # Wiederherstellt, die Alten eingaben
     def Eingabe_wiederherstellen(self, Liedname):
         if self.aktualisieren_wahl == "True":
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
+            self.Liedposiotion.delete(0, "end")
             Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer" + Liedname +
                                          ".txt", 'r', encoding='utf8')
             Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse" + Liedname +
                                        ".txt", 'r', encoding='utf8')
             Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch" + Liedname +
                                        ".txt", 'r', encoding='utf8')
+            Lied_Liedposition_Uebergbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition" + Liedname +
+                                       ".txt", 'r', encoding='utf8')
+            Lied_Liedposition = Lied_Liedposition_Uebergbe.read()
+            Lied_Liedposition_Uebergbe.close()
             Lied_vers = Lied_Vers_uebergabe.read()
             Lied_Nummer = Lied_nummer_uebergabe.read()
             Lied_Buch = Lied_Buch_Uebergabe.read()
             self.Liedverse.insert(0, Lied_vers)
             self.Liednummer.insert(0, Lied_Nummer)
             self.clicked.set(Buch_Listen[int(Lied_Buch)])
+            self.Liedposiotion.insert(0, Lied_Liedposition)
 
     def Hintergrund(self, Hintergrund, Vordergrund):
         if self.aktualisieren_wahl == "True":
@@ -375,9 +385,13 @@ def Textmamager_erstellen():
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
     Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
+    klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
     klick.place(x=800,y=500)
     klick.config(command=Textanzeiger.Liedgebe)
     Textwortentry.place(x=0,y=620)
+    zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück")
+    zurueck.config(command=Textanzeiger.Versvorher)
+    zurueck.place(x=800, y=630)
     Stream_erstell_button.place(x=800, y=450)
 
 def start01():
@@ -483,6 +497,8 @@ def Button_command():
     Zusatzlied4.Knopf_Druecken("Zusatzlied4")
     Textwortreinschreiben = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
     Textwortreinschreiben.write(Textwortentry.get("1.0","end-1c"))
+    Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
+    Textanzeiger.Wieoft = 0
     chromesteuereinheit.Videobeschreibung_Thread()
 
 
