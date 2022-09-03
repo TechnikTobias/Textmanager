@@ -14,7 +14,7 @@ Textmanager.minsize(width=1040, height=800)
 Textmanager.iconbitmap("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
-AnzeigeText.geometry("1920x1080+1220+0")
+AnzeigeText.geometry("1920x1080+1920+0")
 AnzeigeText.overrideredirect(True)
 Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
 Aktueller_Text = ""
@@ -347,7 +347,7 @@ class Grafigfuer_ein_Lied:
 
 
 def Einstellungen_Laden():
-    global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder
+    global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder, Browseröffnen
     Textfarbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'r', encoding='utf8')
     Textmanager_Textfarbe = Textfarbe.read()
     Textfarbe.close()
@@ -357,6 +357,8 @@ def Einstellungen_Laden():
     Kinderladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'r', encoding='utf8')
     Kinder_anzeigen = Kinderladen.read()
     Kinderladen.close()
+    Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
+    Browseröffnen = Browseröffnen.read()
     if Kinder_anzeigen == "Wahr":
         Kinder_Anzeigen_Grafig = "True"
         Kinder_Position = 1
@@ -674,7 +676,7 @@ def Hintergrund():
 def Einstellungen():
     Einstellungen_Laden()
     global Hintergrund_clicked, Vordergrund_clicked, Einstellungen_Textmanager, Hintergrund_opt, Vordergrund_clicked, \
-        Vordergrund_opt, Hintergrundlabel, Textlabel, Buttonfarben, Kinder_Anzeigen_Grafig, Kinder_Position, Kinderbutton
+        Vordergrund_opt, Hintergrundlabel, Textlabel, Buttonfarben, Kinder_Anzeigen_Grafig, Kinder_Position, Kinderbutton, Browserbutton
     Einstellungen_Textmanager = Toplevel(Textmanager)
     Einstellungen_Textmanager.geometry("500x300")
     Einstellungen_Textmanager.title("Einstellungen")
@@ -712,13 +714,28 @@ def Einstellungen():
     Hintergrunddatei = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
     Hintergrunddatei.write(Textmanager_Hintergrund)
     Hintergrunddatei.close()
-    Einstellungen_Laden()
     if Kinder_anzeigen == "Falsch":
         Kinderbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="red", text="Kein Kinderlied", command=Kinder_Anzeigen)
     else:
         Kinderbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
     Kinderbutton.place(x=0, y=110)
+    if Browseröffnen == "Wahr":
+        Browserbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="green", text="Browser offen", command=Browsergeschlossen)
+    else:
+        Browserbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="red", text="Kein Browser", command=Browseroffen)
+    Browserbutton.place(y=150)
 
+def Browseroffen():
+    Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
+    Browseröffnen.write("Wahr")
+    Browseröffnen.close()
+    Browserbutton.config(bg="green", text="Browser offen", command=Browsergeschlossen)
+
+def Browsergeschlossen():
+    Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
+    Browseröffnen.write("Falsch")
+    Browseröffnen.close()
+    Browserbutton.config(bg="red", text="Kein Browser", command=Browseroffen)
 
 def Kinder_Anzeigen():
     global Kinder_Anzeigen_Grafig, Kinder_Position

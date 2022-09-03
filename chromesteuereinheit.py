@@ -1,9 +1,11 @@
+import imp
 from threading import Thread
 import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
+import datetime
 import tkinter
 import win32clipboard
 import time 
@@ -16,23 +18,33 @@ def Test01():
     print("programm ist zuende")
 selenium
 Dateiort = os.getlogin()
-ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
-Chromöffnen = ChromeDatei.read()
-ChromeDatei.close()
-try:
-    if Chromöffnen == "Wahr":
-        options = Options()
-        options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
-        driver = webdriver.Chrome("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver", chrome_options=options)
-        driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
-        VideobeschreibungDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Videobeschreibung.txt", 'r',
+
+
+def Chromestarten():
+    global Videobeschreibungaktionvarable, Chromöffnen, driver
+    ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
+    Chromöffnen = ChromeDatei.read()
+    ChromeDatei.close()
+    print("Was??????????")
+    try:
+        if Chromöffnen == "Wahr":
+            options = Options()
+            options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
+            driver = webdriver.Chrome("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver", chrome_options=options)
+            driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
+            VideobeschreibungDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Videobeschreibung.txt", 'r',
                                     encoding='utf8')
-        Videobeschreibungaktionvarable = VideobeschreibungDatei.read()
-    else:
+            Videobeschreibungaktionvarable = VideobeschreibungDatei.read()
+        else:
+            Videobeschreibungaktionvarable = "Falsch"
+    except WebDriverException:
+        print("Error")
         Videobeschreibungaktionvarable = "Falsch"
-except WebDriverException:
-    print("Error")
-    Videobeschreibungaktionvarable = "Falsch"
+
+def Chromestarten_Thread():
+    Chromestarten_thread = Thread(target=Chromestarten)
+    Chromestarten_thread.start()
+Chromestarten_Thread()
 
 def Videobeschreibung_Thread():
     Videobeschreibungthread = Thread(target=Videobeschreibung)
@@ -43,9 +55,18 @@ def Videobeschreibung():
     Stream = Streamheute.read()
     try:
         if Stream == "True":
-            eingabe = driver.find_element(By.XPATH,
-                "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/a")
-            eingabe.click()
+            try:
+                eingabe = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/")
+                eingabe.click()
+            except:
+                    logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a',
+                       encoding='utf8')
+                    logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
+                    logdatei.close()
+                    eingabe = driver.find_element(By.ID,"video-title")
+                    eingabe.click()
+
             eingabe2 = driver.find_element(By.XPATH,
                 "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[1]/ytls-live-control-room-renderer/div[1]/div[1]/div/ytls-broadcast-metadata/div[2]/ytcp-button/div")
             eingabe2.click()
@@ -134,7 +155,7 @@ def Videobeschreibung():
                       fg="green", wraplength=560)
         Error.place(x=210, y=0)
         ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black",
+                           text="Es gibt ein Problem mit dem Browser", bg="black",
                            fg="green", wraplength=560)
         ErrorLabel.place(x=0, y=80)
 
