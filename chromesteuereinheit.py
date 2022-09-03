@@ -137,8 +137,8 @@ def Videobeschreibung():
                            text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black",
                            fg="green", wraplength=560)
         ErrorLabel.place(x=0, y=80)
-    
-def stream_planen_Thread():
+
+def Stream_planen_Thread():
     stream_erstellen= Thread(target=stream_planen)
     stream_erstellen.start()
 def stream_planen():

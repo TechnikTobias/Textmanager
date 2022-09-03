@@ -4,6 +4,7 @@ import threading
 from tkinter import *
 import chromesteuereinheit
 import Textanzeiger
+import keyboard
 
 Dateiort = os.getlogin()
 Textmanager = Tk()
@@ -21,6 +22,8 @@ Text_Anzeige_Label.config(text=Aktueller_Text)
 Text_Anzeige_Label["justify"] = "left"
 Text_Anzeige_Label.place(x=0, y=0)
 Wie_viele_zusatzlieder = 0
+Hintregrundaktualisieren = True
+Buttonebestätigengedrückt = False
 Buch_Listen = [
     "Gesangbuch",
     "Chorbuch",
@@ -35,9 +38,6 @@ Buch_Listen = [
 
 
 
-Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command=chromesteuereinheit.stream_planen_Thread)
-Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation")
-AnfangHaupt = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Anfang")
 
 
 class Grafigfuer_ein_Lied:
@@ -103,8 +103,7 @@ class Grafigfuer_ein_Lied:
     # Lädt den Namen des Liedes für den Livestream und Livestream vorschau
     def Datein_lesen(self):
         try:
-            self.Dateiliedtext1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + str(
-                self.clicked.get()) + "\\l" + str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
+            self.Dateiliedtext1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + str(self.clicked.get()) + "\\l" + str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
             self.Dateiliedtext = self.Dateiliedtext1.read()
         except FileNotFoundError:
             Errorbild = Toplevel(Textmanager)
@@ -112,9 +111,7 @@ class Grafigfuer_ein_Lied:
             Errorbild.config(bg="black")
             Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg="black", fg="green", wraplength=560)
             Error.place(x=210, y=0)
-            ErrorLabel = Label(Errorbild, font=("Helvetica", 20),
-                               text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black",
-                               fg="green", wraplength=560)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black", fg="green", wraplength=560)
             ErrorLabel.place(x=0, y=80)
             Hi = self.Liednummer.get()
             Hi2 = Hi[:-1]
@@ -128,6 +125,7 @@ class Grafigfuer_ein_Lied:
         self.Liednummer.destroy()
         self.Liedverse.destroy()
         self.Liedtextanzeige.destroy()
+        self.Liedposiotion.destroy()
         self.opt = None
         self.Lied = None
         self.Verse = None
@@ -149,8 +147,7 @@ class Grafigfuer_ein_Lied:
         OptionMenu(Textmanager, self.clicked, *Buch_Listen)
         self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
         self.opt.config(width=12, font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
-        self.Lied = Label(Textmanager, font=("Helvetica", 15), pady=5, text=Liedname, bg=Hintergrund,
-                              fg=Vordergrund)
+        self.Lied = Label(Textmanager, font=("Helvetica", 15), pady=5, text=Liedname, bg=Hintergrund, fg=Vordergrund)
         self.Verse = Label(Textmanager, font=("Helvetica", 15), text="Verse", bg=Hintergrund, fg=Vordergrund)
         self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10)
         self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
@@ -162,6 +159,8 @@ class Grafigfuer_ein_Lied:
         self.Verse.place(y=40 + Position)
         self.Liednummer.place(x=150, y=0 + Position)
         self.Liedverse.place(x=150, y=40 + Position)
+        self.Liedposiotion = Entry(Textmanager, font=("Helvetica", 24), width=1)
+        self.Liedposiotion.place(x=720,y= 20 + Position)        
         self.Buch = None
         self.ErrorLabel = None
         self.aktualisieren_wahl = "True"
@@ -203,8 +202,7 @@ class Grafigfuer_ein_Lied:
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
         if len(self.Liedverse.get()) >= 1:
-            self.Liedtextanzeige.config(text=str(self.Buch + " " + self.Liednummer.get() + " Vers " +
-                                                 str(self.Liedverse.get()) + "\n" + self.Dateiliedtext))
+            self.Liedtextanzeige.config(text=str(self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n" + self.Dateiliedtext))
         else:
             self.Liedtextanzeige.config(text=str(self.Buch + " " + self.Liednummer.get()+"\n" + self.Dateiliedtext))
 
@@ -214,13 +212,10 @@ class Grafigfuer_ein_Lied:
             Grafigfuer_ein_Lied.Buchabkuerzen(self)
             Grafigfuer_ein_Lied.Datein_lesen(self)
             Grafigfuer_ein_Lied.Livestream_Vorchau(self)
-            AktuellerText1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + str(Liedname) +
-                                  ".txt", 'r', encoding='utf8')
+            AktuellerText1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + str(Liedname) + ".txt", 'r', encoding='utf8')
             AktuellerText = AktuellerText1.read()
             if len(self.Liedverse.get()) >= 1:
-                if AktuellerText == (
-                        self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n"
-                        + self.Dateiliedtext):
+                if AktuellerText == (self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n" + self.Dateiliedtext):
                     self.Liednummer.config(bg="green")
                     self.Liedverse.config(bg="green")
                 else:
@@ -233,8 +228,6 @@ class Grafigfuer_ein_Lied:
                 else:
                     self.Liednummer.config(bg="red")
                     self.Liedverse.config(bg="red")
-        else:
-            pass
 
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname):
@@ -244,27 +237,21 @@ class Grafigfuer_ein_Lied:
                 "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + self.clicked.get() + "\\l" +
                 str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
             Lied_Text = Lied_Textueberabe.read()
-            Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w',
-                                   encoding='utf8')
-            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname +
-                                         ".txt", 'w', encoding='utf8')
+            Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
+            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
             Lied_nummer_uebergabe.write(self.Liednummer.get())
             Lied_nummer_uebergabe.close()
-            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname +
-                                       ".txt", 'w', encoding='utf8')
+            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
             Lied_Vers_uebergabe.write(self.Liedverse.get())
             Lied_Vers_uebergabe.close()
-            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname +
-                                       ".txt", 'w', encoding='utf8')
+            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
             Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
             Lied_Buch_Uebergabe.close()
-            Lied_Position_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition"+Liedname +
-                                       ".txt", 'w', encoding='utf8')
+            Lied_Position_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition"+Liedname + ".txt", 'w', encoding='utf8')
             Lied_Position_Uebergabe.write(str(self.Liedposiotion.get()))
             Lied_Position_Uebergabe.close()
             if len(self.Liedverse.get()) >= 1:
-                Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + " Vers " + str(
-                    self.Liedverse.get()) + "\n" + Lied_Text)
+                Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + " Vers " + str(self.Liedverse.get()) + "\n" + Lied_Text)
             else:
                 Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + "\n" + Lied_Text)
             Livestream_Text.close()
@@ -288,14 +275,10 @@ class Grafigfuer_ein_Lied:
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
             self.Liedposiotion.delete(0, "end")
-            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer" + Liedname +
-                                         ".txt", 'r', encoding='utf8')
-            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse" + Liedname +
-                                       ".txt", 'r', encoding='utf8')
-            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch" + Liedname +
-                                       ".txt", 'r', encoding='utf8')
-            Lied_Liedposition_Uebergbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition" + Liedname +
-                                       ".txt", 'r', encoding='utf8')
+            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer" + Liedname + ".txt", 'r', encoding='utf8')
+            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse" + Liedname + ".txt", 'r', encoding='utf8')
+            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch" + Liedname + ".txt", 'r', encoding='utf8')
+            Lied_Liedposition_Uebergbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition" + Liedname + ".txt", 'r', encoding='utf8')
             Lied_Liedposition = Lied_Liedposition_Uebergbe.read()
             Lied_Liedposition_Uebergbe.close()
             Lied_vers = Lied_Vers_uebergabe.read()
@@ -328,10 +311,43 @@ class Grafigfuer_ein_Lied:
         if self.aktualisieren_wahl == "True":
             self.Liedtextanzeige.config(bg=Textmanager_Hintergrund)
 
+    def Grafick_präsentation(self, Liedcommand):
+        if self.aktualisieren_wahl == "True":
+            self.Liedposiotion.destroy()
+            self.Liednummer.destroy()
+            self.Liedverse.destroy()
+            self.Liedtextanzeige.place(x=180)
+            self.opt.destroy()
+            self.Liedtextanzeige.config(command=Liedcommand)
+
+    
+    def Grafick_Eingabe(self, Position, Liedname):
+        if self.aktualisieren_wahl == "True":
+            self.Liedposiotion
+            self.clicked = StringVar()
+            self.clicked.set(Buch_Listen[0])
+            OptionMenu(Textmanager, self.clicked, *Buch_Listen)
+            self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
+            self.opt.config(width=12, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+            self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10)
+            self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
+            self.opt.place(x=340, y=25 + Position)
+            self.Liedtextanzeige.place(x=495, y=15 + Position)
+            self.Lied.place(x=0, y=0 + Position)
+            self.Verse.place(y=40 + Position)
+            self.Liednummer.place(x=150, y=0 + Position)
+            self.Liedverse.place(x=150, y=40 + Position)
+            self.Liedposiotion = Entry(Textmanager, font=("Helvetica", 24), width=1)
+            self.Liedposiotion.place(x=720,y= 20 + Position)
+            self.Eingabe_wiederherstellen(Liedname)
+            Textanzeiger.Grundstellung()
+            Hauptbildschirmbutton.place(x=800)
+            self.Liedtextanzeige.config(command="")
+
+
 
 def Einstellungen_Laden():
-    global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, \
-        Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder
+    global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder
     Textfarbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'r', encoding='utf8')
     Textmanager_Textfarbe = Textfarbe.read()
     Textfarbe.close()
@@ -356,9 +372,7 @@ def Einstellungen_Laden():
 # Erstellt die Grundstruktur des Programms
 def Textmamager_erstellen():
     Einstellungen_Laden()
-    global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1,\
-        Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, \
-        loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel
+    global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton
     Einganslied = Grafigfuer_ein_Lied(0, "Einganslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Textwortlied = Grafigfuer_ein_Lied(83, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Amtswechsellied = Grafigfuer_ein_Lied(166, "Amtswechsellied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
@@ -371,31 +385,95 @@ def Textmamager_erstellen():
     Zusatzlied3 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied2", Zusatzlied3_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Zusatzlied4 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied3", Zusatzlied4_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Textmanager.config(bg=Textmanager_Hintergrund)
-    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund,
-                                bg=Textmanager_Textfarbe, text="Weiters Lied",
-                                command=zusaetzlicheslied)
+    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", command=zusaetzlicheslied)
     zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position)
     Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
     Button_bestaetigen.place(x=800, y=200)
-    loeschenbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Löschen",
-                            command=Eingabe_loeschen)
+    loeschenbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Löschen", command=Eingabe_loeschen)
     loeschenbutton.place(x=800, y=396)
-    wiederherstellen = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Wiederherstellen",
-                              command=Eingabe_wiederherstellen)
+    wiederherstellen = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Wiederherstellen", command=Eingabe_wiederherstellen)
     wiederherstellen.place(x=800, y=333)
-    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung",
-                                  command=Einstellungen)
+    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen)
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
     Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
-    klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter")
-    klick.place(x=800,y=500)
-    klick.config(command=Textanzeiger.Liedgebe)
     Textwortentry.place(x=0,y=620)
-    zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück")
-    zurueck.config(command=Textanzeiger.Versvorher)
-    zurueck.place(x=800, y=630)
-    Stream_erstell_button.place(x=800, y=450)
+    Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
+    Stream_erstell_button.place(x=800, y=480)
+    Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
+    Hauptbildschirmbutton.place(x=800, y=720)
+
+def Grifuckfürpräsantatiom():
+    if Buttonebestätigengedrückt == True:
+        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt
+        Hintregrundaktualisieren = False
+        zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher)
+        zurueck.place(x=430, y=630)
+        klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter", command=Textanzeiger.Liedgebe)
+        klick.place(x=430,y=500)
+        AnfangHaupt = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Anfang", command = Textanzeiger.Anfang)
+        AnfangHaupt.place(x=430, y=20)
+        Einganslied.Grafick_präsentation(Textanzeiger.Eingasliedübergabe)
+        Textwortlied.Grafick_präsentation(Textanzeiger.Textwortliedübergabe)
+        Amtswechsellied.Grafick_präsentation(Textanzeiger.Amtswechseliedübergabe)
+        Kinderlied.Grafick_präsentation(Textanzeiger.Kinderliedübergabe)
+        Bussslied.Grafick_präsentation(Textanzeiger.Bußliedübergabe)
+        Abendmahlslied.Grafick_präsentation(Textanzeiger.Abendmahlsliedübergabe)
+        Schlusslied.Grafick_präsentation(Textanzeiger.Schlussliedübergabe)
+        Zusatzlied1.Grafick_präsentation(Textanzeiger.Zusatzlied1übergabe)
+        Zusatzlied2.Grafick_präsentation(Textanzeiger.Zusatzlied2übergabe)
+        Zusatzlied3.Grafick_präsentation(Textanzeiger.Zusatzlied3übergabe)
+        Zusatzlied4.Grafick_präsentation(Textanzeiger.Zusatzlied4übergabe)
+        Button_bestaetigen.destroy()
+        Einstellungen_button.destroy()
+        wiederherstellen.destroy()
+        loeschenbutton.destroy()
+        Stream_erstell_button.destroy()
+        Hauptbildschirmbutton.place(x=430)
+        Hauptbildschirmbutton.config(command=Grifickeingabe, text="Eingabe")
+        zusaetzliches_lied.destroy()
+        Einganslied.Liedtextanzeige.config(bg="orange")
+        Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
+        Textanzeiger.Wieoft = 0
+        Textmanager.minsize(width=400, height=800)
+        Textmanager.geometry("600x"+str(Textmanager.winfo_height())+"")
+        Textmanager.update()
+    
+
+def Grifickeingabe():
+    global Hintregrundaktualisieren, zusaetzliches_lied, Button_bestaetigen, loeschenbutton, wiederherstellen, Einstellungen_button, Stream_erstell_button
+    Hintregrundaktualisieren = True
+    klick.destroy()
+    zurueck.destroy()
+    AnfangHaupt.destroy()
+    Hauptbildschirmbutton.config(command=Grifuckfürpräsantatiom, text="Präsentation")
+    Textmanager.minsize(width=1040, height=800)
+    Textmanager.geometry("1040x"+str(Textmanager.winfo_height())+"")
+    Einganslied.Grafick_Eingabe(0,"Einganslied")
+    Textwortlied.Grafick_Eingabe(83, "Textwortlied")
+    Amtswechsellied.Grafick_Eingabe(166, "Amtswechsellied")
+    Kinderlied.Grafick_Eingabe(249, "Kinderlied")
+    Bussslied.Grafick_Eingabe(249+83*Kinder_Position, "Bußlied")
+    Abendmahlslied.Grafick_Eingabe(332+83*Kinder_Position, "Abendmahlslied")
+    Schlusslied.Grafick_Eingabe(415+83*Kinder_Position, "Schlusslied")
+    Zusatzlied1.Grafick_Eingabe(498+83*Kinder_Position, "Zusatzlied1")
+    Zusatzlied2.Grafick_Eingabe(581+83*Kinder_Position, "Zusatzlied2")
+    Zusatzlied3.Grafick_Eingabe(664+83*Kinder_Position, "Zusatzlied3")
+    Zusatzlied4.Grafick_Eingabe(747+83*Kinder_Position, "Zusatzlied4")
+    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", command=zusaetzlicheslied)
+    zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position)
+    Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
+    Button_bestaetigen.place(x=800, y=200)
+    loeschenbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Löschen", command=Eingabe_loeschen)
+    loeschenbutton.place(x=800, y=396)
+    wiederherstellen = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Wiederherstellen", command=Eingabe_wiederherstellen)
+    wiederherstellen.place(x=800, y=333)
+    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen)
+    Einstellungen_button.place(x=800, y=270)
+    Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
+    Stream_erstell_button.place(x=800, y=480)
+
+
 
 def start01():
     start01 = Thread(target=chromesteuereinheit.Test01)
@@ -403,13 +481,12 @@ def start01():
 
 def zusaetzlicheslied3():
     global Wie_viele_zusatzlieder, Zusatzlied4, Zusatzlied4_obwahr
-    Zusatzlied4 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1),
-                                      "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Zusatzlied4 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Wieoft1 = Wie_viele_zusatzlieder + 1
     Wie_viele_zusatzlieder = Wieoft1
     Zusatzlied4_obwahr = True
+    Aktualiesierung_Grafick()
     zusaetzliches_lied.destroy()
-
     zusaetzliches_liedzerstörer.config(command=zusaetzlichesliedzerstörer3)
 
 def zusaetzlichesliedzerstörer3():
@@ -424,8 +501,7 @@ def zusaetzlichesliedzerstörer3():
 
 def zusaetzlicheslied2():
     global Wie_viele_zusatzlieder, Zusatzlied3, Zusatzlied3_obwahr
-    Zusatzlied3 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1),
-                                      "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Zusatzlied3 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Wie_viele_zusatzlieder1 = Wie_viele_zusatzlieder + 1
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder1
     Zusatzlied3_obwahr = True
@@ -470,9 +546,7 @@ def zusaetzlicheslied():
     Wieoft1 = Wie_viele_zusatzlieder + 1
     Wie_viele_zusatzlieder = Wieoft1
     Zusatzlied1_obwahr = True
-    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund,
-                                bg=Textmanager_Textfarbe, text="Zusatzlied Löschen",
-                                command=zusaetzlichesliedzerstörer)
+    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
     zusaetzliches_lied.config(command=zusaetzlicheslied1)
     Aktualiesierung_Grafick()
 
@@ -487,6 +561,7 @@ def zusaetzlichesliedzerstörer():
 
 
 def Button_command():
+    global Buttonebestätigengedrückt
     Einganslied.Knopf_Druecken("Einganslied")
     Textwortlied.Knopf_Druecken("Textwortlied")
     Amtswechsellied.Knopf_Druecken("Amtswechsellied")
@@ -500,29 +575,30 @@ def Button_command():
     Zusatzlied4.Knopf_Druecken("Zusatzlied4")
     Textwortreinschreiben = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
     Textwortreinschreiben.write(Textwortentry.get("1.0","end-1c"))
-    Einganslied.Liedtextanzeige.config(bg="yellow")
-    Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
-    Textanzeiger.Wieoft = 0
     chromesteuereinheit.Videobeschreibung_Thread()
+    Buttonebestätigengedrückt = True
 
 
 def Hintergrund_aktualisieren():
-    Einganslied.Hintergrund_aktualisierung("Einganslied")
-    Textwortlied.Hintergrund_aktualisierung("Textwortlied")
-    Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
-    Kinderlied.Hintergrund_aktualisierung("Kinderlied")
-    Bussslied.Hintergrund_aktualisierung("Bußlied")
-    Abendmahlslied.Hintergrund_aktualisierung("Abendmahlslied")
-    Schlusslied.Hintergrund_aktualisierung("Schlusslied")
-    Zusatzlied1.Hintergrund_aktualisierung("Zusatzlied1")
-    Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
-    Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
-    Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
-    Textwortauslesen= open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
-    if Textwortentry.get("1.0","end-1c") == Textwortauslesen.read():
-        Textwortentry.config(bg="green")
+    if Hintregrundaktualisieren == True:
+        Einganslied.Hintergrund_aktualisierung("Einganslied")
+        Textwortlied.Hintergrund_aktualisierung("Textwortlied")
+        Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
+        Kinderlied.Hintergrund_aktualisierung("Kinderlied")
+        Bussslied.Hintergrund_aktualisierung("Bußlied")
+        Abendmahlslied.Hintergrund_aktualisierung("Abendmahlslied")
+        Schlusslied.Hintergrund_aktualisierung("Schlusslied")
+        Zusatzlied1.Hintergrund_aktualisierung("Zusatzlied1")
+        Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
+        Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
+        Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
+        Textwortauslesen= open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+        if Textwortentry.get("1.0","end-1c") == Textwortauslesen.read():
+            Textwortentry.config(bg="green")
+        else:
+            Textwortentry.config(bg="red")
     else:
-        Textwortentry.config(bg="red")
+        keyboard.press_and_release("space")
     Einganslied.Lied.after(40, lambda: Hintergrund_aktualisieren())
 
 
