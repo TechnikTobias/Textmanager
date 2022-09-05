@@ -22,8 +22,13 @@ Text_Anzeige_Label.config(text=Aktueller_Text)
 Text_Anzeige_Label["justify"] = "left"
 Text_Anzeige_Label.place(x=0, y=0)
 Wie_viele_zusatzlieder = 0
+Zusatzlied1_obwahr = "False"
+Zusatzlied2_obwahr = "False"
+Zusatzlied3_obwahr = "False"
+Zusatzlied4_obwahr = "False"
 Hintregrundaktualisieren = True
 Buttonebestätigengedrückt = False
+Liedpositionübergabe = 0
 Buch_Listen = [
     "Gesangbuch",
     "Chorbuch",
@@ -42,6 +47,7 @@ Buch_Listen = [
 
 class Grafigfuer_ein_Lied:
     # erstellt Grafik(Eingabe und Ausgabe des Liedes) für ein Lied
+    global Liedpositionübergabe
     opt = None
     Lied = None
     Verse = None
@@ -60,6 +66,7 @@ class Grafigfuer_ein_Lied:
 
 
     def __init__(self, Position, Liedname, Wahl, Hintergrund, Vordergrund):
+        global Liedpositionübergabe
         if Wahl == "True":
             self.clicked = StringVar()
             self.clicked.set(Buch_Listen[0])
@@ -84,6 +91,8 @@ class Grafigfuer_ein_Lied:
             self.Buch = None
             self.ErrorLabel = None
             self.aktualisieren_wahl = "True"
+            Liedpositionübergabe = Liedpositionübergabe + 1
+            self.Liedposiotion.insert(0, Liedpositionübergabe)
         else:
             self.opt = None
             self.Lied = None
@@ -138,6 +147,7 @@ class Grafigfuer_ein_Lied:
         self.Dateiliedtext = None
         self.aktualisieren_wahl = "False"
         self.Buchzahl_clicked = None
+        Liedpositionübergabe = Liedpositionübergabe - 1
         Textmanager.update()
 
 
@@ -365,10 +375,7 @@ def Einstellungen_Laden():
     else:
         Kinder_Anzeigen_Grafig = "False"
         Kinder_Position = 0
-    Zusatzlied1_obwahr = "False"
-    Zusatzlied2_obwahr = "False"
-    Zusatzlied3_obwahr = "False"
-    Zusatzlied4_obwahr = "False"
+
 
 
 # Erstellt die Grundstruktur des Programms
@@ -463,7 +470,7 @@ def Grifickeingabe():
     Zusatzlied3.Grafick_Eingabe(664+83*Kinder_Position, "Zusatzlied3")
     Zusatzlied4.Grafick_Eingabe(747+83*Kinder_Position, "Zusatzlied4")
     zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", command=zusaetzlicheslied)
-    zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position)
+    zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position+Wie_viele_zusatzlieder+83)
     Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
     Button_bestaetigen.place(x=800, y=200)
     loeschenbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Löschen", command=Eingabe_loeschen)
@@ -484,8 +491,7 @@ def start01():
 def zusaetzlicheslied3():
     global Wie_viele_zusatzlieder, Zusatzlied4, Zusatzlied4_obwahr
     Zusatzlied4 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Wieoft1 = Wie_viele_zusatzlieder + 1
-    Wie_viele_zusatzlieder = Wieoft1
+    Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied4_obwahr = True
     Aktualiesierung_Grafick()
     zusaetzliches_lied.destroy()
@@ -504,8 +510,7 @@ def zusaetzlichesliedzerstörer3():
 def zusaetzlicheslied2():
     global Wie_viele_zusatzlieder, Zusatzlied3, Zusatzlied3_obwahr
     Zusatzlied3 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Wie_viele_zusatzlieder1 = Wie_viele_zusatzlieder + 1
-    Wie_viele_zusatzlieder = Wie_viele_zusatzlieder1
+    Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied3_obwahr = True
     Textmanager.geometry("1040x990")
     Textmanager.minsize(width=1040, height=990)
@@ -526,8 +531,7 @@ def zusaetzlicheslied1():
     global Wie_viele_zusatzlieder, Zusatzlied2, Zusatzlied2_obwahr
     Zusatzlied2 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1),
                                       "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Wieoft1 = Wie_viele_zusatzlieder + 1
-    Wie_viele_zusatzlieder = Wieoft1
+    Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied2_obwahr = True
     Aktualiesierung_Grafick()
     zusaetzliches_lied.config(command=zusaetzlicheslied2)
@@ -545,8 +549,7 @@ def zusaetzlicheslied():
     global Wie_viele_zusatzlieder, Zusatzlied1, Zusatzlied1_obwahr, zusaetzliches_liedzerstörer
     Zusatzlied1 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1),
                                       "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Wieoft1 = Wie_viele_zusatzlieder + 1
-    Wie_viele_zusatzlieder = Wieoft1
+    Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied1_obwahr = True
     zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
     zusaetzliches_lied.config(command=zusaetzlicheslied1)
