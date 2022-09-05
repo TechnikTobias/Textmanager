@@ -12,10 +12,6 @@ import time
 import Haupt
 import os
 import Zeitgeber
-def Test01():
-    print("halo welt")
-    time.sleep(5)
-    print("programm ist zuende")
 selenium
 Dateiort = os.getlogin()
 
@@ -25,7 +21,6 @@ def Chromestarten():
     ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Chromöffnen = ChromeDatei.read()
     ChromeDatei.close()
-    print("Was??????????")
     try:
         if Chromöffnen == "Wahr":
             options = Options()

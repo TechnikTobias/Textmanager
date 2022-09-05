@@ -148,6 +148,7 @@ def Grundstellung():
     Haupt.Text_Anzeige_Label.config(text="")
 
 def positionfeedback(Liedposition):
+    global lesteslied
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
     elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Liedposition):
@@ -170,7 +171,9 @@ def positionfeedback(Liedposition):
         Haupt.Zusatzlied3.Liedtextanzeige.config(bg="orange")
     elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Liedposition):
         Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
-
+    else:
+        Haupt.Text_Anzeige_Label.config(text="")
+        lesteslied = True
 def vorherübergabeTextandiewand(Liedposition):
     global Datenfürliedanderwand, Wieoft, voherliedzwischensehne, lesteslied
     Datenfürliedanderwand = []
@@ -252,7 +255,9 @@ def Anfang():
     elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(1):
         Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
-
+    else:
+        Haupt.Text_Anzeige_Label.config(text="")
+        lesteslied = True
 
 def Eingasliedübergabe():
     global Datenfürliedanderwand, Wieoft, Wieoftlied
