@@ -383,7 +383,7 @@ def Textmamager_erstellen():
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
     Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
-    Textwortentry.place(x=0,y=537)
+    Textwortentry.place(x=0,y=537+83*Kinder_Position)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
@@ -612,29 +612,29 @@ def Hintergrund_aktualisieren():
         if Testeneingeben == True:
             if keyboard.is_pressed("space"):
                 while keyboard.is_pressed("space"):
-                    print("moin")
+                    pass
                 print("hallo Welt")
                 Textanzeiger.Liedgebe()
             if keyboard.is_pressed("left"):
                 while keyboard.is_pressed("left"):
-                    print("moin")
+                    pass
                 print("hallo Welt")
                 Textanzeiger.Versvorher()
             if keyboard.is_pressed("right"):
                 while keyboard.is_pressed("right"):
-                    print("moin")
+                    pass
                 print("hallo Welt")
                 Textanzeiger.Liedgebe()
             if keyboard.is_pressed("up"):
                 while keyboard.is_pressed("up"):
-                    print("moin")
+                    pass
                 print("hallo Welt")
                 Textanzeiger.Wieoft = 0
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
                 Textanzeiger.vorherübergabeTextandiewand(Textanzeiger.Wieoftlied)
             if keyboard.is_pressed("down"):
                 while keyboard.is_pressed("down"):
-                    print("moin")
+                    pass
                 print("hallo Welt")
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
                 Textanzeiger.Nächstelied()
@@ -644,7 +644,7 @@ def Hintergrund_aktualisieren():
         if keyboard.is_pressed("strg"):
             if keyboard.is_pressed("y"):
                 Testeneingeben = True
-    Einganslied.Lied.after(40, lambda: Hintergrund_aktualisieren())
+    Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
 
