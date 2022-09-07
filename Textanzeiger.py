@@ -175,9 +175,12 @@ def positionfeedback(Liedposition):
         Haupt.Text_Anzeige_Label.config(text="")
         lesteslied = True
 def vorherübergabeTextandiewand(Liedposition):
-    global Datenfürliedanderwand, Wieoft, voherliedzwischensehne, lesteslied
+    global Datenfürliedanderwand, Wieoft, voherliedzwischensehne, lesteslied, Wieoftlied
     Datenfürliedanderwand = []
     Grundstellung()
+    if Wieoftlied == 0:
+        Wieoftlied = 1
+        Liedposition = 1
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
@@ -260,94 +263,104 @@ def Anfang():
         lesteslied = True
 
 def Eingasliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
     Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Einganslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
-
+    lesteslied = False
 
 def Textwortliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
     Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Textwortlied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 
 def Amtswechseliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
     Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Bußliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
     Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Bussslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Bussslied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Abendmahlsliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
     Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Abendmahlslied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Schlussliedübergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
     Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Schlusslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Schlusslied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Kinderliedübergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
     Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Kinderlied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Kinderlied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Zusatzlied1übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
     Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Zusatzlied1.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Zusatzlied2übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
     Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Zusatzlied2.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Zusatzlied3übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
     Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Zusatzlied3.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 def Zusatzlied4übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
     Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung()
     Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
 
 
 def Nächstelied():

@@ -1,6 +1,8 @@
 import os
+from re import T
 from threading import Thread
 import threading
+import time
 from tkinter import *
 import chromesteuereinheit
 import Textanzeiger
@@ -28,6 +30,7 @@ Zusatzlied3_obwahr = "False"
 Zusatzlied4_obwahr = "False"
 Hintregrundaktualisieren = True
 Buttonebestätigengedrückt = False
+Testeneingeben = True
 Liedpositionübergabe = 0
 Buch_Listen = [
     "Gesangbuch",
@@ -269,9 +272,6 @@ class Grafigfuer_ein_Lied:
             Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer" + Liedname + ".txt", 'r', encoding='utf8')
             Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse" + Liedname + ".txt", 'r', encoding='utf8')
             Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch" + Liedname + ".txt", 'r', encoding='utf8')
-            Lied_Liedposition_Uebergbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Liedposition" + Liedname + ".txt", 'r', encoding='utf8')
-            Lied_Liedposition = Lied_Liedposition_Uebergbe.read()
-            Lied_Liedposition_Uebergbe.close()
             Lied_vers = Lied_Vers_uebergabe.read()
             Lied_Nummer = Lied_nummer_uebergabe.read()
             Lied_Buch = Lied_Buch_Uebergabe.read()
@@ -357,7 +357,7 @@ def Einstellungen_Laden():
 # Erstellt die Grundstruktur des Programms
 def Textmamager_erstellen():
     Einstellungen_Laden()
-    global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton
+    global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton, zusaetzliches_liedzerstörer
     Einganslied = Grafigfuer_ein_Lied(0, "Einganslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Textwortlied = Grafigfuer_ein_Lied(83, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Amtswechsellied = Grafigfuer_ein_Lied(166, "Amtswechsellied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
@@ -371,6 +371,7 @@ def Textmamager_erstellen():
     Zusatzlied4 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied3", Zusatzlied4_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Textmanager.config(bg=Textmanager_Hintergrund)
     zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", command=zusaetzlicheslied)
+    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)    
     zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position)
     Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
     Button_bestaetigen.place(x=800, y=200)
@@ -382,7 +383,7 @@ def Textmamager_erstellen():
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
     Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
-    Textwortentry.place(x=0,y=620)
+    Textwortentry.place(x=0,y=537)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
@@ -417,6 +418,7 @@ def Grifuckfürpräsantatiom():
         Hauptbildschirmbutton.place(x=430)
         Hauptbildschirmbutton.config(command=Grifickeingabe, text="Eingabe")
         zusaetzliches_lied.destroy()
+        zusaetzliches_liedzerstörer.destroy()
         Einganslied.Liedtextanzeige.config(bg="orange")
         Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
         Textanzeiger.Wieoft = 0
@@ -426,7 +428,7 @@ def Grifuckfürpräsantatiom():
     
 
 def Grifickeingabe():
-    global Hintregrundaktualisieren, zusaetzliches_lied, Button_bestaetigen, loeschenbutton, wiederherstellen, Einstellungen_button, Stream_erstell_button
+    global Hintregrundaktualisieren, zusaetzliches_lied, Button_bestaetigen, loeschenbutton, wiederherstellen, Einstellungen_button, Stream_erstell_button, zusaetzliches_liedzerstörer
     Hintregrundaktualisieren = True
     klick.destroy()
     zurueck.destroy()
@@ -449,11 +451,15 @@ def Grifickeingabe():
     zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position+Wie_viele_zusatzlieder+83)
     if Zusatzlied1_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied1)
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
     elif Zusatzlied2_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied2)
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer1)    
     elif Zusatzlied3_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied3)
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer2)    
     elif Zusatzlied4_obwahr == True:
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer3)        
         zusaetzliches_lied.destroy()
     else:
         zusaetzliches_lied.config(command=zusaetzlicheslied)
@@ -584,6 +590,7 @@ def Button_command():
 
 
 def Hintergrund_aktualisieren():
+    global Testeneingeben
     if Hintregrundaktualisieren == True:
         Einganslied.Hintergrund_aktualisierung("Einganslied")
         Textwortlied.Hintergrund_aktualisierung("Textwortlied")
@@ -602,8 +609,45 @@ def Hintergrund_aktualisieren():
         else:
             Textwortentry.config(bg="red")
     else:
-        keyboard.is_pressed("space")
+        if Testeneingeben == True:
+            if keyboard.is_pressed("space"):
+                while keyboard.is_pressed("space"):
+                    print("moin")
+                print("hallo Welt")
+                Textanzeiger.Liedgebe()
+            if keyboard.is_pressed("left"):
+                while keyboard.is_pressed("left"):
+                    print("moin")
+                print("hallo Welt")
+                Textanzeiger.Versvorher()
+            if keyboard.is_pressed("right"):
+                while keyboard.is_pressed("right"):
+                    print("moin")
+                print("hallo Welt")
+                Textanzeiger.Liedgebe()
+            if keyboard.is_pressed("up"):
+                while keyboard.is_pressed("up"):
+                    print("moin")
+                print("hallo Welt")
+                Textanzeiger.Wieoft = 0
+                Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
+                Textanzeiger.vorherübergabeTextandiewand(Textanzeiger.Wieoftlied)
+            if keyboard.is_pressed("down"):
+                while keyboard.is_pressed("down"):
+                    print("moin")
+                print("hallo Welt")
+                Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
+                Textanzeiger.Nächstelied()
+        if keyboard.is_pressed("strg"):
+            if keyboard.is_pressed("n"):
+                Testeneingeben = False
+        if keyboard.is_pressed("strg"):
+            if keyboard.is_pressed("y"):
+                Testeneingeben = True
     Einganslied.Lied.after(40, lambda: Hintergrund_aktualisieren())
+
+
+
 
 
 def Eingabe_loeschen():
