@@ -326,7 +326,6 @@ class Grafigfuer_ein_Lied:
             self.Liednummer.place(x=150, y=0 + Position)
             self.Liedverse.place(x=150, y=40 + Position)
             self.Eingabe_wiederherstellen(Liedname)
-            Textanzeiger.Grundstellung()
             Hauptbildschirmbutton.place(x=800)
             self.Liedtextanzeige.config(command="")
 
@@ -476,6 +475,7 @@ def Grifickeingabe():
     Aktualiesierung_Grafick()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
+    Textanzeiger.Grundstellung()
 
 
 

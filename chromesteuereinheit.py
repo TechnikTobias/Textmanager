@@ -1,4 +1,3 @@
-import imp
 from threading import Thread
 import selenium
 from selenium import webdriver
@@ -7,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 import datetime
 import tkinter
-import win32clipboard
+import pyperclip
 import time 
 import Haupt
 import os
@@ -52,7 +51,7 @@ def Videobeschreibung():
         if Stream == "True":
             try:
                 eingabe = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/")
+                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/a")
                 eingabe.click()
             except:
                     logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a',
@@ -227,13 +226,10 @@ def stream_planen():
             eingabe22 = driver.find_element(By.XPATH,"/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/span/p")
             eingabe22.click()
             time.sleep(1)
-            win32clipboard.OpenClipboard()
-            data = win32clipboard.GetClipboardData()
-            win32clipboard.CloseClipboard()
             eingabe23 = driver.find_element(By.XPATH,
                 "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/label/div/div/textarea")
             eingabe23.clear()
-            eingabe23.send_keys(data)
+            eingabe23.send_keys(pyperclip.paste())
             eingabe24 = driver.find_element(By.XPATH,
                 "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
             eingabe24.click()
