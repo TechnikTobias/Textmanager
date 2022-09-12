@@ -64,6 +64,7 @@ class Grafigfuer_ein_Lied:
     Buchzahl_clicked = None
     Liednummerfest = None
     Liedversefest = None
+    gespeichertestlied = None
     Daten_fürTextanderwand = [0]
 
 
@@ -211,26 +212,29 @@ class Grafigfuer_ein_Lied:
     # sorgt dafür, dass alles aktualisiert wird
     def Hintergrund_aktualisierung(self, Liedname):
         if self.aktualisieren_wahl == "True":
-            Grafigfuer_ein_Lied.Buchabkuerzen(self)
-            Grafigfuer_ein_Lied.Datein_lesen(self)
-            Grafigfuer_ein_Lied.Livestream_Vorchau(self)
-            AktuellerText1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + str(Liedname) + ".txt", 'r', encoding='utf8')
-            AktuellerText = AktuellerText1.read()
-            if len(self.Liedverse.get()) >= 1:
-                if AktuellerText == (self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n" + self.Dateiliedtext):
-                    self.Liednummer.config(bg="green")
-                    self.Liedverse.config(bg="green")
-                else:
-                    self.Liednummer.config(bg="red")
-                    self.Liedverse.config(bg="red")
+            if self.gespeichertestlied == self.Liednummer.get():
+                pass
             else:
-                if AktuellerText == (self.Buch + " " + self.Liednummer.get() + "\n" + self.Dateiliedtext):
-                    self.Liednummer.config(bg="green")
-                    self.Liedverse.config(bg="green")
+                Grafigfuer_ein_Lied.Buchabkuerzen(self)
+                Grafigfuer_ein_Lied.Datein_lesen(self)
+                Grafigfuer_ein_Lied.Livestream_Vorchau(self)
+                AktuellerText1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + str(Liedname) + ".txt", 'r', encoding='utf8')
+                AktuellerText = AktuellerText1.read()
+                if len(self.Liedverse.get()) >= 1:
+                    if AktuellerText == (self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n" + self.Dateiliedtext):
+                        self.Liednummer.config(bg="green")
+                        self.Liedverse.config(bg="green")
+                    else:
+                        self.Liednummer.config(bg="red")
+                        self.Liedverse.config(bg="red")
                 else:
-                    self.Liednummer.config(bg="red")
-                    self.Liedverse.config(bg="red")
-
+                    if AktuellerText == (self.Buch + " " + self.Liednummer.get() + "\n" + self.Dateiliedtext):
+                        self.Liednummer.config(bg="green")
+                        self.Liedverse.config(bg="green")
+                    else:
+                        self.Liednummer.config(bg="red")
+                        self.Liedverse.config(bg="red")
+            self.gespeichertestlied = self.Liednummer.get()
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname, Liedposition):
         global Warum
@@ -326,7 +330,6 @@ class Grafigfuer_ein_Lied:
             self.Liednummer.place(x=150, y=0 + Position)
             self.Liedverse.place(x=150, y=40 + Position)
             self.Eingabe_wiederherstellen(Liedname)
-            Textanzeiger.Grundstellung()
             Hauptbildschirmbutton.place(x=800)
             self.Liedtextanzeige.config(command="")
 
