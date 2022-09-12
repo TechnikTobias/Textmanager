@@ -119,10 +119,11 @@ class Grafigfuer_ein_Lied:
             Error.place(x=210, y=0)
             ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black", fg="green", wraplength=560)
             ErrorLabel.place(x=0, y=80)
-            Hi = self.Liednummer.get()
-            Hi2 = Hi[:-1]
-            self.Liednummer.delete(0, "end")
-            self.Liednummer.insert(0, Hi2)
+            if len(self.Liednummer.get()) > 3:
+                Hi = self.Liednummer.get()
+                Hi2 = Hi[:-1]
+                self.Liednummer.delete(0, "end")
+                self.Liednummer.insert(0, Hi2)
 
     def Zerstören(self):
         global Liedpositionübergabe

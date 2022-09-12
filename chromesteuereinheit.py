@@ -47,28 +47,12 @@ def Videobeschreibung():
     if Chromöffnen == "Wahr":
         Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt", 'r',
                        encoding='utf8')
-<<<<<<< HEAD
         Stream = Streamheute.read()
         try:
             if Stream == "True":
                 try:
                     eingabe = driver.find_element(By.XPATH,
-                        "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/")
-=======
-    Stream = Streamheute.read()
-    try:
-        if Stream == "True":
-            try:
-                eingabe = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/a")
-                eingabe.click()
-            except:
-                    logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a',
-                       encoding='utf8')
-                    logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
-                    logdatei.close()
-                    eingabe = driver.find_element(By.ID,"video-title")
->>>>>>> 154a2c716f0d8b14a28a5a18c941fb3dd5d31b70
+                        "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/a")
                     eingabe.click()
                 except:
                         logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
