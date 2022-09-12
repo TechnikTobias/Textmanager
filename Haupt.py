@@ -260,6 +260,8 @@ class Grafigfuer_ein_Lied:
                 Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + "\n" + Lied_Text)
             Livestream_Text.close()
             self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
+            self.Liednummerfest = self.Liednummer.get()
+            self.Liedversefest = self.Liedverse.get()
 
 
     # Löscht alle Eingaben für ein Lied

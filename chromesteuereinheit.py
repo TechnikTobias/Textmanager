@@ -13,10 +13,10 @@ import os
 import Zeitgeber
 selenium
 Dateiort = os.getlogin()
-Chromöffnen = "Falsch"
-
+Videobeschreibungaktionvarable = "Falsch"
+Streamüperprüfen = False
 def Chromestarten():
-    global Videobeschreibungaktionvarable, Chromöffnen, driver
+    global Videobeschreibungaktionvarable, Chromöffnen, driver, Streamüperprüfen
     ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Chromöffnen = ChromeDatei.read()
     ChromeDatei.close()
@@ -26,9 +26,18 @@ def Chromestarten():
             options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
             driver = webdriver.Chrome("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver", chrome_options=options)
             driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
-            VideobeschreibungDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Videobeschreibung.txt", 'r',
-                                    encoding='utf8')
-            Videobeschreibungaktionvarable = VideobeschreibungDatei.read()
+            try:
+                time.sleep(3)
+                suche = driver.find_element(By.ID,"video-title")
+                suche.click()
+                endesuche = driver.find_element(By.ID,"entity-back-button")
+                time.sleep(8)
+                endesuche.click()
+                Videobeschreibungaktionvarable = "Wahr"
+            except:
+                Videobeschreibungaktionvarable = "Falsch"
+                print("Kein stream")
+            Streamüperprüfen = True
         else:
             Videobeschreibungaktionvarable = "Falsch"
     except WebDriverException:
@@ -44,7 +53,7 @@ def Videobeschreibung_Thread():
     Videobeschreibungthread = Thread(target=Videobeschreibung)
     Videobeschreibungthread.start()
 def Videobeschreibung():
-    if Chromöffnen == "Wahr":
+    if Videobeschreibungaktionvarable == "Wahr":
         Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt", 'r',
                        encoding='utf8')
         Stream = Streamheute.read()
@@ -71,7 +80,7 @@ def Videobeschreibung():
                 eingabe3.clear()
                 if len(Haupt.Einganslied.Liedversefest) >= 1:
                     Texteingabe = str(
-                        "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedverse + "\n" + str(
+                        "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
                             Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
                     eingabe3.send_keys(Texteingabe)
                 else:
@@ -157,93 +166,94 @@ def Stream_planen_Thread():
     stream_erstellen= Thread(target=stream_planen)
     stream_erstellen.start()
 def stream_planen():
+    global Videobeschreibungaktionvarable
     if Chromöffnen == "Wahr":
-        Streamheute = open ("C:\\Users\\"+Haupt.Dateiort+"\\Desktop\\Lieder\\"+Zeitgeber.Datum+".txt", 'r',encoding='utf8')
-        Stream = Streamheute.read()
-        if Stream == "True":
-            print("stream exestiert")
-        else:
-            einagbe8 = driver.find_element(By.XPATH,
-                "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[1]/ytcp-button")
-            einagbe8.click()
-            time.sleep(2)
-            eingabe9 = driver.find_element(By.XPATH,
-                "/html/body/ytcp-app/ytls-popup-container/tp-yt-paper-dialog/ytls-duplicate-broadcast-renderer/div[4]/ytcp-button[2]/div")
-            eingabe9.click()
-            time.sleep(2)
-            eingabe10 = driver.find_element(By.XPATH,
-                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
-            eingabe10.click()
-            time.sleep(2)
-            eingabe11 = driver.find_element(By.XPATH,
-                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
-            eingabe11.click()
-            time.sleep(2)
-            eingabe111 = driver.find_element(By.XPATH,"/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/ytcp-video-visibility-select/div/tp-yt-paper-radio-group/tp-yt-paper-radio-button[2]/div[2]")
-            eingabe111.click()
-            time.sleep(1)
-            eingabe12 = driver.find_element(By.XPATH,
-                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div/ytcp-text-dropdown-trigger/ytcp-dropdown-trigger/div/div[3]")
-            eingabe12.click()
-            time.sleep(2)
-            eingabe13 = driver.find_element(By.XPATH,
-                "/html/body/ytcp-date-picker/tp-yt-paper-dialog/div/form/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
-            eingabe13.clear()
-            time.sleep(2)
-            eingabe13.send_keys(Zeitgeber.Datum)
-            time.sleep(2)
-            eingabe14 = driver.find_element(By.XPATH,"/html/body/tp-yt-iron-overlay-backdrop")
-            eingabe14.click()
-            time.sleep(2)
-            eingabe15 = driver.find_element(By.XPATH,
-                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div[2]/form/ytcp-form-input-container/div[1]/div/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
-            eingabe15.clear()
-            time.sleep(2)
-            eingabe15.send_keys(Zeitgeber.Uhrzeit)
-            time.sleep(2)
-            eingabe17 = driver.find_element(By.XPATH,
-                "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[3]/div")
-            eingabe17.click()
-            time.sleep(4)
-            eingabe18 = driver.find_element(By.XPATH,
-                "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
-            eingabe18.click()
-            time.sleep(1)
-            eingabe19 = driver.find_element(By.XPATH,
-                "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row[1]/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/div")
-            eingabe19.click()
-            time.sleep(1)
-            eingabe20 = driver.find_element(By.XPATH,
-                "/html/body/ytcp-text-menu/tp-yt-paper-dialog/tp-yt-paper-listbox/tp-yt-paper-item[2]/ytcp-ve")
-            eingabe20.click()
-            time.sleep(1)
-            driver.get("https://rebrandly.com/links")
-            time.sleep(10)
-            eingabe21 = driver.find_element(By.XPATH,
-                "/html/body/div[1]/div[2]/div[3]/div[2]/ul/li/div/div/div[1]/div/div[1]/div/a")
-            eingabe21.click()
-            time.sleep(1)
-            eingabe22 = driver.find_element(By.XPATH,"/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/span/p")
-            eingabe22.click()
-            time.sleep(1)
-            eingabe23 = driver.find_element(By.XPATH,
-                "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/label/div/div/textarea")
-            eingabe23.clear()
-            eingabe23.send_keys(pyperclip.paste())
-            eingabe24 = driver.find_element(By.XPATH,
-                "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
-            eingabe24.click()
-            time.sleep(4)
-            driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
-            Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt",
-                               'w', encoding='utf8')
-            Streamheute.write("True")
-            Streamnechst = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum2 + ".txt",
-                               'w', encoding='utf8')
-            Streamnechst.write("False")
-            Streamnechst2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum3 + ".txt",
-                               'w', encoding='utf8')
-            Streamnechst2.write("False")
-            Streamnechst3 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum4 + ".txt",
-                               'w', encoding='utf8')
-            Streamnechst3.write("False")
+        if Streamüperprüfen == True:
+            if Videobeschreibungaktionvarable == "Wahr":
+                print("stream exestiert")
+            else:
+                einagbe8 = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[1]/ytcp-button")
+                einagbe8.click()
+                time.sleep(2)
+                eingabe9 = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-app/ytls-popup-container/tp-yt-paper-dialog/ytls-duplicate-broadcast-renderer/div[4]/ytcp-button[2]/div")
+                eingabe9.click()
+                time.sleep(2)
+                eingabe10 = driver.find_element(By.XPATH,
+                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
+                eingabe10.click()
+                time.sleep(2)
+                eingabe11 = driver.find_element(By.XPATH,
+                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
+                eingabe11.click()
+                time.sleep(2)
+                eingabe111 = driver.find_element(By.XPATH,"/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/ytcp-video-visibility-select/div/tp-yt-paper-radio-group/tp-yt-paper-radio-button[2]/div[2]")
+                eingabe111.click()
+                time.sleep(1)
+                eingabe12 = driver.find_element(By.XPATH,
+                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div/ytcp-text-dropdown-trigger/ytcp-dropdown-trigger/div/div[3]")
+                eingabe12.click()
+                time.sleep(2)
+                eingabe13 = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-date-picker/tp-yt-paper-dialog/div/form/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
+                eingabe13.clear()
+                time.sleep(2)
+                eingabe13.send_keys(Zeitgeber.Datum)
+                time.sleep(2)
+                eingabe14 = driver.find_element(By.XPATH,"/html/body/tp-yt-iron-overlay-backdrop")
+                eingabe14.click()
+                time.sleep(2)
+                eingabe15 = driver.find_element(By.XPATH,
+                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div[2]/form/ytcp-form-input-container/div[1]/div/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
+                eingabe15.clear()
+                time.sleep(2)
+                eingabe15.send_keys(Zeitgeber.Uhrzeit)
+                time.sleep(2)
+                eingabe17 = driver.find_element(By.XPATH,
+                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[3]/div")
+                eingabe17.click()
+                time.sleep(4)
+                eingabe18 = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
+                eingabe18.click()
+                time.sleep(1)
+                eingabe19 = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/   ytcp-video-row[1]/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/div")
+                eingabe19.click()
+                time.sleep(1)
+                eingabe20 = driver.find_element(By.XPATH,
+                    "/html/body/ytcp-text-menu/tp-yt-paper-dialog/tp-yt-paper-listbox/tp-yt-paper-item[2]/ytcp-ve")
+                eingabe20.click()
+                time.sleep(1)
+                driver.get("https://rebrandly.com/links")
+                time.sleep(10)
+                eingabe21 = driver.find_element(By.XPATH,
+                    "/html/body/div[1]/div[2]/div[3]/div[2]/ul/li/div/div/div[1]/div/div[1]/div/a")
+                eingabe21.click()
+                time.sleep(1)
+                eingabe22 = driver.find_element(By.XPATH,"/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/span/p")
+                eingabe22.click()
+                time.sleep(1)
+                eingabe23 = driver.find_element(By.XPATH,
+                    "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/label/div/div/textarea")
+                eingabe23.clear()
+                eingabe23.send_keys(pyperclip.paste())
+                eingabe24 = driver.find_element(By.XPATH,
+                    "/html/body/div[10]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
+                eingabe24.click()
+                time.sleep(4)
+                driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
+                Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt",
+                                   'w', encoding='utf8')
+                Streamheute.write("True")
+                Streamnechst = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum2 + ".txt",
+                                   'w', encoding='utf8')
+                Streamnechst.write("False")
+                Streamnechst2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum3 + ".txt",
+                                   'w', encoding='utf8')
+                Streamnechst2.write("False")
+                Streamnechst3 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum4 + ".txt",
+                                   'w', encoding='utf8')
+                Streamnechst3.write("False")
+                Videobeschreibungaktionvarable = "Wahr"
