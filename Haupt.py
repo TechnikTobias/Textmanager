@@ -57,7 +57,7 @@ class Grafigfuer_ein_Lied:
     Liednummer = None
     Liedverse = None
     Liedtextanzeige = None
-    Buch = None
+    Buch = "GB"
     Dateiliedtext1 = None
     Dateiliedtext = None
     aktualisieren_wahl = "False"
@@ -65,6 +65,8 @@ class Grafigfuer_ein_Lied:
     Liednummerfest = None
     Liedversefest = None
     gespeichertestlied = None
+    gespeichertestvers = None
+    gespeichertestBuch = None
     Daten_fürTextanderwand = [0]
 
 
@@ -88,7 +90,6 @@ class Grafigfuer_ein_Lied:
             self.Verse.place(y=40 + Position)
             self.Liednummer.place(x=150, y=0 + Position)
             self.Liedverse.place(x=150, y=40 + Position)
-            self.Buch = None
             self.aktualisieren_wahl = "True"
             Liedpositionübergabe = Liedpositionübergabe + 1
         else:
@@ -98,7 +99,6 @@ class Grafigfuer_ein_Lied:
             self.Liednummer = None
             self.Liedverse = None
             self.Liedtextanzeige = None
-            self.Buch = None
             self.Dateiliedtext1 = None
             self.Dateiliedtext = None
             self.aktualisieren_wahl = "False"
@@ -166,7 +166,7 @@ class Grafigfuer_ein_Lied:
         self.Verse.place(y=40 + Position)
         self.Liednummer.place(x=150, y=0 + Position)
         self.Liedverse.place(x=150, y=40 + Position)
-        self.Buch = None
+        self.Buch = "GB"
         self.aktualisieren_wahl = "True"
 
 
@@ -213,9 +213,7 @@ class Grafigfuer_ein_Lied:
     # sorgt dafür, dass alles aktualisiert wird
     def Hintergrund_aktualisierung(self, Liedname):
         if self.aktualisieren_wahl == "True":
-            if self.gespeichertestlied == self.Liednummer.get():
-                pass
-            else:
+            if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get():
                 Grafigfuer_ein_Lied.Buchabkuerzen(self)
                 Grafigfuer_ein_Lied.Datein_lesen(self)
                 Grafigfuer_ein_Lied.Livestream_Vorchau(self)
@@ -236,6 +234,8 @@ class Grafigfuer_ein_Lied:
                         self.Liednummer.config(bg="red")
                         self.Liedverse.config(bg="red")
             self.gespeichertestlied = self.Liednummer.get()
+            self.gespeichertestvers = self.Liedverse.get()
+            self.gespeichertestBuch = self.clicked.get()
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname, Liedposition):
         global Warum
@@ -262,6 +262,7 @@ class Grafigfuer_ein_Lied:
             self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
             self.Liednummerfest = self.Liednummer.get()
             self.Liedversefest = self.Liedverse.get()
+            
 
 
     # Löscht alle Eingaben für ein Lied
@@ -646,11 +647,13 @@ def Hintergrund_aktualisieren():
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
                 Textanzeiger.Nächstelied()
         if keyboard.is_pressed("strg"):
-            if keyboard.is_pressed("n"):
-                Testeneingeben = False
-        if keyboard.is_pressed("strg"):
             if keyboard.is_pressed("y"):
-                Testeneingeben = True
+                while keyboard.is_pressed("y"):
+                    pass
+                if Testeneingeben == False:  
+                    Testeneingeben = True
+                else:
+                    Testeneingeben = False
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
