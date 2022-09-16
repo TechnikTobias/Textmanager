@@ -483,7 +483,7 @@ def Grifickeingabe():
     Aktualiesierung_Grafick()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
-    Textanzeiger.Grundstellung()
+    Textanzeiger.Grundstellung(True)
 
 
 

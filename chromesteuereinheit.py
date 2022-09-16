@@ -59,16 +59,18 @@ def Videobeschreibung():
         Stream = Streamheute.read()
         try:
             if Stream == "True":
+                Texteingabe = ""
                 try:
-                    eingabe = driver.find_element(By.XPATH,
-                        "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/ytcp-video-row/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/h3/a")
+                    test1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Livestreamänderung.txt", 'r', encoding='utf8')
+                    test = test1.read()
+                    eingabe = driver.find_element(By.XPATH,test)
                     eingabe.click()
                 except:
-                        logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
-                        logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
-                        logdatei.close()
-                        eingabe = driver.find_element(By.ID,"video-title")
-                        eingabe.click()
+                    logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
+                    logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
+                    logdatei.close()
+                    eingabe = driver.find_element(By.ID,"video-title")
+                    eingabe.click()
 
                 eingabe2 = driver.find_element(By.XPATH,
                     "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[1]/ytls-live-control-room-renderer/div[1]/div[1]/div/ytls-broadcast-metadata/div[2]/ytcp-button/div")
@@ -79,41 +81,35 @@ def Videobeschreibung():
                 time.sleep(1)
                 eingabe3.clear()
                 if len(Haupt.Einganslied.Liedversefest) >= 1:
-                    Texteingabe = str(
+                    Texteingabe1 = str(
                         "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
                             Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe)
+                    Texteingabe = Texteingabe + Texteingabe1
                 else:
-                    Texteingabe = str(
+                    Texteingabe1 = str(
                         "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest +"\n" + str(Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe)
+                    Texteingabe = Texteingabe + Texteingabe1
                 if len(Haupt.Textwortlied.Liedversefest) >= 1:
-                    Texteingabe = str(
+                    Texteingabe1 = str(
                         "TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + " Vers " + " " + Haupt.Textwortlied.Liedversefest + "\n" + str(
                             Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe)
                 else:
-                    Texteingabe = str("TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + "\n" + str(
+                    Texteingabe1 = str("TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + "\n" + str(
                         Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe)
                 if len(Haupt.Amtswechsellied.Liedversefest) >= 1:
-                    Texteingabe = str(
+                    Texteingabe1 = str(
                         "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext.get()) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe)
                 else:
-                    Texteingabe = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
+                    Texteingabe1 = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
                         Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe)
                 if Haupt.Kinderlied.aktualisieren_wahl == "True":
                     if len(Haupt.Kinderlied.Liedversefest) >= 1:
-                        Texteingabe = str(
+                        Texteingabe1 = str(
                             "Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + " Vers " + " " + Haupt.Kinderlied.Liedversefest + "\n" + str(
                                 Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
-                        eingabe3.send_keys(Texteingabe)
                     else:
-                        Texteingabe = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
+                        Texteingabe1 = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
                             Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
-                        eingabe3.send_keys(Texteingabe)
                 if len(Haupt.Bussslied.Liedversefest) >= 1:
                     Texteingabe4 = str(
                         "B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + " Vers " + " " + Haupt.Bussslied.Liedversefest + "\n" + str(
