@@ -31,6 +31,8 @@ Zusatzlied4_obwahr = "False"
 Hintregrundaktualisieren = True
 Buttonebestätigengedrückt = False
 Testeneingeben = True
+Textwortwiederherstellen = False
+Textworteingabeübergabe = False
 Liedpositionübergabe = 0
 Buch_Listen = [
     "Gesangbuch",
@@ -336,6 +338,9 @@ class Grafigfuer_ein_Lied:
             self.Eingabe_wiederherstellen(Liedname)
             Hauptbildschirmbutton.place(x=800)
             self.Liedtextanzeige.config(command="")
+            self.gespeichertestBuch = 0
+            self.gespeichertestlied = 0
+            self.gespeichertestvers = 0
 
 
 
@@ -366,12 +371,12 @@ def Textmamager_erstellen():
     Einstellungen_Laden()
     global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton, zusaetzliches_liedzerstörer
     Einganslied = Grafigfuer_ein_Lied(0, "Einganslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Textwortlied = Grafigfuer_ein_Lied(83, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Amtswechsellied = Grafigfuer_ein_Lied(166, "Amtswechsellied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Kinderlied = Grafigfuer_ein_Lied(166 +83*Kinder_Position, "Kinderlied", Kinder_Anzeigen_Grafig, Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Bussslied = Grafigfuer_ein_Lied(249+83*Kinder_Position, "Bußlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Abendmahlslied = Grafigfuer_ein_Lied(332+83*Kinder_Position, "Abendmahlslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    Schlusslied = Grafigfuer_ein_Lied(415+83*Kinder_Position, "Schlusslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Textwortlied = Grafigfuer_ein_Lied(83+41, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Amtswechsellied = Grafigfuer_ein_Lied(166+41, "Amtswechsellied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Kinderlied = Grafigfuer_ein_Lied(166+41 +83*Kinder_Position, "Kinderlied", Kinder_Anzeigen_Grafig, Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Bussslied = Grafigfuer_ein_Lied(249+41+83*Kinder_Position, "Bußlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Abendmahlslied = Grafigfuer_ein_Lied(332+41+83*Kinder_Position, "Abendmahlslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Schlusslied = Grafigfuer_ein_Lied(415+41+83*Kinder_Position, "Schlusslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Zusatzlied1 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied", Zusatzlied1_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Zusatzlied2 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied1", Zusatzlied2_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Zusatzlied3 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied2", Zusatzlied3_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
@@ -379,7 +384,7 @@ def Textmamager_erstellen():
     Textmanager.config(bg=Textmanager_Hintergrund)
     zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", command=zusaetzlicheslied)
     zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)    
-    zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position)
+    zusaetzliches_lied.place(x=300, y=500+41+83*Kinder_Position)
     Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
     Button_bestaetigen.place(x=800, y=200)
     loeschenbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Löschen", command=Eingabe_loeschen)
@@ -388,13 +393,37 @@ def Textmamager_erstellen():
     wiederherstellen.place(x=800, y=333)
     Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen)
     Einstellungen_button.place(x=800, y=270)
-    Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg="#FFEBCD", text="Kapitel")
-    Textwortentry = Text(Textmanager, font=("Helvetica", 15), width=40,height=5, bg="#FFEBCD")
-    Textwortentry.place(x=0,y=537+83*Kinder_Position)
+    Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Textwort")
+    Textwortlabel.place(y=83)
+    Textwortentry = Button(Textmanager, font=("Helvetica", 15), text="Bitte hier das Textwort eingeben", bg="#FFEBCD", command=Textwortcommand)
+    Textwortentry.place(x=150,y=83)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
     Hauptbildschirmbutton.place(x=800, y=720)
+
+def Textwortcommand():
+    global Textworteingabe, Textwort_manager, Textworteingabeübergabe
+    Textworteingabeübergabe = True
+    Textwort_manager = Toplevel(Textmanager)
+    Textwort_manager.geometry("800x600")
+    Textworteingabe = Text(Textwort_manager, font=("Helvetica", 15), height= 20, width=60, bg="#FFEBCD")
+    if Textwortwiederherstellen == True:
+        Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+        Textwortvariabel = Textwortauslesen.read()
+        Textworteingabe.insert(END, Textwortvariabel)
+        Textwortauslesen.close()
+    Textworteingabe.pack()
+    Textwortbestätigen = Button(Textwort_manager, font=("Helvetica", 15), text="Textwort bestätigen", bg="#FFEBCD", command=Textwortbestätigenbefehl)
+    Textwortbestätigen.place(x=270, y=520)
+
+
+def Textwortbestätigenbefehl():
+    Textwortentry.config(text=Textworteingabe.get("1.0","1.end"))
+    Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
+    Textwortauslesen.write(Textworteingabe.get("1.0","end-1c"))
+    Textwortauslesen.close()
+    Textwort_manager.destroy()
 
 def Grifuckfürpräsantatiom():
     if Buttonebestätigengedrückt == True:
@@ -520,6 +549,7 @@ def zusaetzlicheslied2():
     Zusatzlied3_obwahr = True
     Zusatzlied2_obwahr = False
     Textmanager.geometry("1040x990")
+    chromesteuereinheit.Chromeupdate.place(y=940)
     Textmanager.minsize(width=1040, height=990)
     zusaetzliches_lied.config(command=zusaetzlicheslied3)
     Aktualiesierung_Grafick()
@@ -534,7 +564,9 @@ def zusaetzlichesliedzerstörer2():
     zusaetzliches_lied.config(command=zusaetzlicheslied2)
     Aktualiesierung_Grafick()
     zusaetzliches_liedzerstörer.config(command=zusaetzlichesliedzerstörer1)
+    chromesteuereinheit.Chromeupdate.place(y=760)
     Textmanager.geometry("1040x800")
+    Textmanager.minsize(width=1040, height=800)
 
 def zusaetzlicheslied1():
     global Wie_viele_zusatzlieder, Zusatzlied2, Zusatzlied2_obwahr, Zusatzlied1_obwahr
@@ -591,8 +623,6 @@ def Button_command():
     Zusatzlied2.Knopf_Druecken("Zusatzlied2", 8+Kinder_Position)
     Zusatzlied3.Knopf_Druecken("Zusatzlied3", 9+Kinder_Position)
     Zusatzlied4.Knopf_Druecken("Zusatzlied4", 10+Kinder_Position)
-    Textwortreinschreiben = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
-    Textwortreinschreiben.write(Textwortentry.get("1.0","end-1c"))
     chromesteuereinheit.Videobeschreibung_Thread()
     Buttonebestätigengedrückt = True
 
@@ -611,11 +641,6 @@ def Hintergrund_aktualisieren():
         Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
         Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
         Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
-        Textwortauslesen= open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
-        if Textwortentry.get("1.0","end-1c") == Textwortauslesen.read():
-            Textwortentry.config(bg="green")
-        else:
-            Textwortentry.config(bg="red")
     else:
         if Testeneingeben == True:
             if keyboard.is_pressed("space"):
@@ -675,6 +700,7 @@ def Eingabe_loeschen():
 
 
 def Eingabe_wiederherstellen():
+    global Textwortwiederherstellen
     Einganslied.Eingabe_wiederherstellen("Einganslied")
     Textwortlied.Eingabe_wiederherstellen("Textwortlied")
     Amtswechsellied.Eingabe_wiederherstellen("Amtswechsellied")
@@ -686,6 +712,12 @@ def Eingabe_wiederherstellen():
     Zusatzlied2.Eingabe_wiederherstellen("Zusatzlied2")
     Zusatzlied3.Eingabe_wiederherstellen("Zusatzlied3")
     Zusatzlied4.Eingabe_wiederherstellen("Zusatzlied4")
+    Textwortwiederherstellen = True
+    if Textworteingabeübergabe == True:
+        Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+        Textwortvariabel = Textwortauslesen.read()
+        Textworteingabe.insert(END, Textwortvariabel)
+        Textwortauslesen.close()
 
 
 def Farben_in_Zahl(uebergabe):
@@ -820,21 +852,21 @@ def Kinder_Nicht_Anzeigen():
 def Aktualiesierung_Grafick():
     global Wie_viele_zusatzlieder
     Einganslied.Aktualiesieren(0)
-    Textwortlied.Aktualiesieren(83)
-    Amtswechsellied.Aktualiesieren(166)
-    Kinderlied.Aktualiesieren(249)
-    Bussslied.Aktualiesieren(249+83*Kinder_Position)
-    Abendmahlslied.Aktualiesieren(332+83*Kinder_Position)
-    Schlusslied.Aktualiesieren(415+83*Kinder_Position)
-    Zusatzlied1.Aktualiesieren(498+83*Kinder_Position)
-    Zusatzlied2.Aktualiesieren(581+83*Kinder_Position)
-    Zusatzlied3.Aktualiesieren(664+83*Kinder_Position)
-    Zusatzlied4.Aktualiesieren(747+83*Kinder_Position)
+    Textwortlied.Aktualiesieren(83+41)
+    Amtswechsellied.Aktualiesieren(166+41)
+    Kinderlied.Aktualiesieren(249+41)
+    Bussslied.Aktualiesieren(249+41+83*Kinder_Position)
+    Abendmahlslied.Aktualiesieren(332+41+83*Kinder_Position)
+    Schlusslied.Aktualiesieren(415+41+83*Kinder_Position)
+    Zusatzlied1.Aktualiesieren(498+41+83*Kinder_Position)
+    Zusatzlied2.Aktualiesieren(581+41+83*Kinder_Position)
+    Zusatzlied3.Aktualiesieren(664+41+83*Kinder_Position)
+    Zusatzlied4.Aktualiesieren(747+41+83*Kinder_Position)
     if Wie_viele_zusatzlieder > 0:
-            zusaetzliches_liedzerstörer.place(x=30, y=500 + Wie_viele_zusatzlieder * 83+83*Kinder_Position)
+            zusaetzliches_liedzerstörer.place(x=30, y=500+41 + Wie_viele_zusatzlieder * 83+83*Kinder_Position)
     if Wie_viele_zusatzlieder < 4:
-        zusaetzliches_lied.place(x=300, y=(500 + Wie_viele_zusatzlieder * 83+83*Kinder_Position))
-    Textwortentry.place(x=0,y=(537 + Wie_viele_zusatzlieder * 83+83*Kinder_Position))
+        zusaetzliches_lied.place(x=300, y=(500+41 + Wie_viele_zusatzlieder * 83+83*Kinder_Position))
+    Textwortentry.place(x=150,y=83)
     
 
 

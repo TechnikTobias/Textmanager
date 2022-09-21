@@ -16,7 +16,7 @@ Dateiort = os.getlogin()
 Videobeschreibungaktionvarable = "Falsch"
 Streamüperprüfen = False
 def Chromestarten():
-    global Videobeschreibungaktionvarable, Chromöffnen, driver, Streamüperprüfen
+    global Videobeschreibungaktionvarable, Chromöffnen, driver, Streamüperprüfen, Chromeupdate
     ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Chromöffnen = ChromeDatei.read()
     ChromeDatei.close()
@@ -42,6 +42,8 @@ def Chromestarten():
             Videobeschreibungaktionvarable = "Falsch"
     except WebDriverException:
         print("Error")
+        Chromeupdate = tkinter.Label(Haupt.Textmanager, font=("Helvetica", 15), text="Bitte Chromedriver aktualiesieren", bg="white", fg="green")
+        Chromeupdate.place(y=760)
         Videobeschreibungaktionvarable = "Falsch"
 
 def Chromestarten_Thread():
