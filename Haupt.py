@@ -33,6 +33,7 @@ Buttonebestätigengedrückt = False
 Testeneingeben = True
 Textwortwiederherstellen = False
 Textworteingabeübergabe = False
+Textwortübergabe = None
 Liedpositionübergabe = 0
 Buch_Listen = [
     "Gesangbuch",
@@ -395,7 +396,7 @@ def Textmamager_erstellen():
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Textwort")
     Textwortlabel.place(y=83)
-    Textwortentry = Button(Textmanager, font=("Helvetica", 15), text="Bitte hier das Textwort eingeben", bg="#FFEBCD", command=Textwortcommand)
+    Textwortentry = Button(Textmanager, font=("Helvetica", 15), text="Bitte hier das Textwort eingeben", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, command=Textwortcommand, border=0)
     Textwortentry.place(x=150,y=83)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
@@ -419,15 +420,21 @@ def Textwortcommand():
 
 
 def Textwortbestätigenbefehl():
+    global Textwortübergabe, Textworteingabeübergabe
     Textwortentry.config(text=Textworteingabe.get("1.0","1.end"))
+    Textwortübergabe = Textworteingabe.get("1.0","1.end")
     Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
     Textwortauslesen.write(Textworteingabe.get("1.0","end-1c"))
     Textwortauslesen.close()
+    Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwortbutton.txt", 'w', encoding='utf8')
+    Textwortauslesen1.write(Textwortübergabe)
+    Textwortauslesen1.close()
     Textwort_manager.destroy()
+    Textworteingabeübergabe = False
 
 def Grifuckfürpräsantatiom():
     if Buttonebestätigengedrückt == True:
-        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt
+        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Textwortanzeigelable
         Hintregrundaktualisieren = False
         zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher)
         zurueck.place(x=430, y=630)
@@ -456,6 +463,7 @@ def Grifuckfürpräsantatiom():
         zusaetzliches_lied.destroy()
         zusaetzliches_liedzerstörer.destroy()
         Einganslied.Liedtextanzeige.config(bg="orange")
+        Textwortentry.config(command=Textanzeiger.Textwortübergabe, bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
         Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
         Textanzeiger.Wieoft = 0
         Textmanager.minsize(width=400, height=800)
@@ -464,7 +472,7 @@ def Grifuckfürpräsantatiom():
     
 
 def Grifickeingabe():
-    global Hintregrundaktualisieren, zusaetzliches_lied, Button_bestaetigen, loeschenbutton, wiederherstellen, Einstellungen_button, Stream_erstell_button, zusaetzliches_liedzerstörer
+    global Hintregrundaktualisieren, zusaetzliches_lied, Button_bestaetigen, loeschenbutton, wiederherstellen, Einstellungen_button, Stream_erstell_button, zusaetzliches_liedzerstörer, Textwortentry
     Hintregrundaktualisieren = True
     klick.destroy()
     zurueck.destroy()
@@ -473,29 +481,29 @@ def Grifickeingabe():
     Textmanager.minsize(width=1040, height=800)
     Textmanager.geometry("1040x"+str(Textmanager.winfo_height())+"")
     Einganslied.Grafick_Eingabe(0,"Einganslied")
-    Textwortlied.Grafick_Eingabe(83, "Textwortlied")
-    Amtswechsellied.Grafick_Eingabe(166, "Amtswechsellied")
-    Kinderlied.Grafick_Eingabe(249, "Kinderlied")
-    Bussslied.Grafick_Eingabe(249+83*Kinder_Position, "Bußlied")
-    Abendmahlslied.Grafick_Eingabe(332+83*Kinder_Position, "Abendmahlslied")
-    Schlusslied.Grafick_Eingabe(415+83*Kinder_Position, "Schlusslied")
-    Zusatzlied1.Grafick_Eingabe(498+83*Kinder_Position, "Zusatzlied1")
-    Zusatzlied2.Grafick_Eingabe(581+83*Kinder_Position, "Zusatzlied2")
-    Zusatzlied3.Grafick_Eingabe(664+83*Kinder_Position, "Zusatzlied3")
-    Zusatzlied4.Grafick_Eingabe(747+83*Kinder_Position, "Zusatzlied4")
-    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", )
+    Textwortlied.Grafick_Eingabe(83+41, "Textwortlied")
+    Amtswechsellied.Grafick_Eingabe(166+41, "Amtswechsellied")
+    Kinderlied.Grafick_Eingabe(249+41, "Kinderlied")
+    Bussslied.Grafick_Eingabe(249+41+83*Kinder_Position, "Bußlied")
+    Abendmahlslied.Grafick_Eingabe(332+41+83*Kinder_Position, "Abendmahlslied")
+    Schlusslied.Grafick_Eingabe(415+41+83*Kinder_Position, "Schlusslied")
+    Zusatzlied1.Grafick_Eingabe(498+41+83*Kinder_Position, "Zusatzlied1")
+    Zusatzlied2.Grafick_Eingabe(581+41+83*Kinder_Position, "Zusatzlied2")
+    Zusatzlied3.Grafick_Eingabe(664+41+83*Kinder_Position, "Zusatzlied3")
+    Zusatzlied4.Grafick_Eingabe(747+41+83*Kinder_Position, "Zusatzlied4")
+    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Weiters Lied", )
     zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position+Wie_viele_zusatzlieder+83)
     if Zusatzlied1_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied1)
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
     elif Zusatzlied2_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied2)
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer1)    
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer1)    
     elif Zusatzlied3_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied3)
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer2)    
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer2)    
     elif Zusatzlied4_obwahr == True:
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer3)        
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer3)        
         zusaetzliches_lied.destroy()
     else:
         zusaetzliches_lied.config(command=zusaetzlicheslied)
@@ -509,6 +517,7 @@ def Grifickeingabe():
     Einstellungen_button.place(x=800, y=270)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
+    Textwortentry.config(command=Textwortcommand, bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Aktualiesierung_Grafick()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
@@ -646,29 +655,24 @@ def Hintergrund_aktualisieren():
             if keyboard.is_pressed("space"):
                 while keyboard.is_pressed("space"):
                     pass
-                print("hallo Welt")
                 Textanzeiger.Liedgebe()
             if keyboard.is_pressed("left"):
                 while keyboard.is_pressed("left"):
                     pass
-                print("hallo Welt")
                 Textanzeiger.Versvorher()
             if keyboard.is_pressed("right"):
                 while keyboard.is_pressed("right"):
                     pass
-                print("hallo Welt")
                 Textanzeiger.Liedgebe()
             if keyboard.is_pressed("up"):
                 while keyboard.is_pressed("up"):
                     pass
-                print("hallo Welt")
                 Textanzeiger.Wieoft = 0
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
                 Textanzeiger.vorherübergabeTextandiewand(Textanzeiger.Wieoftlied)
             if keyboard.is_pressed("down"):
                 while keyboard.is_pressed("down"):
                     pass
-                print("hallo Welt")
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
                 Textanzeiger.Nächstelied()
         if keyboard.is_pressed("strg"):
@@ -686,6 +690,7 @@ def Hintergrund_aktualisieren():
 
 
 def Eingabe_loeschen():
+    global Textworteingabeübergabe
     Einganslied.Eingabe_loeschen()
     Textwortlied.Eingabe_loeschen()
     Amtswechsellied.Eingabe_loeschen()
@@ -697,6 +702,9 @@ def Eingabe_loeschen():
     Zusatzlied2.Eingabe_loeschen()
     Zusatzlied3.Eingabe_loeschen()
     Zusatzlied4.Eingabe_loeschen()
+    Textworteingabeübergabe = False
+    Textwortübergabe = "Bitte hier das Textwort eingeben"
+    Textwortentry.config(text=Textwortübergabe)
 
 
 def Eingabe_wiederherstellen():
@@ -712,6 +720,10 @@ def Eingabe_wiederherstellen():
     Zusatzlied2.Eingabe_wiederherstellen("Zusatzlied2")
     Zusatzlied3.Eingabe_wiederherstellen("Zusatzlied3")
     Zusatzlied4.Eingabe_wiederherstellen("Zusatzlied4")
+    Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwortbutton.txt", 'r', encoding='utf8')
+    Textwortübergabe = Textwortauslesen1.read()
+    Textwortauslesen1.close()
+    Textwortentry.config(text=Textwortübergabe)
     Textwortwiederherstellen = True
     if Textworteingabeübergabe == True:
         Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')

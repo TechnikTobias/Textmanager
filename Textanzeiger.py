@@ -342,6 +342,8 @@ def Zusatzlied4übergabe():
     Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
     lesteslied = False
 
+def Textwortübergabe():
+    pass
 
 def Nächstelied():
     global Wieoftlied, Datenfürliedanderwand, Wieoft, lesteslied
@@ -481,9 +483,9 @@ def optisches_fedback(Liedposition):
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Haupt.Textwortlied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
-        keyboard.press("F22")
+        keyboard.press("F23")
         time.sleep(0.5)
-        keyboard.release("F22")
+        keyboard.release("F23")
         time.sleep(0.5)
         keyboard.press("1")
         time.sleep(0.5)

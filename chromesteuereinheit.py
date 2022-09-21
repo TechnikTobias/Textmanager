@@ -10,6 +10,7 @@ import pyperclip
 import time 
 import Haupt
 import os
+from Textanzeiger import Textwortübergabe
 import Zeitgeber
 selenium
 Dateiort = os.getlogin()
@@ -100,7 +101,7 @@ def Videobeschreibung():
                         Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
                 if len(Haupt.Amtswechsellied.Liedversefest) >= 1:
                     Texteingabe1 = str(
-                        "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext.get()) + "\n\n\n")
+                        "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
                 else:
                     Texteingabe1 = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
                         Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
@@ -139,7 +140,10 @@ def Videobeschreibung():
                     Texteingabe6 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(
                         Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
                     eingabe3.send_keys(Texteingabe6)
-                eingabe3.send_keys(Haupt.Textwortentry.get("1.0","end-1c"))
+                Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+                Textwortübergabe = Textwortauslesen1.read()
+                Textwortauslesen1.close()
+                eingabe3.send_keys(Textwortübergabe)
                 eingabe4 = driver.find_element(By.XPATH,
                     "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[3]/div/ytcp-button[2]/div")
                 eingabe4.click()
