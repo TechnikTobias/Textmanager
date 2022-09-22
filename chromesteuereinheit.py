@@ -96,50 +96,55 @@ def Videobeschreibung():
                     Texteingabe1 = str(
                         "TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + " Vers " + " " + Haupt.Textwortlied.Liedversefest + "\n" + str(
                             Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
+                    Texteingabe = Texteingabe + Texteingabe1
                 else:
                     Texteingabe1 = str("TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + "\n" + str(
                         Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
+                    Texteingabe = Texteingabe + Texteingabe1
                 if len(Haupt.Amtswechsellied.Liedversefest) >= 1:
                     Texteingabe1 = str(
                         "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
+                    Texteingabe = Texteingabe + Texteingabe1
                 else:
                     Texteingabe1 = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
                         Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
+                    Texteingabe = Texteingabe + Texteingabe1
                 if Haupt.Kinderlied.aktualisieren_wahl == "True":
                     if len(Haupt.Kinderlied.Liedversefest) >= 1:
                         Texteingabe1 = str(
                             "Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + " Vers " + " " + Haupt.Kinderlied.Liedversefest + "\n" + str(
                                 Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
-                    else:
+                        Texteingabe = Texteingabe + Texteingabe1
+                else:
                         Texteingabe1 = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
                             Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
                 if len(Haupt.Bussslied.Liedversefest) >= 1:
-                    Texteingabe4 = str(
+                    Texteingabe1 = str(
                         "B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + " Vers " + " " + Haupt.Bussslied.Liedversefest + "\n" + str(
                         Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe4)
+                    Texteingabe = Texteingabe + Texteingabe1
                 else:
-                    Texteingabe4 = str("B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + "\n" + str(
+                    Texteingabe1 = str("B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + "\n" + str(
                         Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe4)
+                    Texteingabe = Texteingabe + Texteingabe1
                 if len(Haupt.Abendmahlslied.Liedversefest) >= 1:
-                    Texteingabe5 = str(
+                    Texteingabe1 = str(
                         "A " + Haupt.Abendmahlslied.Buch + " " + Haupt.Abendmahlslied.Liednummerfest + " Vers " + " " + Haupt.Abendmahlslied.Liedversefest + "\n" + str(
                             Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe5)
+                    Texteingabe = Texteingabe + Texteingabe1
                 else:
-                    Texteingabe5 = str("A " + Haupt.Abendmahlslied.Buch + " " +Haupt.Abendmahlslied.Liednummerfest + "\n" + str(
+                    Texteingabe1 = str("A " + Haupt.Abendmahlslied.Buch + " " +Haupt.Abendmahlslied.Liednummerfest + "\n" + str(
                         Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe5)
+                    Texteingabe = Texteingabe + Texteingabe1
                 if len(Haupt.Schlusslied.Liedversefest) >= 1:
-                    Texteingabe6 = str(
+                    Texteingabe1 = str(
                         "S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + " Vers " + " " + Haupt.Schlusslied.Liedversefest + "\n" + str(
                                 Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe6)
+                    Texteingabe = Texteingabe + Texteingabe1
                 else:
-                    Texteingabe6 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(
+                    Texteingabe1 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(
                         Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
-                    eingabe3.send_keys(Texteingabe6)
                 Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
                 Textwortübergabe = Textwortauslesen1.read()
                 Textwortauslesen1.close()
@@ -246,16 +251,4 @@ def stream_planen():
                 eingabe24.click()
                 time.sleep(4)
                 driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
-                Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt",
-                                   'w', encoding='utf8')
-                Streamheute.write("True")
-                Streamnechst = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum2 + ".txt",
-                                   'w', encoding='utf8')
-                Streamnechst.write("False")
-                Streamnechst2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum3 + ".txt",
-                                   'w', encoding='utf8')
-                Streamnechst2.write("False")
-                Streamnechst3 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum4 + ".txt",
-                                   'w', encoding='utf8')
-                Streamnechst3.write("False")
                 Videobeschreibungaktionvarable = "Wahr"

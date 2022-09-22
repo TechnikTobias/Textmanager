@@ -34,6 +34,7 @@ Testeneingeben = True
 Textwortwiederherstellen = False
 Textworteingabeübergabe = False
 Textwortübergabe = None
+Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
 Buch_Listen = [
     "Gesangbuch",
@@ -149,28 +150,6 @@ class Grafigfuer_ein_Lied:
         self.Buchzahl_clicked = None
         Liedpositionübergabe = Liedpositionübergabe - 1
         Textmanager.update()
-
-
-    def Erstellen(self, Position, Liedname, Hintergrund, Vordergrund):
-        self.clicked = StringVar()
-        self.clicked.set(Buch_Listen[0])
-        OptionMenu(Textmanager, self.clicked, *Buch_Listen)
-        self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
-        self.opt.config(width=12, font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
-        self.Lied = Label(Textmanager, font=("Helvetica", 15), pady=5, text=Liedname, bg=Hintergrund, fg=Vordergrund)
-        self.Verse = Label(Textmanager, font=("Helvetica", 15), text="Verse", bg=Hintergrund, fg=Vordergrund)
-        self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10)
-        self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
-        self.Liedtextanzeige = Button(Textmanager, font=12, pady=5, bg=Hintergrund, border=0, fg=Vordergrund)
-        self.Liedtextanzeige["justify"] = "left"
-        self.opt.place(x=340, y=25 + Position)
-        self.Liedtextanzeige.place(x=495, y=15 + Position)
-        self.Lied.place(x=0, y=0 + Position)
-        self.Verse.place(y=40 + Position)
-        self.Liednummer.place(x=150, y=0 + Position)
-        self.Liedverse.place(x=150, y=40 + Position)
-        self.Buch = "GB"
-        self.aktualisieren_wahl = "True"
 
 
     # Erstellt die Buchabkürzung für den Livestream und NBuchzahl für das Wiederherstellen
@@ -464,6 +443,7 @@ def Grifuckfürpräsantatiom():
         zusaetzliches_liedzerstörer.destroy()
         Einganslied.Liedtextanzeige.config(bg="orange")
         Textwortentry.config(command=Textanzeiger.Textwortübergabe, bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+        Textwortentry.place(x=180)
         Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
         Textanzeiger.Wieoft = 0
         Textmanager.minsize(width=400, height=800)
@@ -622,16 +602,16 @@ def zusaetzlichesliedzerstörer():
 def Button_command():
     global Buttonebestätigengedrückt
     Einganslied.Knopf_Druecken("Einganslied", 1)
-    Textwortlied.Knopf_Druecken("Textwortlied", 2)
-    Amtswechsellied.Knopf_Druecken("Amtswechsellied", 3)
-    Kinderlied.Knopf_Druecken("Kinderlied", 4)
-    Bussslied.Knopf_Druecken("Bußlied", 4+Kinder_Position)
-    Abendmahlslied.Knopf_Druecken("Abendmahlslied", 5+Kinder_Position)
-    Schlusslied.Knopf_Druecken("Schlusslied", 6+Kinder_Position)
-    Zusatzlied1.Knopf_Druecken("Zusatzlied1", 7+Kinder_Position)
-    Zusatzlied2.Knopf_Druecken("Zusatzlied2", 8+Kinder_Position)
-    Zusatzlied3.Knopf_Druecken("Zusatzlied3", 9+Kinder_Position)
-    Zusatzlied4.Knopf_Druecken("Zusatzlied4", 10+Kinder_Position)
+    Textwortlied.Knopf_Druecken("Textwortlied", 3)
+    Amtswechsellied.Knopf_Druecken("Amtswechsellied", 4)
+    Kinderlied.Knopf_Druecken("Kinderlied", 5)
+    Bussslied.Knopf_Druecken("Bußlied", 5+Kinder_Position)
+    Abendmahlslied.Knopf_Druecken("Abendmahlslied", 6+Kinder_Position)
+    Schlusslied.Knopf_Druecken("Schlusslied", 7+Kinder_Position)
+    Zusatzlied1.Knopf_Druecken("Zusatzlied1", 8+Kinder_Position)
+    Zusatzlied2.Knopf_Druecken("Zusatzlied2", 9+Kinder_Position)
+    Zusatzlied3.Knopf_Druecken("Zusatzlied3", 10+Kinder_Position)
+    Zusatzlied4.Knopf_Druecken("Zusatzlied4", 11+Kinder_Position)
     chromesteuereinheit.Videobeschreibung_Thread()
     Buttonebestätigengedrückt = True
 
@@ -652,11 +632,19 @@ def Hintergrund_aktualisieren():
         Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
     else:
         if Testeneingeben == True:
+            if keyboard.is_pressed("page_down"):
+                while keyboard.is_pressed("page_down"):
+                    pass
+                Textanzeiger.Liedgebe()
+            elif keyboard.is_pressed("page_up"):
+                while keyboard.is_pressed("page_up"):
+                    pass
+                Textanzeiger.Versvorher()
             if keyboard.is_pressed("space"):
                 while keyboard.is_pressed("space"):
                     pass
                 Textanzeiger.Liedgebe()
-            if keyboard.is_pressed("left"):
+            elif keyboard.is_pressed("left"):
                 while keyboard.is_pressed("left"):
                     pass
                 Textanzeiger.Versvorher()
@@ -669,7 +657,7 @@ def Hintergrund_aktualisieren():
                     pass
                 Textanzeiger.Wieoft = 0
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
-                Textanzeiger.vorherübergabeTextandiewand(Textanzeiger.Wieoftlied)
+                Textanzeiger.vorherübergabeTextandiewand()
             if keyboard.is_pressed("down"):
                 while keyboard.is_pressed("down"):
                     pass
