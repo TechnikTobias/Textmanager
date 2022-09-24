@@ -85,7 +85,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                         wieoft = wieoft + 1
                         # fügt zweite teil verse dazu
         Verzanzahl = open(
-            "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + WelchesBuch + "\\" + Welcheart + ".txt",
+            "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + WelchesBuch + "\\" + str(Welcheart) + ".txt",
             "r",
             encoding="utf-8")
         Maxzahl = Verzanzahl.read()
@@ -370,10 +370,6 @@ def Versvorher():
 def Liedgebe():
     global Wieoft, Wieoftlied, Datenfürliedanderwand, voherliedzwischensehne, lesteslied
     if lesteslied == False:
-        if voherliedzwischensehne == True:
-            Wieoftlied = Wieoftlied + 1
-            Nächstelied()
-            Haupt.Textmanager.update()
         if Wieoftlied == 0:
             Wieoft = 0
             Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
@@ -394,7 +390,7 @@ def Liedgebe():
             Nächstelied()
             Haupt.Textmanager.update()
             if Wieoftlied == 1:
-                Versvorher()
+                Voeherlied()
                 Haupt.Textmanager.update()
         elif int(Wieoft) == - 2:
             Wieoft = 0
@@ -417,6 +413,16 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+    elif int(Haupt.Textwortübergabedaten[0]) == int(Liedposition):
+        Haupt.Textwortentry.config(bg="green")
+        Haupt.Textmanager.update()
+        keyboard.press("F13")
+        time.sleep(0.5)
+        keyboard.release("F13")
+        time.sleep(0.5)
+        keyboard.press("1")
+        time.sleep(0.5)
+        keyboard.release("1")
     elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Haupt.Amtswechsellied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
@@ -426,7 +432,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.press("1")
         time.sleep(0.5)
-        keyboard.release("1")    
+        keyboard.release("1")
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Haupt.Textwortlied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()

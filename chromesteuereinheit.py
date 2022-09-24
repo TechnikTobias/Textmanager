@@ -15,9 +15,10 @@ import Zeitgeber
 selenium
 Dateiort = os.getlogin()
 Videobeschreibungaktionvarable = "Falsch"
+Chromeaktuell =  False
 Streamüperprüfen = False
 def Chromestarten():
-    global Videobeschreibungaktionvarable, Chromöffnen, driver, Streamüperprüfen, Chromeupdate
+    global Videobeschreibungaktionvarable, Chromöffnen, driver, Streamüperprüfen, Chromeupdate, Chromeaktuell
     ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Chromöffnen = ChromeDatei.read()
     ChromeDatei.close()
@@ -39,13 +40,16 @@ def Chromestarten():
                 Videobeschreibungaktionvarable = "Falsch"
                 print("Kein stream")
             Streamüperprüfen = True
+            Chromeaktuell =  True
         else:
             Videobeschreibungaktionvarable = "Falsch"
+            Chromeaktuell =  True
     except WebDriverException:
         print("Error")
         Chromeupdate = tkinter.Label(Haupt.Textmanager, font=("Helvetica", 15), text="Bitte Chromedriver aktualiesieren", bg="white", fg="green")
         Chromeupdate.place(y=760)
         Videobeschreibungaktionvarable = "Falsch"
+        Chromeaktuell =  False
 
 def Chromestarten_Thread():
     Chromestarten_thread = Thread(target=Chromestarten)

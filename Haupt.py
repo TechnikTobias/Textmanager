@@ -402,12 +402,16 @@ def Textwortbestätigenbefehl():
     global Textwortübergabe, Textworteingabeübergabe
     Textwortentry.config(text=Textworteingabe.get("1.0","1.end"))
     Textwortübergabe = Textworteingabe.get("1.0","1.end")
+    Textwortübergabeganz = Textworteingabe.get("1.0","end-1c")
     Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
-    Textwortauslesen.write(Textworteingabe.get("1.0","end-1c"))
+    Textwortauslesen.write(Textwortübergabeganz)
     Textwortauslesen.close()
     Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwortbutton.txt", 'w', encoding='utf8')
     Textwortauslesen1.write(Textwortübergabe)
     Textwortauslesen1.close()
+    Textwortauslesen2 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\Textwort\\1 Vers 1.txt", 'w', encoding='utf8')
+    Textwortauslesen2.write(Textwortübergabeganz)
+    Textwortauslesen2.close()
     Textwort_manager.destroy()
     Textworteingabeübergabe = False
 
@@ -505,10 +509,6 @@ def Grifickeingabe():
 
 
 
-def start01():
-    start01 = Thread(target=chromesteuereinheit.Test01)
-    start01.start()
-
 def zusaetzlicheslied3():
     global Wie_viele_zusatzlieder, Zusatzlied4, Zusatzlied4_obwahr, Zusatzlied3_obwahr
     Zusatzlied4 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
@@ -538,7 +538,8 @@ def zusaetzlicheslied2():
     Zusatzlied3_obwahr = True
     Zusatzlied2_obwahr = False
     Textmanager.geometry("1040x990")
-    chromesteuereinheit.Chromeupdate.place(y=940)
+    if chromesteuereinheit.Chromeaktuell == False:
+        chromesteuereinheit.Chromeupdate.place(y=940)
     Textmanager.minsize(width=1040, height=990)
     zusaetzliches_lied.config(command=zusaetzlicheslied3)
     Aktualiesierung_Grafick()
@@ -553,7 +554,8 @@ def zusaetzlichesliedzerstörer2():
     zusaetzliches_lied.config(command=zusaetzlicheslied2)
     Aktualiesierung_Grafick()
     zusaetzliches_liedzerstörer.config(command=zusaetzlichesliedzerstörer1)
-    chromesteuereinheit.Chromeupdate.place(y=760)
+    if chromesteuereinheit.Chromeaktuell == False:
+        chromesteuereinheit.Chromeupdate.place(y=760)
     Textmanager.geometry("1040x800")
     Textmanager.minsize(width=1040, height=800)
 
@@ -643,7 +645,7 @@ def Hintergrund_aktualisieren():
             if keyboard.is_pressed("space"):
                 while keyboard.is_pressed("space"):
                     pass
-                Textanzeiger.Liedgebe()
+                keyboard.press_and_release("f")
             elif keyboard.is_pressed("left"):
                 while keyboard.is_pressed("left"):
                     pass
