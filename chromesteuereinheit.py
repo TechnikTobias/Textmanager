@@ -64,25 +64,45 @@ def Videobeschreibung():
             if Stream == "True":
                 Texteingabe = ""
                 try:
-                    test1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Livestreamänderung.txt", 'r', encoding='utf8')
-                    test = test1.read()
-                    eingabe = driver.find_element(By.XPATH,test)
+                    Livestreamänderung = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Livestreamänderung.txt", 'r', encoding='utf8')
+                    Livestreamänderung = Livestreamänderung.read()
+                    eingabe = driver.find_element(By.XPATH,Livestreamänderung)
                     eingabe.click()
                 except:
                     logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
                     logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
                     logdatei.close()
-                    eingabe = driver.find_element(By.ID,"video-title")
+                    Livestreamänderungersatz = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Livestreamänderungersatz.txt", 'r', encoding='utf8')
+                    Livestreamänderungersatz = Livestreamänderungersatz.read()
+                    eingabe = driver.find_element(By.ID,Livestreamänderungersatz)
                     eingabe.click()
-
-                eingabe2 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[1]/ytls-live-control-room-renderer/div[1]/div[1]/div/ytls-broadcast-metadata/div[2]/ytcp-button/div")
-                eingabe2.click()
+                try:
+                    Öffnen_Einstellungenstream = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Öffnen_Einstellungenstream.txt", 'r',    encoding='utf8')
+                    Öffnen_Einstellungenstream = Öffnen_Einstellungenstream.read()
+                    eingabe2 = driver.find_element(By.XPATH,Öffnen_Einstellungenstream)
+                    eingabe2.click()
+                except:
+                    logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
+                    logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
+                    logdatei.close()
+                    Öffnen_Einstellungenstreamersatz = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Öffnen_Einstellungenstreamersatz.txt", 'r',    encoding='utf8')
+                    Öffnen_Einstellungenstreamersatz = Öffnen_Einstellungenstreamersatz.read()
+                    eingabe2 = driver.find_element(By.XPATH,Öffnen_Einstellungenstreamersatz)
+                    eingabe2.click()
                 time.sleep(2)
-                eingabe3 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[2]/ytcp-navigation/div[2]/iron-pages/ytcp-video-metadata-editor/div/ytcp-video-metadata-editor-basics/div[2]/ytcp-social-suggestions-textbox/ytcp-form-input-container/div[1]/div[2]/div/ytcp-social-suggestion-input/div")
-                time.sleep(1)
-                eingabe3.clear()
+                try:
+                    Texteingabe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabe = Texteingabe.read()
+                    eingabe3 = driver.find_element(By.XPATH,Texteingabe)
+                    eingabe3.clear()
+                except:
+                    logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
+                    logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
+                    logdatei.close()
+                    Texteingabe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabe = Texteingabe.read()
+                    eingabe3 = driver.find_element(By.XPATH,Texteingabe)
+                    eingabe3.clear()
                 if len(Haupt.Einganslied.Liedversefest) >= 1:
                     Texteingabe1 = str(
                         "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
@@ -149,13 +169,27 @@ def Videobeschreibung():
                 Textwortübergabe = Textwortauslesen1.read()
                 Textwortauslesen1.close()
                 eingabe3.send_keys(Textwortübergabe)
-                eingabe4 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-edit-dialog/ytcp-dialog/tp-yt-paper-dialog/div[3]/div/ytcp-button[2]/div")
-                eingabe4.click()
+                try:
+                    Texteingabebestätigen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabebestätigen = Texteingabebestätigen.read()
+                    eingabe4 = driver.find_element(By.XPATH,Texteingabebestätigen)
+                    eingabe4.click()
+                except:
+                    Texteingabebestätigen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabebestätigen = Texteingabebestätigen.read()
+                    eingabe4 = driver.find_element(By.XPATH,Texteingabebestätigen)
+                    eingabe4.click()
                 time.sleep(1)
-                eingabe5 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
-                eingabe5.click()
+                try:
+                    Texteingabeende = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabeende.txt", 'r',    encoding='utf8')
+                    Texteingabeende = Texteingabeende.read()
+                    eingabe5 = driver.find_element(By.XPATH,Texteingabeende)
+                    eingabe5.click()
+                except:
+                    Texteingabeendeersatz = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabeendeersatz.txt", 'r',    encoding='utf8')
+                    Texteingabeendeersatz = Texteingabeendeersatz.read()
+                    eingabe5 = driver.find_element(By.XPATH,Texteingabeendeersatz)
+                    eingabe5.click()
         except NoSuchElementException:
             Errorbild = tkinter.Toplevel(Haupt.Textmanager)
             Errorbild.geometry("560x350+500+400")
