@@ -1,3 +1,4 @@
+import datetime
 import os
 from re import T
 from threading import Thread
@@ -165,25 +166,25 @@ class Grafigfuer_ein_Lied:
             self.Buchzahl_clicked = 2
         elif self.clicked.get() == "Argentinisches Chorbuch":
             self.Buch = "AC"
-            self.Buchzahl_clicked = 3
+            self.Buchzahl_clicked = 7
         elif self.clicked.get() == "Kinderliederbuch":
             self.Buch = "KLB"
-            self.Buchzahl_clicked = 4
+            self.Buchzahl_clicked = 3
         elif self.clicked.get() == "Sonderheft":
             self.Buch = "SH"
-            self.Buchzahl_clicked = 5
+            self.Buchzahl_clicked = 9
         elif self.clicked.get() == "Spanisches Chorbuch":
             self.Buch = "SpC"
-            self.Buchzahl_clicked = 6
+            self.Buchzahl_clicked = 8
         elif self.clicked.get() == "Band 1 Singt dem Herrn":
             self.Buch = "SdH Band 1"
-            self.Buchzahl_clicked = 7
+            self.Buchzahl_clicked = 4
         elif self.clicked.get() == "Band 2 Singt dem Herrn":
             self.Buch = "SdH Band 2"
-            self.Buchzahl_clicked = 8
+            self.Buchzahl_clicked = 5
         elif self.clicked.get() == "Band 3 Singt dem Herrn":
             self.Buch = "SdH Band 3"
-            self.Buchzahl_clicked = 9
+            self.Buchzahl_clicked = 6
 
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
@@ -645,7 +646,7 @@ def Hintergrund_aktualisieren():
             if keyboard.is_pressed("space"):
                 while keyboard.is_pressed("space"):
                     pass
-                keyboard.press_and_release("f")
+                Textanzeiger.Liedgebe()
             elif keyboard.is_pressed("left"):
                 while keyboard.is_pressed("left"):
                     pass
@@ -673,6 +674,12 @@ def Hintergrund_aktualisieren():
                     Testeneingeben = True
                 else:
                     Testeneingeben = False
+        Zeit = 9.20
+        Zeit1 = 19.50
+        if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or Zeit1:
+            Textanzeiger.Grundstellung(True)
+            Zeit1 = 100
+            Zeit = 100
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 

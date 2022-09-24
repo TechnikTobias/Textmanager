@@ -95,21 +95,21 @@ def Videobeschreibung():
                     eingabe2.click()
                 time.sleep(2)
                 try:
-                    Texteingabe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
-                    Texteingabe = Texteingabe.read()
-                    eingabe3 = driver.find_element(By.XPATH,Texteingabe)
+                    Texteingabeclick = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabeclick = Texteingabeclick.read()
+                    eingabe3 = driver.find_element(By.XPATH,Texteingabeclick)
                     eingabe3.clear()
                 except:
                     logdatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Logdatei.txt", 'a', encoding='utf8')
                     logdatei.write("Chromedatei.Eingabe Error falsche XPATH\n"+str(datetime.datetime.now().strftime("%d.%m.%Y Datum\n%M.%H Uhr\n")))
                     logdatei.close()
-                    Texteingabe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
-                    Texteingabe = Texteingabe.read()
-                    eingabe3 = driver.find_element(By.XPATH,Texteingabe)
+                    Texteingabeclick = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabeclick = Texteingabeclick.read()
+                    eingabe3 = driver.find_element(By.XPATH,Texteingabeclick)
                     eingabe3.clear()
                 if len(Haupt.Einganslied.Liedversefest) >= 1:
                     Texteingabe1 = str(
-                        "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
+                        "\n\n\nLieder für den Gottesdienst \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
                             Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
                     Texteingabe = Texteingabe + Texteingabe1
                 else:
@@ -139,7 +139,7 @@ def Videobeschreibung():
                             "Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + " Vers " + " " + Haupt.Kinderlied.Liedversefest + "\n" + str(
                                 Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
                         Texteingabe = Texteingabe + Texteingabe1
-                else:
+                    else:
                         Texteingabe1 = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
                             Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
                         Texteingabe = Texteingabe + Texteingabe1
@@ -167,19 +167,19 @@ def Videobeschreibung():
                                 Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
                     Texteingabe = Texteingabe + Texteingabe1
                 else:
-                    Texteingabe1 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(
-                        Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
+                    Texteingabe1 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
+                    Texteingabe = Texteingabe + Texteingabe1
                 Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
                 Textwortübergabe = Textwortauslesen1.read()
                 Textwortauslesen1.close()
-                eingabe3.send_keys(Textwortübergabe)
+                eingabe3.send_keys(Textwortübergabe +"\n\n\n"+ Texteingabe)
                 try:
-                    Texteingabebestätigen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabebestätigen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabebestätigen.txt", 'r',    encoding='utf8')
                     Texteingabebestätigen = Texteingabebestätigen.read()
                     eingabe4 = driver.find_element(By.XPATH,Texteingabebestätigen)
                     eingabe4.click()
                 except:
-                    Texteingabebestätigen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabe.txt", 'r',    encoding='utf8')
+                    Texteingabebestätigen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabebestätigenersatz.txt", 'r',    encoding='utf8')
                     Texteingabebestätigen = Texteingabebestätigen.read()
                     eingabe4 = driver.find_element(By.XPATH,Texteingabebestätigen)
                     eingabe4.click()
@@ -193,7 +193,7 @@ def Videobeschreibung():
                     Texteingabeendeersatz = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabeendeersatz.txt", 'r',    encoding='utf8')
                     Texteingabeendeersatz = Texteingabeendeersatz.read()
                     eingabe5 = driver.find_element(By.XPATH,Texteingabeendeersatz)
-                    eingabe5.click()
+                    eingabe5.click()        
         except NoSuchElementException:
             Errorbild = tkinter.Toplevel(Haupt.Textmanager)
             Errorbild.geometry("560x350+500+400")
