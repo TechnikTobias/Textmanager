@@ -820,6 +820,7 @@ def Browseroffen():
     Browseröffnen.write("Wahr")
     Browseröffnen.close()
     Browserbutton.config(bg="green", text="Browser offen", command=Browsergeschlossen)
+    chromesteuereinheit.Chromestarten_Thread()
 
 def Browsergeschlossen():
     Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
@@ -828,14 +829,14 @@ def Browsergeschlossen():
     Browserbutton.config(bg="red", text="Kein Browser", command=Browseroffen)
 
 def Kinder_Anzeigen():
-    global Kinder_Anzeigen_Grafig, Kinder_Position
+    global Kinder_Anzeigen_Grafig, Kinder_Position, Kinderlied
     Kinderbutton.config(bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
     Kinder_Anzeigen_Grafig = "False"
     Kinder_Position = 1
     Kinderladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
     Kinderladen.write("Wahr")
     Kinderladen.close()
-    Kinderlied.Erstellen(166 +83*Kinder_Position, "Kinderlied", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Kinderlied = Grafigfuer_ein_Lied(166+41 +83*Kinder_Position, "Kinderlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Aktualiesierung_Grafick()
 
 
