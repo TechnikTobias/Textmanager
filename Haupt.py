@@ -676,7 +676,7 @@ def Hintergrund_aktualisieren():
                     Testeneingeben = False
         Zeit = 9.20
         Zeit1 = 19.50
-        if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or Zeit1:
+        if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or float(datetime.datetime.now().strftime("%H.%M")) == Zeit1:
             Textanzeiger.Grundstellung(True)
             Zeit1 = 100
             Zeit = 100
