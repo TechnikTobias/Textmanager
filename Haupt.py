@@ -8,7 +8,10 @@ from tkinter import *
 import chromesteuereinheit
 import Textanzeiger
 import keyboard
-
+Zeit = 9.20
+Zeit1 = 19.50
+Zeit2 = 9.25
+Zeit3 = 19.55
 Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
@@ -674,12 +677,20 @@ def Hintergrund_aktualisieren():
                     Testeneingeben = True
                 else:
                     Testeneingeben = False
-        Zeit = 9.20
-        Zeit1 = 19.50
         if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or float(datetime.datetime.now().strftime("%H.%M")) == Zeit1:
             Textanzeiger.Grundstellung(True)
             Zeit1 = 100
             Zeit = 100
+        if float(datetime.datetime.now().strftime("%H.%M")) == Zeit2 or float(datetime.datetime.now().strftime("%H.%M")) == Zeit3:
+            keyboard.press("F24")
+            time.sleep(0.5)
+            keyboard.release("F24")
+            time.sleep(0.5)
+            keyboard.press("1")
+            time.sleep(0.5)
+            keyboard.release("1")
+            Zeit2 = 100
+            Zeit3 = 100
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 

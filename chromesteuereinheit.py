@@ -61,11 +61,7 @@ def Videobeschreibung_Thread():
     Videobeschreibungthread.start()
 def Videobeschreibung():
     if Videobeschreibungaktionvarable == "Wahr":
-        Streamheute = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\" + Zeitgeber.Datum + ".txt", 'r',
-                       encoding='utf8')
-        Stream = Streamheute.read()
         try:
-            if Stream == "True":
                 Texteingabe = ""
                 try:
                     Livestreamänderung = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Livestreamänderung.txt", 'r', encoding='utf8')
@@ -193,7 +189,7 @@ def Videobeschreibung():
                     Texteingabeendeersatz = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabeendeersatz.txt", 'r',    encoding='utf8')
                     Texteingabeendeersatz = Texteingabeendeersatz.read()
                     eingabe5 = driver.find_element(By.XPATH,Texteingabeendeersatz)
-                    eingabe5.click()        
+                    eingabe5.click()
         except NoSuchElementException:
             Errorbild = tkinter.Toplevel(Haupt.Textmanager)
             Errorbild.geometry("560x350+500+400")
@@ -217,58 +213,73 @@ def stream_planen():
             if Videobeschreibungaktionvarable == "Wahr":
                 print("stream exestiert")
             else:
-                einagbe8 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[1]/ytcp-button")
-                einagbe8.click()
+                Stream_erstellen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen.txt", 'r', encoding='utf8')
+                Stream_erstellen = Stream_erstellen.read()
+                eingabe8 = driver.find_element(By.XPATH,Stream_erstellen)
+                eingabe8.click()
                 time.sleep(2)
-                eingabe9 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-popup-container/tp-yt-paper-dialog/ytls-duplicate-broadcast-renderer/div[4]/ytcp-button[2]/div")
+                Stream_erstellen_details = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_details.txt", 'r', encoding='utf8')
+                Stream_erstellen_details = Stream_erstellen_details.read()
+                eingabe9 = driver.find_element(By.XPATH,Stream_erstellen_details)
                 eingabe9.click()
                 time.sleep(2)
-                eingabe10 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
+                Stream_erstellen_anpassen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_anpassen.txt", 'r', encoding='utf8')
+                Stream_erstellen_anpassen = Stream_erstellen_anpassen.read()
+                eingabe10 = driver.find_element(By.XPATH,Stream_erstellen_anpassen)
                 eingabe10.click()
                 time.sleep(2)
-                eingabe11 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[2]/div")
+                Stream_erstellen_sichtbarkeit = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_sichtbarkeit.txt", 'r', encoding='utf8')
+                Stream_erstellen_sichtbarkeit = Stream_erstellen_sichtbarkeit.read()
+                eingabe11 = driver.find_element(By.XPATH,Stream_erstellen_sichtbarkeit)
                 eingabe11.click()
                 time.sleep(2)
-                eingabe111 = driver.find_element(By.XPATH,"/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/ytcp-video-visibility-select/div/tp-yt-paper-radio-group/tp-yt-paper-radio-button[2]/div[2]")
+                Stream_erstellen_sichtbarkeit_nicht_gelistet = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_sichtbarkeit_nicht_gelistet.txt", 'r', encoding='utf8')
+                Stream_erstellen_sichtbarkeit_nicht_gelistet = Stream_erstellen_sichtbarkeit_nicht_gelistet.read()
+                eingabe111 = driver.find_element(By.XPATH,Stream_erstellen_sichtbarkeit_nicht_gelistet)
                 eingabe111.click()
                 time.sleep(1)
-                eingabe12 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div/ytcp-text-dropdown-trigger/ytcp-dropdown-trigger/div/div[3]")
+                Stream_erstellen_eingabe_datum = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_eingabe_datum.txt", 'r', encoding='utf8')
+                Stream_erstellen_eingabe_datum = Stream_erstellen_eingabe_datum.read()
+                eingabe12 = driver.find_element(By.XPATH,Stream_erstellen_eingabe_datum)
                 eingabe12.click()
                 time.sleep(2)
-                eingabe13 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-date-picker/tp-yt-paper-dialog/div/form/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
+                Stream_erstellen_datum = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_datum.txt", 'r', encoding='utf8')
+                Stream_erstellen_datum = Stream_erstellen_datum.read()
+                eingabe13 = driver.find_element(By.XPATH,Stream_erstellen_datum)
                 eingabe13.clear()
                 time.sleep(2)
                 eingabe13.send_keys(Zeitgeber.Datum)
                 time.sleep(2)
-                eingabe14 = driver.find_element(By.XPATH,"/html/body/tp-yt-iron-overlay-backdrop")
+                Stream_erstellen_hintergrund = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_hintergrund.txt", 'r', encoding='utf8')
+                Stream_erstellen_hintergrund = Stream_erstellen_hintergrund.read()
+                eingabe14 = driver.find_element(By.XPATH,Stream_erstellen_hintergrund)
                 eingabe14.click()
                 time.sleep(2)
-                eingabe15 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[3]/div[2]/div[2]/div[3]/div/ytcp-form-datetime/ytcp-datetime-picker/div/div[2]/form/ytcp-form-input-container/div[1]/div/tp-yt-paper-input/tp-yt-paper-input-container/div[2]/div/iron-input/input")
+                Stream_erstellen_uhrzeit = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_uhrzeit.txt", 'r', encoding='utf8')
+                Stream_erstellen_uhrzeit = Stream_erstellen_uhrzeit.read()
+                eingabe15 = driver.find_element(By.XPATH,Stream_erstellen_uhrzeit)
                 eingabe15.clear()
                 time.sleep(2)
                 eingabe15.send_keys(Zeitgeber.Uhrzeit)
                 time.sleep(2)
-                eingabe17 = driver.find_element(By.XPATH,
-                    "/html/body/ytls-broadcast-create-dialog/tp-yt-paper-dialog/div/div[4]/div/ytcp-button[3]/div")
+                Stream_erstellen_sichtbarkeit_fertig = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_sichtbarkeit_fertig.txt", 'r', encoding='utf8')
+                Stream_erstellen_sichtbarkeit_fertig = Stream_erstellen_sichtbarkeit_fertig.read()
+                eingabe17 = driver.find_element(By.XPATH,Stream_erstellen_sichtbarkeit_fertig)
                 eingabe17.click()
                 time.sleep(4)
-                eingabe18 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/ytls-navigation/nav/div/div/li/tp-yt-paper-icon-item/div[1]/tp-yt-iron-icon")
+                Texteingabeende = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Texteingabeende.txt", 'r',    encoding='utf8')
+                Texteingabeende = Texteingabeende.read()
+                eingabe18 = driver.find_element(By.XPATH,Texteingabeende)
                 eingabe18.click()
                 time.sleep(1)
-                eingabe19 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-app/ytls-live-streaming-section/ytls-core-app/div/div[2]/div/ytls-live-dashboard-page-renderer/div[1]/div[2]/ytls-broadcast-list/ytls-broadcast-list-content/div[2]/div/div/   ytcp-video-row[1]/div/div[2]/ytcp-video-list-cell-video/div[2]/div[1]/div")
+                Stream_erstellen_einstellungen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_einstellungen.txt", 'r', encoding='utf8')
+                Stream_erstellen_einstellungen = Stream_erstellen_einstellungen.read()
+                eingabe19 = driver.find_element(By.XPATH,Stream_erstellen_einstellungen)
                 eingabe19.click()
                 time.sleep(1)
-                eingabe20 = driver.find_element(By.XPATH,
-                    "/html/body/ytcp-text-menu/tp-yt-paper-dialog/tp-yt-paper-listbox/tp-yt-paper-item[2]/ytcp-ve")
+                Stream_erstellen_kopieren = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_kopieren.txt", 'r', encoding='utf8')
+                Stream_erstellen_kopieren = Stream_erstellen_sichtbarkeit.read()
+                eingabe20 = driver.find_element(By.XPATH,Stream_erstellen_kopieren)
                 eingabe20.click()
                 time.sleep(1)
                 driver.get("https://rebrandly.com/links")
