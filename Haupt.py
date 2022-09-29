@@ -1,5 +1,6 @@
 import datetime
 import os
+import subprocess
 from re import T
 from threading import Thread
 import threading
@@ -454,6 +455,8 @@ def Grifuckfürpräsantatiom():
         Textwortentry.place(x=180)
         Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
         Textanzeiger.Wieoft = 0
+        Stream_beenden_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Beenden", command=Streambeenden)
+        Stream_beenden_button.place(x=430, y=300)
         Textmanager.minsize(width=400, height=800)
         Textmanager.geometry("600x"+str(Textmanager.winfo_height())+"")
         Textmanager.update()
@@ -623,7 +626,7 @@ def Button_command():
 
 
 def Hintergrund_aktualisieren():
-    global Testeneingeben
+    global Testeneingeben, Zeit, Zeit1, Zeit2, Zeit3
     if Hintregrundaktualisieren == True:
         Einganslied.Hintergrund_aktualisierung("Einganslied")
         Textwortlied.Hintergrund_aktualisierung("Textwortlied")
@@ -694,8 +697,36 @@ def Hintergrund_aktualisieren():
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
+def Streamstarten():
+    subprocess.call("")
+    time.sleep(120)
+    keyboard.press("")
+    time.sleep()
+    keyboard.release("")
+    time.sleep(5)
+    keyboard.press("")
+    keyboard.press("")
+    time.sleep()
+    keyboard.release("")
+    keyboard.release("")
 
-
+def Streambeenden():
+    keyboard.press("9")
+    keyboard.release("9")
+    time.sleep(0.5)
+    keyboard.press("1")
+    keyboard.release("1")
+    time.sleep(180)
+    keyboard.press("strg")
+    keyboard.press("q")
+    time.sleep(0.5)
+    keyboard.release("strg")
+    keyboard.release("q")
+    time.sleep(5)
+    Textanzeiger.Grundstellung()
+    subprocess.call("taskkill /IM chrome.exe /F")
+    subprocess.call("shutdown /s /t 60")
+    exit()
 
 def Eingabe_loeschen():
     global Textworteingabeübergabe
