@@ -1,5 +1,7 @@
+from asyncore import read
 import datetime
 import os
+from pydoc import text
 import subprocess
 from re import T
 from threading import Thread
@@ -39,6 +41,9 @@ Testeneingeben = True
 Textwortwiederherstellen = False
 Textworteingabeübergabe = False
 Textwortübergabe = None
+Buchclickedladen = None
+Verseingabeladen = None
+Liedeingabeladen = None
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
 Buch_Listen = [
@@ -355,7 +360,7 @@ def Einstellungen_Laden():
 def Textmamager_erstellen():
     Einstellungen_Laden()
     global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton, zusaetzliches_liedzerstörer
-    Einganslied = Grafigfuer_ein_Lied(0, "Einganslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Einganslied = Grafigfuer_ein_Lied(0, "Eingangslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Textwortlied = Grafigfuer_ein_Lied(83+41, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Amtswechsellied = Grafigfuer_ein_Lied(166+41, "Amtswechsellied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Kinderlied = Grafigfuer_ein_Lied(166+41 +83*Kinder_Position, "Kinderlied", Kinder_Anzeigen_Grafig, Textmanager_Hintergrund, Textmanager_Textfarbe)
@@ -383,9 +388,13 @@ def Textmamager_erstellen():
     Textwortentry = Button(Textmanager, font=("Helvetica", 15), text="Bitte hier das Textwort eingeben", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, command=Textwortcommand, border=0)
     Textwortentry.place(x=150,y=83)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
+    Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
+    Stream_plan_button.place(x=800, y=50)
     Stream_erstell_button.place(x=800, y=480)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
     Hauptbildschirmbutton.place(x=800, y=720)
+    Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle)
+    Hauptbildschirmbutton.place(x=800, y=20)
 
 def Textwortcommand():
     global Textworteingabe, Textwort_manager, Textworteingabeübergabe
@@ -422,7 +431,7 @@ def Textwortbestätigenbefehl():
 
 def Grifuckfürpräsantatiom():
     if Buttonebestätigengedrückt == True:
-        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Textwortanzeigelable
+        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Stream_beenden_button
         Hintregrundaktualisieren = False
         zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher)
         zurueck.place(x=430, y=630)
@@ -455,12 +464,12 @@ def Grifuckfürpräsantatiom():
         Textwortentry.place(x=180)
         Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
         Textanzeiger.Wieoft = 0
-        Stream_beenden_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Beenden", command=Streambeenden)
+        Stream_erstell_button.destroy()
+        Stream_beenden_button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Stream\nBeenden", command=Streambeenden)
         Stream_beenden_button.place(x=430, y=300)
         Textmanager.minsize(width=400, height=800)
         Textmanager.geometry("600x"+str(Textmanager.winfo_height())+"")
         Textmanager.update()
-    
 
 def Grifickeingabe():
     global Hintregrundaktualisieren, zusaetzliches_lied, Button_bestaetigen, loeschenbutton, wiederherstellen, Einstellungen_button, Stream_erstell_button, zusaetzliches_liedzerstörer, Textwortentry
@@ -489,12 +498,12 @@ def Grifickeingabe():
         zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
     elif Zusatzlied2_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied2)
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer1)    
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer1)
     elif Zusatzlied3_obwahr == True:
         zusaetzliches_lied.config(command=zusaetzlicheslied3)
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer2)    
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer2)
     elif Zusatzlied4_obwahr == True:
-        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer3)        
+        zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer3)
         zusaetzliches_lied.destroy()
     else:
         zusaetzliches_lied.config(command=zusaetzlicheslied)
@@ -510,10 +519,79 @@ def Grifickeingabe():
     Stream_erstell_button.place(x=800, y=480)
     Textwortentry.config(command=Textwortcommand, bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Aktualiesierung_Grafick()
+    Stream_beenden_button.destroy()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
     Textanzeiger.Grundstellung(True)
 
+def Verskontrolle():
+    global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked
+    Verskontroller = Toplevel(Textmanager)
+    Verskontroller.geometry("800x800")
+    Verskontroller.title("Einstellungen")
+    Verskontroller.config(bg=Textmanager_Hintergrund)
+    Liedeingabe = Entry(Verskontroller, font=("Helvetica", 24), width=4)
+    Liedeingabe.place(x=30,y=110)
+    Verseingabe = Entry(Verskontroller, font=("Helvetica", 24), width=2)
+    Verseingabe.place(x=300, y=110)
+    Verszahl = Entry(Verskontroller, font=("Helvetica", 24), width=2)
+    Verszahl.place(x=500, y=110)
+    Liedeingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Bitte geben sie ein Lied ein", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+    Liedeingabelabel.place(y=60)
+    Verseingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Welcher vers ist das", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+    Verseingabelabel.place(x=300, y=60)
+    Verszahllabel = Label(Verskontroller, font=("Helvetica", 15), text="Wie vile Verse hat das Lied?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+    Verszahllabel.place(x=500, y=60)
+    Liedverse_eingabe = Text(Verskontroller, font=("Helvetica", 20), height= 15, width=40, bg="#FFEBCD")
+    Liedverse_eingabe.place(y=200, x=10)
+    Buchclicked = StringVar()
+    Buchclicked.set(Buch_Listen[0])
+    OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
+    Buchopt = OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
+    Buchopt.config(width=20, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+    Buchopt.place(x=0,y=10)
+    Versbestätigen = Button(Verskontroller, font=("Helvetica", 24), text="Bestätigen", command=Versbestätigendef)
+    Versbestätigen.place(x=300, y=750)
+    Verskontrolleloop()
+
+def Versbestätigendef():
+    Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'w', encoding='utf8')
+    Text.write(Liedverse_eingabe.get("1.0","end-1c"))
+    Text.close()
+    Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+    Text1.write(Verszahl.get())
+    Text1.close()
+
+def Verskontrolleloop():
+    global Buchclickedladen, Verszahlladen, Verseingabeladen, Liedeingabeladen, Verse
+    Verszahl.get()
+    erstart = ""
+    if Verseingabe.get() == erstart:
+        Verse = 1
+    else:
+        Verse = Verseingabe.get()
+    Liedverse_eingabe.get("1.0","end-1c")
+    if not Buchclicked.get() == Buchclickedladen or not Verseingabe.get() == Verseingabeladen or not Liedeingabe.get() == Liedeingabeladen:
+        if len(Liedeingabe.get()) > 0:
+            try:
+                Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'r', encoding='utf8')
+                Textfertig = Text.read()
+                Text.close()
+                Liedverse_eingabe.delete("1.0","end-1c")
+                Liedverse_eingabe.insert(END,Textfertig)
+                Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
+                text1 = Text1.read()
+                Verszahl.delete(0, "end")
+                Verszahl.insert(0, text1)
+            except:
+                print("error")
+                print("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt")
+                print(Verse)
+    Buchclickedladen = Buchclicked.get()
+    Verseingabeladen = Verseingabe.get()
+    Verszahlladen = Liedeingabe.get()
+    Liedeingabeladen= Liedeingabe.get()
+    Liedeingabe.after(100, lambda: Verskontrolleloop())
 
 
 def zusaetzlicheslied3():
@@ -697,9 +775,7 @@ def Hintergrund_aktualisieren():
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
-def Streamstarten():
-    subprocess.call("")
-    time.sleep(120)
+def Streamstarten1():
     keyboard.press("")
     time.sleep()
     keyboard.release("")
@@ -710,20 +786,28 @@ def Streamstarten():
     keyboard.release("")
     keyboard.release("")
 
+def Streamstarten():
+    Streamstarten_Thread = Thread(target=Streamstarten1)
+    Streamstarten_Thread.start()
+
+def Streambeenden_Thread():
+    Streambeenden_thread = Thread(target=Streambeenden)
+    Streambeenden_thread.start()
+
 def Streambeenden():
     keyboard.press("9")
     keyboard.release("9")
     time.sleep(0.5)
     keyboard.press("1")
     keyboard.release("1")
-    time.sleep(180)
+    time.sleep(1)
     keyboard.press("strg")
     keyboard.press("q")
     time.sleep(0.5)
     keyboard.release("strg")
     keyboard.release("q")
     time.sleep(5)
-    Textanzeiger.Grundstellung()
+    Textanzeiger.Grundstellung(True)
     subprocess.call("taskkill /IM chrome.exe /F")
     subprocess.call("shutdown /s /t 60")
     exit()
