@@ -1,9 +1,9 @@
-from asyncore import read
 import datetime
 import os
 from pydoc import text
 import subprocess
 from re import T
+import sys
 from threading import Thread
 import threading
 import time
@@ -802,9 +802,11 @@ def Streambeenden_Thread():
 
 def Streambeenden():
     keyboard.press("9")
+    time.sleep(0.5)
     keyboard.release("9")
     time.sleep(0.5)
     keyboard.press("1")
+    time.sleep(0.5)
     keyboard.release("1")
     time.sleep(116)
     keyboard.press("strg")
@@ -816,10 +818,10 @@ def Streambeenden():
     Textanzeiger.Grundstellung(True)
     subprocess.call("taskkill /IM chrome.exe /F")
     subprocess.call("shutdown /s /t 60")
-    exit()
+    sys.exit()
 
 def Eingabe_loeschen():
-    global Textworteingabeübergabe
+    global Textworteingabeübergabe, Textwortwiederherstellen
     Einganslied.Eingabe_loeschen()
     Textwortlied.Eingabe_loeschen()
     Amtswechsellied.Eingabe_loeschen()
@@ -831,6 +833,7 @@ def Eingabe_loeschen():
     Zusatzlied2.Eingabe_loeschen()
     Zusatzlied3.Eingabe_loeschen()
     Zusatzlied4.Eingabe_loeschen()
+    Textwortwiederherstellen = False
     Textworteingabeübergabe = False
     Textwortübergabe = "Bitte hier das Textwort eingeben"
     Textwortentry.config(text=Textwortübergabe)
