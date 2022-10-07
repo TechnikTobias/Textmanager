@@ -1,3 +1,4 @@
+import re
 import time
 import Haupt
 import tkinter
@@ -13,6 +14,12 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         global AusganneVerse
         datenteil1 = []
         AusganneVerse = []
+        if len(WelcherVers) >= 1:
+            p = re.compile(("[0-9,-]"))
+            j =p.findall(WelcherVers)
+            charakter = "[]"
+            WelcherVers = "".join(x for x in j if x not in charakter)
+            print(WelcherVers)
         if WelcherVers == "":
             AusganneVerse = []
             Wieoft = 1
@@ -41,7 +48,8 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                 elif len(teilvers) == 1:
                     AusganneVerse = AusganneVerse + [int(teilvers)]
                     # Alles mit länge 1
-
+                elif len(teilvers) == 2:
+                    AusganneVerse = AusganneVerse + [1]
                 Wieoft = Wieoft + 1
 
             Vonbis = list(filter(lambda x: x[1].count("-"), datenteil1))
@@ -107,8 +115,10 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         if len(AusganneVerse) == 1:
             if int(AusganneVerse[0]) > int(Maxzahl):
                 AusganneVerse = Maxzahl
+                return True
         if int(AusganneVerse[-1]) > int(Maxzahl):
             AusganneVerse.pop()
+            return True
         if int(AusganneVerse[-1]) > int(Maxzahl):
             AusganneVerse.pop()
         if int(AusganneVerse[-1]) > int(Maxzahl):

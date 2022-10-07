@@ -1,6 +1,5 @@
 import datetime
 import os
-from pydoc import text
 import subprocess
 from re import T
 import sys
@@ -15,6 +14,7 @@ Zeit = 9.20
 Zeit1 = 19.50
 Zeit2 = 9.25
 Zeit3 = 19.55
+Hintregrundaktualisierenvariable = False
 Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
@@ -205,7 +205,7 @@ class Grafigfuer_ein_Lied:
     # sorgt dafür, dass alles aktualisiert wird
     def Hintergrund_aktualisierung(self, Liedname):
         if self.aktualisieren_wahl == "True":
-            if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get():
+            if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get() or Hintregrundaktualisierenvariable:
                 Grafigfuer_ein_Lied.Buchabkuerzen(self)
                 Grafigfuer_ein_Lied.Datein_lesen(self)
                 Grafigfuer_ein_Lied.Livestream_Vorchau(self)
@@ -225,12 +225,16 @@ class Grafigfuer_ein_Lied:
                     else:
                         self.Liednummer.config(bg="red")
                         self.Liedverse.config(bg="red")
+                if Textanzeiger.Verinbterprätator(self.Liednummer.get(), self.Buch self.Liedverse.get()):
+                    
             self.gespeichertestlied = self.Liednummer.get()
             self.gespeichertestvers = self.Liedverse.get()
             self.gespeichertestBuch = self.clicked.get()
+            Hintregrundaktualisierenvariable = False
+
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname, Liedposition):
-        global Warum
+        global Hintregrundaktualisierenvariable 
         if self.aktualisieren_wahl == "True":
             Lied_Textueberabe = open(
                 "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + self.clicked.get() + "\\l" +
@@ -254,7 +258,7 @@ class Grafigfuer_ein_Lied:
             self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
             self.Liednummerfest = self.Liednummer.get()
             self.Liedversefest = self.Liedverse.get()
-            
+            Hintregrundaktualisierenvariable = True
 
 
     # Löscht alle Eingaben für ein Lied
@@ -531,7 +535,7 @@ def Grifickeingabe():
     Textanzeiger.Grundstellung(True)
 
 def Verskontrolle():
-    global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked
+    global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked, Streameinblendung 
     Verskontroller = Toplevel(Textmanager)
     Verskontroller.geometry("800x800")
     Verskontroller.title("Vers Kontrolle")
@@ -543,21 +547,23 @@ def Verskontrolle():
     Verszahl = Entry(Verskontroller, font=("Helvetica", 24), width=2)
     Verszahl.place(x=300, y=150)
     Liedeingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Bitte geben sie ein Lied ein", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-    Liedeingabelabel.place(y=60)
+    Liedeingabelabel.place(x=10, y=60)
     Verseingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Welcher vers ist das", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-    Verseingabelabel.place(x=0, y=105)
+    Verseingabelabel.place(x=10, y=105)
     Verszahllabel = Label(Verskontroller, font=("Helvetica", 15), text="Wie vile Verse hat das Lied?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-    Verszahllabel.place(x=0, y=150)
+    Verszahllabel.place(x=10, y=150)
     Liedverse_eingabe = Text(Verskontroller, font=("Helvetica", 20), height= 15, width=40, bg="#FFEBCD")
-    Liedverse_eingabe.place(y=200, x=10)
+    Liedverse_eingabe.place(y=255, x=10)
     Buchclicked = StringVar()
     Buchclicked.set(Buch_Listen[0])
     OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
     Buchopt = OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
     Buchopt.config(width=20, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-    Buchopt.place(x=0,y=10)
+    Buchopt.place(x=10,y=10)
     Versbestätigen = Button(Verskontroller, font=("Helvetica", 24), text="Bestätigen", command=Versbestätigendef)
-    Versbestätigen.place(x=300, y=700)
+    Versbestätigen.place(x=300, y=755)
+    Streameinblendung = Entry(Verskontroller, font=("Helvetica", 24), width=30, bg="#FFEBCD")
+    Streameinblendung.place(x=10, y=205)
     Verskontrolleloop()
 
 def Versbestätigendef():
@@ -589,6 +595,11 @@ def Verskontrolleloop():
                 text1 = Text1.read()
                 Verszahl.delete(0, "end")
                 Verszahl.insert(0, text1)
+                Einblendung = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
+                Einblendungfertig = Einblendung.read()
+                Einblendung.close()
+                Streameinblendung.delete(0, "end")
+                Streameinblendung.insert(END,Einblendungfertig)
             except:
                 print("error")
                 print("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt")
