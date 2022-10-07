@@ -225,8 +225,8 @@ class Grafigfuer_ein_Lied:
                     else:
                         self.Liednummer.config(bg="red")
                         self.Liedverse.config(bg="red")
-                if Textanzeiger.Verinbterprätator(self.Liednummer.get(), self.Buch self.Liedverse.get()):
-                    
+                if Textanzeiger.Verinbterprätator(self.Liednummer.get(), self.Buch, self.Liedverse.get()):
+                    pass
             self.gespeichertestlied = self.Liednummer.get()
             self.gespeichertestvers = self.Liedverse.get()
             self.gespeichertestBuch = self.clicked.get()
