@@ -7,6 +7,7 @@ from threading import Thread
 import threading
 import time
 from tkinter import *
+from turtle import goto
 import chromesteuereinheit
 import Textanzeiger
 import keyboard
@@ -204,6 +205,7 @@ class Grafigfuer_ein_Lied:
 
     # sorgt dafür, dass alles aktualisiert wird
     def Hintergrund_aktualisierung(self, Liedname):
+        global Hintregrundaktualisierenvariable
         if self.aktualisieren_wahl == "True":
             if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get() or Hintregrundaktualisierenvariable:
                 Grafigfuer_ein_Lied.Buchabkuerzen(self)
@@ -225,8 +227,12 @@ class Grafigfuer_ein_Lied:
                     else:
                         self.Liednummer.config(bg="red")
                         self.Liedverse.config(bg="red")
-                if Textanzeiger.Verinbterprätator(self.Liednummer.get(), self.Buch, self.Liedverse.get()):
-                    pass
+                if len(self.Liednummer.get()) > 0:
+                    if Textanzeiger.Verinbterprätator(self.Liednummer.get(), self.clicked.get(), self.Liedverse.get()):
+                        Hi = self.Liedverse.get()
+                        Hi2 = Hi[:-1]
+                        self.Liedverse.delete(0, "end")
+                        self.Liedverse.insert(0, Hi2)
             self.gespeichertestlied = self.Liednummer.get()
             self.gespeichertestvers = self.Liedverse.get()
             self.gespeichertestBuch = self.clicked.get()
@@ -435,7 +441,7 @@ def Textwortbestätigenbefehl():
 
 def Grifuckfürpräsantatiom():
     if Buttonebestätigengedrückt == True:
-        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Stream_beenden_button
+        global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Stream_beenden_button, Tastensperren
         Hintregrundaktualisieren = False
         zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher)
         zurueck.place(x=430, y=630)
@@ -471,6 +477,8 @@ def Grifuckfürpräsantatiom():
         Stream_erstell_button.destroy()
         Stream_beenden_button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Stream\nBeenden", command=Streambeenden)
         Stream_beenden_button.place(x=430, y=300)
+        Tastensperren = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="green", text="Tastatur", command=Tastaturaus)
+        Tastensperren.place(x=430, y=230)
         Textmanager.minsize(width=400, height=800)
         Textmanager.geometry("600x"+str(Textmanager.winfo_height())+"")
         Verskontroll_Button.destroy()
@@ -601,6 +609,9 @@ def Verskontrolleloop():
                 Streameinblendung.delete(0, "end")
                 Streameinblendung.insert(END,Einblendungfertig)
             except:
+                Liedverse_eingabe.delete("1.0","end-1c")
+                Verszahl.delete(0, "end")
+                Streameinblendung.delete(0, "end")
                 print("error")
                 print("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt")
                 print(Verse)
@@ -792,7 +803,18 @@ def Hintergrund_aktualisieren():
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
+def Tastaturaus():
+    global Testeneingeben
+    Testeneingeben = False
+    Tastensperren.config(bg="red", command=Tastaturan)
+
+def Tastaturan():
+    global Testeneingeben
+    Testeneingeben = True
+    Tastensperren.config(bg="green", command=Tastaturaus)
+
 def Streamstarten1():
+    pass
     keyboard.press("")
     time.sleep()
     keyboard.release("")
@@ -822,7 +844,7 @@ def Streambeenden():
     time.sleep(116)
     keyboard.press("strg")
     keyboard.press("q")
-    time.sleep(0.5)
+    time.sleep(1.5)
     keyboard.release("strg")
     keyboard.release("q")
     time.sleep(5)

@@ -278,7 +278,7 @@ def stream_planen():
                 eingabe19.click()
                 time.sleep(1)
                 Stream_erstellen_kopieren = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Stream_erstellen_kopieren.txt", 'r', encoding='utf8')
-                Stream_erstellen_kopieren = Stream_erstellen_sichtbarkeit.read()
+                Stream_erstellen_kopieren = Stream_erstellen_kopieren.read()
                 eingabe20 = driver.find_element(By.XPATH,Stream_erstellen_kopieren)
                 eingabe20.click()
                 time.sleep(1)

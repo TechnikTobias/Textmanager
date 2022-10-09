@@ -52,9 +52,9 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                     AusganneVerse = AusganneVerse + [1]
                 Wieoft = Wieoft + 1
 
-            Vonbis = list(filter(lambda x: x[1].count("-"), datenteil1))
+            Vonbis = datenteil1
             # Lässt nur lange sachen mit - durch
-            ob1oder2 = -(len(Vonbis))
+            ob1oder2 = -(len(datenteil1))
 
             if ob1oder2 < 0:
                 wieoft = 0
@@ -446,9 +446,9 @@ def optisches_fedback(Liedposition):
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Haupt.Textwortlied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
-        keyboard.press("F23")
+        keyboard.press("F22")
         time.sleep(0.5)
-        keyboard.release("F23")
+        keyboard.release("F22")
         time.sleep(0.5)
         keyboard.press("1")
         time.sleep(0.5)
