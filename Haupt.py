@@ -538,6 +538,7 @@ def Grifickeingabe():
     Verskontroll_Button.place(x=800, y=110)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
     Stream_plan_button.place(x=800, y=20)
+    Tastensperren.destroy()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
     Textanzeiger.Grundstellung(True)
