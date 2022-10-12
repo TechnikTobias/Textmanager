@@ -137,7 +137,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
             AusganneVerse.pop()
         # Filter, das niht mehr als es Verse gibt
     except FileNotFoundError:
-        Errorbild = tkinter.Toplevel(Haupt.root)
+        Errorbild = tkinter.Toplevel(Haupt.Textmanager)
         Errorbild.geometry("560x350+500+400")
         Errorbild.config(bg="black")
         Error = tkinter.Label(Errorbild, font=("Helvetica", 40),

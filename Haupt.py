@@ -236,8 +236,7 @@ class Grafigfuer_ein_Lied:
             self.gespeichertestlied = self.Liednummer.get()
             self.gespeichertestvers = self.Liedverse.get()
             self.gespeichertestBuch = self.clicked.get()
-            Hintregrundaktualisierenvariable = False
-
+            
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname, Liedposition):
         global Hintregrundaktualisierenvariable 
@@ -733,7 +732,7 @@ def Button_command():
 
 
 def Hintergrund_aktualisieren():
-    global Testeneingeben, Zeit, Zeit1, Zeit2, Zeit3
+    global Testeneingeben, Zeit, Zeit1, Zeit2, Zeit3, Hintregrundaktualisierenvariable
     if Hintregrundaktualisieren == True:
         Einganslied.Hintergrund_aktualisierung("Einganslied")
         Textwortlied.Hintergrund_aktualisierung("Textwortlied")
@@ -746,6 +745,7 @@ def Hintergrund_aktualisieren():
         Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
         Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
         Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
+        Hintregrundaktualisierenvariable = False
     else:
         if Testeneingeben == True:
             if keyboard.is_pressed("page_down"):
