@@ -14,27 +14,29 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         global AusganneVerse
         datenteil1 = []
         AusganneVerse = []
-        if len(WelcherVers) >= 1:
-            p = re.compile(("[0-9,-]"))
+        if len(WelcherVers) == 1:
+            p = re.compile(("[0-9]"))
             j =p.findall(WelcherVers)
-            charakter = "[]"
+            charakter = "[],"
             WelcherVers = "".join(x for x in j if x not in charakter)
-            print(WelcherVers)
-        if WelcherVers == "":
+        einzeldaten = WelcherVers
+        if einzeldaten == "":
+            Sooft = 0
             AusganneVerse = []
             Wieoft = 1
             while True:
                 Verzanzahl = open(
-                    "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + WelchesBuch + "\\" + str(Welcheart) + ".txt",
+                    "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(WelchesBuch) + "\\" + str(Welcheart) + ".txt",
                     "r",
                     encoding="utf-8")
                 Maxzahl = Verzanzahl.read()
-                if Wieoft == int(Maxzahl) + 1:
+                if Sooft == int(Maxzahl) + 1:
                     break
                 AusganneVerse = AusganneVerse + [Wieoft]
                 Wieoft = int(Wieoft) + 1
+                Sooft = Sooft + 1
         else:
-            daten = WelcherVers.split(",")
+            daten = einzeldaten.split(",")
             # teilt alles bei den kommas
             Wieoft = 0
             ob1oder2odermehr = len(daten)
@@ -52,9 +54,9 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                     AusganneVerse = AusganneVerse + [1]
                 Wieoft = Wieoft + 1
 
-            Vonbis = datenteil1
+            Vonbis = list(filter(lambda x: x[1].count("-"), datenteil1))
             # Lässt nur lange sachen mit - durch
-            ob1oder2 = -(len(datenteil1))
+            ob1oder2 = -(len(Vonbis))
 
             if ob1oder2 < 0:
                 wieoft = 0
@@ -93,17 +95,19 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                         wieoft = wieoft + 1
                         # fügt zweite teil verse dazu
         Verzanzahl = open(
-            "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + WelchesBuch + "\\" + str(Welcheart) + ".txt",
+            "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(WelchesBuch) + "\\" + str(Welcheart) + ".txt",
             "r",
             encoding="utf-8")
         Maxzahl = Verzanzahl.read()
         AusganneVerse.sort()
+        global Hai
+        Hai = "False"
         if len(AusganneVerse) == 0:
             Sooft = 0
             Wieoft = 1
             while True:
                 Verzanzahl = open(
-                    "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + WelchesBuch + "\\" + Welcheart + ".txt",
+                    "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(WelchesBuch) + "\\" + str(Welcheart) + ".txt",
                     "r",
                     encoding="utf-8")
                 Maxzahl = Verzanzahl.read()
@@ -133,7 +137,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
             AusganneVerse.pop()
         # Filter, das niht mehr als es Verse gibt
     except FileNotFoundError:
-        Errorbild = tkinter.Toplevel(Haupt.Textmanager)
+        Errorbild = tkinter.Toplevel(Haupt.root)
         Errorbild.geometry("560x350+500+400")
         Errorbild.config(bg="black")
         Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
@@ -141,7 +145,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                       fg="green", wraplength=560)
         Error.place(x=210, y=0)
         ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="In 0rdner Lieder im Odner Versanzahl fehlt die Datei für das Lied "+str(Welcheart), bg="black",
+                           text="In 0rdner Lieder im Odner Versanzahl fehlt die Datei für das Lied "+Welcheart, bg="black",
                            fg="green", wraplength=560)
         ErrorLabel.place(x=0, y=80)
 
