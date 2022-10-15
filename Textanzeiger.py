@@ -9,6 +9,37 @@ Wieoftlied = 1
 voherliedzwischensehne = False
 lesteslied = False
 
+
+def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
+    global Verzanzahl1
+    try:
+        Verzanzahl1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(Buch) + "\\" + str(Liednummer) + ".txt", "r", encoding="utf-8")
+    except:
+        pass
+    Verzanzahl = Verzanzahl1.read()
+    Verse1 = Verse.split(",")
+    Hallo = []
+    try:
+        while True:
+            Hallo = Hallo + Verse1.pop().split("-")
+            if len(Verse1) == 0:
+                break
+        while True:
+            if Hallo == [""]:
+                break
+            if int(Hallo.pop()) > int(Verzanzahl):
+                print(str(Hallo) +"g"+str(Verzanzahl))
+                return True
+            if len(Hallo) == 0:
+                break
+    except:
+        pass
+    p = re.compile(("[0-9,-]"))
+    j = p.findall(Verseübergabe)
+    charakter = "[]´"
+    Verserückgabe = "".join(x for x in j if x not in charakter)
+    return Verserückgabe
+
 def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
     try:
         global AusganneVerse

@@ -20,7 +20,7 @@ Dateiort = os.getlogin()
 Textmanager = Tk()
 Textmanager.title("Textmanager")
 Textmanager.geometry("1040x800")
-Textmanager.minsize(width=1040, height=800)
+Textmanager.minsize(width=1040, height=850)
 Textmanager.iconbitmap("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
@@ -208,6 +208,15 @@ class Grafigfuer_ein_Lied:
         global Hintregrundaktualisierenvariable
         if self.aktualisieren_wahl == "True":
             if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get() or Hintregrundaktualisierenvariable:
+                Verseüber = self.Liedverse.get()
+                if Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber) == True:
+                    Hi = self.Liedverse.get()
+                    Hi2 = Hi[:-1]
+                    self.Liedverse.delete(0, "end")
+                    self.Liedverse.insert(0, Hi2)
+                else:
+                    self.Liedverse.delete(0, "end")
+                    self.Liedverse.insert(END, Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber))
                 Grafigfuer_ein_Lied.Buchabkuerzen(self)
                 Grafigfuer_ein_Lied.Datein_lesen(self)
                 Grafigfuer_ein_Lied.Livestream_Vorchau(self)
@@ -227,12 +236,6 @@ class Grafigfuer_ein_Lied:
                     else:
                         self.Liednummer.config(bg="red")
                         self.Liedverse.config(bg="red")
-                if len(self.Liednummer.get()) > 0:
-                    if Textanzeiger.Verinbterprätator(self.Liednummer.get(), self.clicked.get(), self.Liedverse.get()):
-                        Hi = self.Liedverse.get()
-                        Hi2 = Hi[:-1]
-                        self.Liedverse.delete(0, "end")
-                        self.Liedverse.insert(0, Hi2)
             self.gespeichertestlied = self.Liednummer.get()
             self.gespeichertestvers = self.Liedverse.get()
             self.gespeichertestBuch = self.clicked.get()
@@ -670,7 +673,7 @@ def zusaetzlichesliedzerstörer2():
     if chromesteuereinheit.Chromeaktuell == False:
         chromesteuereinheit.Chromeupdate.place(y=760)
     Textmanager.geometry("1040x800")
-    Textmanager.minsize(width=1040, height=800)
+    Textmanager.minsize(width=1040, height=850)
 
 def zusaetzlicheslied1():
     global Wie_viele_zusatzlieder, Zusatzlied2, Zusatzlied2_obwahr, Zusatzlied1_obwahr
