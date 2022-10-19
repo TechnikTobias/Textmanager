@@ -243,31 +243,34 @@ class Grafigfuer_ein_Lied:
     # Speichert alle relevanten Daten egal ob Livestream oder zum Wiederherstellen
     def Knopf_Druecken(self, Liedname, Liedposition):
         global Hintregrundaktualisierenvariable 
-        if self.aktualisieren_wahl == "True":
-            Lied_Textueberabe = open(
-                "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + self.clicked.get() + "\\l" +
-                str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
-            Lied_Text = Lied_Textueberabe.read()
-            Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
-            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
-            Lied_nummer_uebergabe.write(self.Liednummer.get())
-            Lied_nummer_uebergabe.close()
-            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
-            Lied_Vers_uebergabe.write(self.Liedverse.get())
-            Lied_Vers_uebergabe.close()
-            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
-            Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
-            Lied_Buch_Uebergabe.close()
-            if len(self.Liedverse.get()) >= 1:
-                Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + " Vers " + str(self.Liedverse.get()) + "\n" + Lied_Text)
-            else:
-                Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + "\n" + Lied_Text)
-            Livestream_Text.close()
-            self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
-            self.Liednummerfest = self.Liednummer.get()
-            self.Liedversefest = self.Liedverse.get()
-            Hintregrundaktualisierenvariable = True
-
+        try:
+            if self.aktualisieren_wahl == "True":
+                Lied_Textueberabe = open(
+                    "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + self.clicked.get() + "\\l" +
+                    str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
+                Lied_Text = Lied_Textueberabe.read()
+                Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
+                Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
+                Lied_nummer_uebergabe.write(self.Liednummer.get())
+                Lied_nummer_uebergabe.close()
+                Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
+                Lied_Vers_uebergabe.write(self.Liedverse.get())
+                Lied_Vers_uebergabe.close()
+                Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
+                Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
+                Lied_Buch_Uebergabe.close()
+                if len(self.Liedverse.get()) >= 1:
+                    Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + " Vers " + str(self.Liedverse.get()) + "\n" + Lied_Text)
+                else:
+                    Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + "\n" + Lied_Text)
+                Livestream_Text.close()
+                self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
+                self.Liednummerfest = self.Liednummer.get()
+                self.Liedversefest = self.Liedverse.get()
+                Hintregrundaktualisierenvariable = True
+        except:
+            self.Liedversefest = 0
+            self.Liednummerfest = 0
 
     # Löscht alle Eingaben für ein Lied
     def Eingabe_loeschen(self):
