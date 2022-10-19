@@ -562,9 +562,9 @@ def Verskontrolle():
     Verszahl.place(x=300, y=150)
     Liedeingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Bitte geben sie ein Lied ein", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Liedeingabelabel.place(x=10, y=60)
-    Verseingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Welcher vers ist das", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+    Verseingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Welcher Vers ist das?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Verseingabelabel.place(x=10, y=105)
-    Verszahllabel = Label(Verskontroller, font=("Helvetica", 15), text="Wie vile Verse hat das Lied?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+    Verszahllabel = Label(Verskontroller, font=("Helvetica", 15), text="Wie viele Verse hat das Lied?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Verszahllabel.place(x=10, y=150)
     Liedverse_eingabe = Text(Verskontroller, font=("Helvetica", 20), height= 15, width=40, bg="#FFEBCD")
     Liedverse_eingabe.place(y=255, x=10)
@@ -605,18 +605,22 @@ def Verskontrolleloop():
                 Text.close()
                 Liedverse_eingabe.delete("1.0","end-1c")
                 Liedverse_eingabe.insert(END,Textfertig)
+            except:
+                Liedverse_eingabe.delete("1.0","end-1c")
+            try:
                 Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
                 text1 = Text1.read()
                 Verszahl.delete(0, "end")
                 Verszahl.insert(0, text1)
+            except:
+                Verszahl.delete(0, "end")
+            try:
                 Einblendung = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
                 Einblendungfertig = Einblendung.read()
                 Einblendung.close()
                 Streameinblendung.delete(0, "end")
                 Streameinblendung.insert(END,Einblendungfertig)
             except:
-                Liedverse_eingabe.delete("1.0","end-1c")
-                Verszahl.delete(0, "end")
                 Streameinblendung.delete(0, "end")
                 print("error")
                 print("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt")
