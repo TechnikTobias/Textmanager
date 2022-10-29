@@ -1,3 +1,4 @@
+from ast import Str
 import datetime
 import os
 import subprocess
@@ -203,6 +204,38 @@ class Grafigfuer_ein_Lied:
         else:
             self.Liedtextanzeige.config(text=str(self.Buch + " " + self.Liednummer.get()+"\n" + self.Dateiliedtext))
 
+
+    def Datein_lesen_spontan(self):
+        try:
+            self.Dateiliedtext1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + str(Textanzeiger.clicked.get()) + "\\l" + str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
+            self.Dateiliedtext = self.Dateiliedtext1.read()
+        except:
+            pass
+
+
+    def Livestream_Vorchau_spontan(self):
+        if len(Textanzeiger.Verseingabe.get()) >= 1:
+            self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get() + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + self.Dateiliedtext))
+        else:
+            self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
+
+    def Spontaneingabe_Hintergrund_aktualisierung(self, Welcheslied):
+        global Hintregrundaktualisierenvariable
+        if Welcheslied:
+            Verseüber = Textanzeiger.Verseingabe.get()
+            if Textanzeiger.Versüperprüfen(Textanzeiger.clicked.get() ,Textanzeiger.Texteingabe.get(), Verseüber,Verseüber) == True:
+                Hi = Textanzeiger.Verseingabe.get()
+                Hi2 = Hi[:-1]
+                Textanzeiger.Verseingabe.delete(0, "end")
+                Textanzeiger.Verseingabe.insert(0, Hi2)
+            else:
+                Textanzeiger.Verseingabe.delete(0, "end")
+                Textanzeiger.Verseingabe.insert(END, Textanzeiger.Versüperprüfen(Textanzeiger.clicked.get() ,Textanzeiger.Texteingabe.get(), Verseüber,Verseüber))
+            Grafigfuer_ein_Lied.Buchabkuerzen(self)
+            Grafigfuer_ein_Lied.Datein_lesen_spontan(self)
+            Grafigfuer_ein_Lied.Livestream_Vorchau_spontan(self)
+
+
     # sorgt dafür, dass alles aktualisiert wird
     def Hintergrund_aktualisierung(self, Liedname):
         global Hintregrundaktualisierenvariable
@@ -402,7 +435,6 @@ def Textmamager_erstellen():
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
     Stream_plan_button.place(x=800, y=20)
-    Stream_erstell_button.place(x=800, y=480)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
     Hauptbildschirmbutton.place(x=800, y=720)
     Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle)
@@ -755,7 +787,37 @@ def Hintergrund_aktualisieren():
         Hintregrundaktualisierenvariable = False
     else:
         if Testeneingeben == True:
-            if keyboard.is_pressed("page_down"):
+            if keyboard.get_hotkey_name()== str(1):
+                while keyboard.get_hotkey_name()==str(1):
+                    pass
+            elif keyboard.get_hotkey_name() == str(2):
+                while keyboard.get_hotkey_name() == str(2):
+                    pass
+            elif keyboard.get_hotkey_name() == str(3):
+                while keyboard.get_hotkey_name() == str(3):
+                    pass
+            elif keyboard.get_hotkey_name() == str(4):
+                while keyboard.get_hotkey_name() == str(4):
+                    pass
+            elif keyboard.get_hotkey_name()== str(5):
+                while keyboard.get_hotkey_name()== str(5):
+                    pass
+            elif keyboard.get_hotkey_name() == str(6):
+                while keyboard.get_hotkey_name() == str(6):
+                    pass
+            elif keyboard.get_hotkey_name()== str(7):
+                while keyboard.get_hotkey_name() == str(7):
+                    pass
+            elif keyboard.get_hotkey_name() == str(8):
+                while keyboard.get_hotkey_name() == str(8):
+                    pass
+            elif keyboard.get_hotkey_name()== str(9):
+                while keyboard.get_hotkey_name() == str(9):
+                    pass
+            elif keyboard.get_hotkey_name() == str(0):
+                while keyboard.get_hotkey_name() == str(0):
+                    pass
+            elif keyboard.is_pressed("page_down"):
                 while keyboard.is_pressed("page_down"):
                     pass
                 Textanzeiger.Liedgebe()
@@ -763,7 +825,7 @@ def Hintergrund_aktualisieren():
                 while keyboard.is_pressed("page_up"):
                     pass
                 Textanzeiger.Versvorher()
-            if keyboard.is_pressed("space"):
+            elif keyboard.is_pressed("space"):
                 while keyboard.is_pressed("space"):
                     pass
                 Textanzeiger.Liedgebe()
@@ -771,17 +833,17 @@ def Hintergrund_aktualisieren():
                 while keyboard.is_pressed("left"):
                     pass
                 Textanzeiger.Versvorher()
-            if keyboard.is_pressed("right"):
+            elif keyboard.is_pressed("right"):
                 while keyboard.is_pressed("right"):
                     pass
                 Textanzeiger.Liedgebe()
-            if keyboard.is_pressed("up"):
+            elif keyboard.is_pressed("up"):
                 while keyboard.is_pressed("up"):
                     pass
                 Textanzeiger.Wieoft = 0
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
                 Textanzeiger.vorherübergabeTextandiewand()
-            if keyboard.is_pressed("down"):
+            elif keyboard.is_pressed("down"):
                 while keyboard.is_pressed("down"):
                     pass
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
@@ -794,20 +856,21 @@ def Hintergrund_aktualisieren():
                     Testeneingeben = True
                 else:
                     Testeneingeben = False
-        if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or float(datetime.datetime.now().strftime("%H.%M")) == Zeit1:
-            Textanzeiger.Grundstellung(True)
-            Zeit1 = 100
-            Zeit = 100
-        if float(datetime.datetime.now().strftime("%H.%M")) == Zeit2 or float(datetime.datetime.now().strftime("%H.%M")) == Zeit3:
-            keyboard.press("F24")
-            time.sleep(0.5)
-            keyboard.release("F24")
-            time.sleep(0.5)
-            keyboard.press("1")
-            time.sleep(0.5)
-            keyboard.release("1")
-            Zeit2 = 100
-            Zeit3 = 100
+    if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or float(datetime.datetime.now().strftime("%H.%M")) == Zeit1:
+        Textanzeiger.Grundstellung(True)
+        Zeit1 = 100
+        Zeit = 100
+    if float(datetime.datetime.now().strftime("%H.%M")) == Zeit2 or float(datetime.datetime.now().strftime("%H.%M")) == Zeit3:
+        keyboard.press("F24")
+        time.sleep(0.5)
+        keyboard.release("F24")
+        time.sleep(0.5)
+        keyboard.press("1")
+        time.sleep(0.5)
+        keyboard.release("1")
+        Zeit2 = 100
+        Zeit3 = 100
+    Amtswechsellied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Amtswechsel)
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
