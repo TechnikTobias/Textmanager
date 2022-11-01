@@ -8,7 +8,7 @@ Wieoft = 0
 Wieoftlied = 1
 voherliedzwischensehne = False
 lesteslied = False
-
+Darf_ich_Amtswechsel = False
 
 def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
     global Verzanzahl1
@@ -167,7 +167,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         if int(AusganneVerse[-1]) > int(Maxzahl):
             AusganneVerse.pop()
         # Filter, das niht mehr als es Verse gibt
-    except FileNotFoundError:
+    except:
         Errorbild = tkinter.Toplevel(Haupt.Textmanager)
         Errorbild.geometry("560x350+500+400")
         Errorbild.config(bg="black")
@@ -335,19 +335,50 @@ def Textwortübergabe():
     lesteslied = False
 
 def Nächstelied():
-    global Wieoftlied, Datenfürliedanderwand, Wieoft, lesteslied
+    global Wieoftlied, Datenfürliedanderwand, Wieoft, lesteslied, Texteingabe, Verseingabe, opt, Darf_ich_Amtswechsel, clicked
     Wieoft = 0
     Grundstellung(True)
     Datenfürliedanderwand = []
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=10)
+            Texteingabe.place(x=30,y=600)
+            Verseingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=7)
+            Verseingabe.place(x=30, y=645)
     elif int(Haupt.Textwortübergabedaten[0]) == int(Wieoftlied):
         Haupt.Textwortentry.config(bg="orange")
-        Datenfürliedanderwand = Haupt.Textwortübergabedaten.copy()    
+        Datenfürliedanderwand = Haupt.Textwortübergabedaten.copy()
     elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=4)
+            Texteingabe.place(x=30, y=600)
+            Verseingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=7)
+            Verseingabe.place(x=30, y=645)
+            clicked = Haupt.StringVar()
+            clicked.set(Haupt.Buch_Listen[0])
+            Haupt.OptionMenu(Haupt.Textmanager, clicked, *Haupt.Buch_Listen)
+            opt = Haupt.OptionMenu(Haupt.Textmanager, clicked, *Haupt.Buch_Listen)
+            opt.config(width=12, font=('Helvetica', 12), bg=Haupt.Textmanager_Hintergrund, fg=Haupt.Textmanager_Textfarbe)
+            opt.place(x=170, y=630)
+            Darf_ich_Amtswechsel = True
+        else:
+            try:
+                Texteingabe.destroy()
+            except:
+                pass
+            try:
+                Verseingabe.destroy()
+            except:
+                pass
+            try:
+                opt.destroy()
+            except:
+                pass
+            Darf_ich_Amtswechsel = False
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
@@ -386,17 +417,19 @@ def Nächstelied():
 
 def Voeherlied():
     global Wieoftlied, Wieoft, voherliedzwischensehne, AusganneVerse, Datenfürliedanderwand
-    if Wieoftlied > 1:
-        Wieoftlied = Wieoftlied - 1
-        vorherübergabeTextandiewand()
-        Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
-        Wieoft = len(AusganneVerse) + 1
-        Wieoft = Wieoft - 2
-        Verse(Datenfürliedanderwand[3],AusganneVerse[Wieoft],Datenfürliedanderwand[2])
-        Wieoft = Wieoft + 1
-    else:
-        Nächstelied()
-
+    try:
+        if Wieoftlied > 1:
+            Wieoftlied = Wieoftlied - 1
+            vorherübergabeTextandiewand()
+            Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
+            Wieoft = len(AusganneVerse) + 1
+            Wieoft = Wieoft - 2
+            Verse(Datenfürliedanderwand[3],AusganneVerse[Wieoft],Datenfürliedanderwand[2])
+            Wieoft = Wieoft + 1
+        else:
+            Nächstelied()
+    except:
+        pass
 
 def Versvorher():
     global Wieoft, voherliedzwischensehne, lesteslied, Wieoftlied
