@@ -28,7 +28,6 @@ def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
             if Hallo == [""]:
                 break
             if int(Hallo.pop()) > int(Verzanzahl):
-                print(str(Hallo) +"g"+str(Verzanzahl))
                 return True
             if len(Hallo) == 0:
                 break
@@ -343,7 +342,7 @@ def Nächstelied():
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
         if len(Datenfürliedanderwand[3]) == 0:
-            Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=10)
+            Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=4)
             Texteingabe.place(x=30,y=600)
             Verseingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=7)
             Verseingabe.place(x=30, y=645)

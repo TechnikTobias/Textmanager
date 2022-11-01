@@ -296,7 +296,7 @@ def stream_planen():
                 eingabe23.clear()
                 eingabe23.send_keys(pyperclip.paste())
                 eingabe24 = driver.find_element(By.XPATH,
-                    "/html/body/div[13]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
+                    "/html/body/div[14]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
                 eingabe24.click()
                 time.sleep(4)
                 driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")

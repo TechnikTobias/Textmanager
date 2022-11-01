@@ -210,7 +210,11 @@ class Grafigfuer_ein_Lied:
             self.Dateiliedtext1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + str(Textanzeiger.clicked.get()) + "\\l" + str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
             self.Dateiliedtext = self.Dateiliedtext1.read()
         except:
-            pass
+            if len(Textanzeiger.Texteingabe.get()) > 3:
+                Hi = Textanzeiger.Texteingabe.get()
+                Hi2 = Hi[:-1]
+                Textanzeiger.Texteingabe.delete(0, "end")
+                Textanzeiger.Texteingabe.insert(0, Hi2)
 
 
     def Livestream_Vorchau_spontan(self):
@@ -436,8 +440,8 @@ def Textmamager_erstellen():
     Textwortentry = Button(Textmanager, font=("Helvetica", 15), text="Bitte hier das Textwort eingeben", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, command=Textwortcommand, border=0)
     Textwortentry.place(x=150,y=83)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
+    Stream_erstell_button.place(x=800, y=480)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
-    Stream_plan_button.place(x=800, y=20)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
     Hauptbildschirmbutton.place(x=800, y=720)
     Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle)
@@ -574,7 +578,6 @@ def Grifickeingabe():
     Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle)
     Verskontroll_Button.place(x=800, y=110)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
-    Stream_plan_button.place(x=800, y=20)
     Tastensperren.destroy()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
