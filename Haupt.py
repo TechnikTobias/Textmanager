@@ -566,7 +566,7 @@ def Verskontrolle():
     Verseingabelabel.place(x=10, y=105)
     Verszahllabel = Label(Verskontroller, font=("Helvetica", 15), text="Wie viele Verse hat das Lied?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Verszahllabel.place(x=10, y=150)
-    Liedverse_eingabe = Text(Verskontroller, font=("Helvetica", 20), height= 15, width=40, bg="#FFEBCD")
+    Liedverse_eingabe = Text(Verskontroller, font=("Helvetica", 20), height= 12, width=44, bg="#FFEBCD")
     Liedverse_eingabe.place(y=255, x=10)
     Buchclicked = StringVar()
     Buchclicked.set(Buch_Listen[0])
@@ -587,6 +587,10 @@ def Versbestätigendef():
     Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
     Text1.write(Verszahl.get())
     Text1.close()
+    Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+    Text1.write(Streameinblendung.get())
+    Text1.close()
+
 
 def Verskontrolleloop():
     global Buchclickedladen, Verszahlladen, Verseingabeladen, Liedeingabeladen, Verse
