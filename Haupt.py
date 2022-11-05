@@ -46,6 +46,7 @@ Textwortübergabe = None
 Buchclickedladen = None
 Verseingabeladen = None
 Liedeingabeladen = None
+Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
 Buch_Listen = [
@@ -197,6 +198,39 @@ class Grafigfuer_ein_Lied:
             self.Buch = "SdH Band 3"
             self.Buchzahl_clicked = 6
 
+    def Buchabkuerzen_Spontan(self):
+        if Textanzeiger.clicked.get() == "Gesangbuch":
+            self.Buch = "GB"
+            self.Buchzahl_clicked = 0
+        elif Textanzeiger.clicked.get() == "Chorbuch":
+            self.Buch = "CB"
+            self.Buchzahl_clicked = 1
+        elif Textanzeiger.clicked.get() == "Jugendliederbuch":
+            self.Buch = "JLB"
+            self.Buchzahl_clicked = 2
+        elif Textanzeiger.clicked.get() == "Argentinisches Chorbuch":
+            self.Buch = "AC"
+            self.Buchzahl_clicked = 7
+        elif Textanzeiger.clicked.get() == "Kinderliederbuch":
+            self.Buch = "KLB"
+            self.Buchzahl_clicked = 3
+        elif Textanzeiger.clicked.get() == "Sonderheft":
+            self.Buch = "SH"
+            self.Buchzahl_clicked = 9
+        elif Textanzeiger.clicked.get() == "Spanisches Chorbuch":
+            self.Buch = "SpC"
+            self.Buchzahl_clicked = 8
+        elif Textanzeiger.clicked.get() == "Band 1 Singt dem Herrn":
+            self.Buch = "SdH Band 1"
+            self.Buchzahl_clicked = 4
+        elif Textanzeiger.clicked.get() == "Band 2 Singt dem Herrn":
+            self.Buch = "SdH Band 2"
+            self.Buchzahl_clicked = 5
+        elif Textanzeiger.clicked.get() == "Band 3 Singt dem Herrn":
+            self.Buch = "SdH Band 3"
+            self.Buchzahl_clicked = 6
+
+
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
         if len(self.Liedverse.get()) >= 1:
@@ -217,13 +251,32 @@ class Grafigfuer_ein_Lied:
                 Textanzeiger.Texteingabe.insert(0, Hi2)
 
 
-    def Livestream_Vorchau_spontan(self):
+    def Livestream_Vorchau_spontan(self, Liedname):
         if len(Textanzeiger.Verseingabe.get()) >= 1:
             self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get() + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + self.Dateiliedtext))
         else:
             self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
+        Lied_Textueberabe = open(
+        "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + Textanzeiger.clicked.get() + "\\l" +
+        str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
+        Lied_Text = Lied_Textueberabe.read()
+        Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
+        Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
+        Lied_nummer_uebergabe.write(Textanzeiger.Texteingabe.get())
+        Lied_nummer_uebergabe.close()
+        Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
+        Lied_Vers_uebergabe.write(Textanzeiger.Verseingabe.get())
+        Lied_Vers_uebergabe.close()
+        Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
+        Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
+        Lied_Buch_Uebergabe.close()
+        if len(Textanzeiger.Verseingabe.get()) >= 1:
+            Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + Lied_Text)
+        else:
+            Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + "\n" + Lied_Text)
+        Livestream_Text.close()
 
-    def Spontaneingabe_Hintergrund_aktualisierung(self, Welcheslied):
+    def Spontaneingabe_Hintergrund_aktualisierung(self, Welcheslied, Liedposition, Liedname):
         global Hintregrundaktualisierenvariable
         if Welcheslied:
             Verseüber = Textanzeiger.Verseingabe.get()
@@ -235,9 +288,11 @@ class Grafigfuer_ein_Lied:
             else:
                 Textanzeiger.Verseingabe.delete(0, "end")
                 Textanzeiger.Verseingabe.insert(END, Textanzeiger.Versüperprüfen(Textanzeiger.clicked.get() ,Textanzeiger.Texteingabe.get(), Verseüber,Verseüber))
-            Grafigfuer_ein_Lied.Buchabkuerzen(self)
+            Grafigfuer_ein_Lied.Buchabkuerzen_Spontan(self)
             Grafigfuer_ein_Lied.Datein_lesen_spontan(self)
-            Grafigfuer_ein_Lied.Livestream_Vorchau_spontan(self)
+            Grafigfuer_ein_Lied.Livestream_Vorchau_spontan(self, Liedname)
+            self.Daten_fürTextanderwand = [Liedposition, False, Textanzeiger.clicked.get(), Textanzeiger.Texteingabe.get(), Textanzeiger.Verseingabe.get()]
+
 
 
     # sorgt dafür, dass alles aktualisiert wird
@@ -311,13 +366,16 @@ class Grafigfuer_ein_Lied:
 
     # Löscht alle Eingaben für ein Lied
     def Eingabe_loeschen(self):
+        global Kindeladen
         if self.aktualisieren_wahl == "True":
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
             self.clicked.set(Buch_Listen[0])
+        Kindeladen= False
 
     # Wiederherstellt, die Alten eingaben
     def Eingabe_wiederherstellen(self, Liedname):
+        global Kindeladen
         if self.aktualisieren_wahl == "True":
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
@@ -330,6 +388,7 @@ class Grafigfuer_ein_Lied:
             self.Liedverse.insert(0, Lied_vers)
             self.Liednummer.insert(0, Lied_Nummer)
             self.clicked.set(Buch_Listen[int(Lied_Buch)])
+            Kindeladen= True
 
     def Hintergrund(self, Hintergrund, Vordergrund):
         if self.aktualisieren_wahl == "True":
@@ -510,7 +569,7 @@ def Grifuckfürpräsantatiom():
         Hauptbildschirmbutton.config(command=Grifickeingabe, text="Eingabe")
         zusaetzliches_lied.destroy()
         zusaetzliches_liedzerstörer.destroy()
-        Einganslied.Liedtextanzeige.config(bg="orange")
+        Textanzeiger.Eingasliedübergabefirst()
         Textwortentry.config(command=Textanzeiger.Textwortübergabe, bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
         Textwortentry.place(x=180)
         Textanzeiger.Datenfürliedanderwand = Einganslied.Daten_fürTextanderwand.copy()
@@ -581,7 +640,7 @@ def Grifickeingabe():
     Tastensperren.destroy()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
-    Textanzeiger.Grundstellung(True)
+    Textanzeiger.Grundstellung(False)
 
 def Verskontrolle():
     global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked, Streameinblendung 
@@ -880,7 +939,17 @@ def Hintergrund_aktualisieren():
         keyboard.release("1")
         Zeit2 = 100
         Zeit3 = 100
-    Amtswechsellied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Amtswechsel)
+    Einganslied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Einganslied, 1,"Einganslied")
+    Textwortlied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Textwortlied, 3, "Textwortlied")
+    Amtswechsellied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Amtswechsel, 4, "Amtswechsellied")
+    Kinderlied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Kinderlied, 5, "Kinderlied")
+    Bussslied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Busslied, 5 + Kinder_Position, "Bußlied")
+    Abendmahlslied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Abendmahlslied, 6 + Kinder_Position, "Abendmahlslied")
+    Schlusslied.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Schlusslied, 7  + Kinder_Position, "Schlusslied")
+    Zusatzlied1.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied1, 8  + Kinder_Position, "Zusatzlied1")
+    Zusatzlied2.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied2, 9  + Kinder_Position, "Zusatzlied2")
+    Zusatzlied3.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied3, 10  + Kinder_Position, "Zusatzlied3")
+    Zusatzlied4.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied4, 11 + Kinder_Position, "Zusatzlied4")
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
@@ -924,8 +993,16 @@ def Streambeenden():
     keyboard.release("1")
     time.sleep(116)
     keyboard.press("strg")
+    time.sleep(0.1)
     keyboard.press("q")
-    time.sleep(1.5)
+    time.sleep(0.5)
+    keyboard.release("strg")
+    keyboard.release("q")
+    time.sleep(0.1)
+    keyboard.press("strg")
+    time.sleep(0.1)
+    keyboard.press("q")
+    time.sleep(0.5)
     keyboard.release("strg")
     keyboard.release("q")
     time.sleep(5)
@@ -1094,6 +1171,8 @@ def Kinder_Anzeigen():
     Kinderladen.write("Wahr")
     Kinderladen.close()
     Kinderlied = Grafigfuer_ein_Lied(166+41 +83*Kinder_Position, "Kinderlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    if Kindeladen == True:
+        Kinderlied.Eingabe_wiederherstellen("Kinderlied")
     Aktualiesierung_Grafick()
 
 

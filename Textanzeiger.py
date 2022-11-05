@@ -8,7 +8,18 @@ Wieoft = 0
 Wieoftlied = 1
 voherliedzwischensehne = False
 lesteslied = False
+Darf_ich_Einganslied = False
+Darf_ich_Textwortlied = False
 Darf_ich_Amtswechsel = False
+Darf_ich_Busslied = False
+Darf_ich_Abendmahlslied = False
+Darf_ich_Schlusslied = False
+Darf_ich_Kinderlied = False
+Darf_ich_Zusatzlied1 = False
+Darf_ich_Zusatzlied2 = False
+Darf_ich_Zusatzlied3 = False
+Darf_ich_Zusatzlied4 = False
+Verseingabe = None
 
 def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
     global Verzanzahl1
@@ -28,6 +39,7 @@ def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
             if Hallo == [""]:
                 break
             if int(Hallo.pop()) > int(Verzanzahl):
+                print(str(Hallo) +"g"+str(Verzanzahl))
                 return True
             if len(Hallo) == 0:
                 break
@@ -180,6 +192,30 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         ErrorLabel.place(x=0, y=80)
 
 def Grundstellung(Livestreamaktualisierung):
+    global Darf_ich_Kinderlied, Darf_ich_Busslied, Darf_ich_Abendmahlslied, Darf_ich_Busslied, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Amtswechsel, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4
+    Darf_ich_Einganslied = False
+    Darf_ich_Textwortlied = False
+    Darf_ich_Amtswechsel = False
+    Darf_ich_Kinderlied = False
+    Darf_ich_Busslied = False
+    Darf_ich_Abendmahlslied = False
+    Darf_ich_Schlusslied = False
+    Darf_ich_Zusatzlied1 =False
+    Darf_ich_Zusatzlied2 = False
+    Darf_ich_Zusatzlied3 = False
+    Darf_ich_Zusatzlied4 = False
+    try:
+        Texteingabe.destroy()
+    except:
+        pass
+    try:
+        Verseingabe.destroy()
+    except:
+        pass
+    try:
+        opt.destroy()
+    except:
+        pass
     Haupt.Einganslied.Grafikresetten()
     Haupt.Textwortlied.Grafikresetten()
     Haupt.Amtswechsellied.Grafikresetten()
@@ -223,106 +259,153 @@ def Anfang():
     Haupt.Textmanager.update()
     Grundstellung(True)
 
+def Eingasliedübergabefirst():
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Einganslied
+    Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
+    Wieoftlied = int(Haupt.Einganslied.Daten_fürTextanderwand[0])
+    Wieoft = 0
+    Grundstellung(False)
+    Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
+    lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Einganslied = True
 
 def Eingasliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Einganslied
     Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Einganslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Einganslied = True
 
 def Textwortliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Textwortlied
     Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Textwortlied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Textwortlied = True
 
 
 def Amtswechseliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Amtswechsel
     Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Amtswechsel = True
 
 def Bußliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Busslied
     Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Bussslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Bussslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Busslied = True
 
 def Abendmahlsliedübergabe():
-    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied
+    global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Abendmahlslied
     Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Abendmahlslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Abendmahlslied = True
+    
 
 def Schlussliedübergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied, Darf_ich_Schlusslied
     Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Schlusslied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Schlusslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Schlusslied = True
+
 
 def Kinderliedübergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied, Darf_ich_Kinderlied
     Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Kinderlied.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Kinderlied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Kinderlied = True
+
 
 def Zusatzlied1übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied, Darf_ich_Zusatzlied1
     Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Zusatzlied1.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Zusatzlied1 = True
 
 def Zusatzlied2übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied, Darf_ich_Zusatzlied2
     Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Zusatzlied2.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Zusatzlied2 = True
 
 def Zusatzlied3übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied, Darf_ich_Zusatzlied3
     Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Zusatzlied3.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Zusatzlied3 = True
 
 def Zusatzlied4übergabe():
-    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
+    global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied, Darf_ich_Zusatzlied4
     Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0])
     Wieoft = 0
     Grundstellung(True)
     Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
     lesteslied = False
+    if len(Datenfürliedanderwand[3]) == 0:
+        Eingabe()
+        Darf_ich_Zusatzlied4 = True
 
 def Textwortübergabe():
     global Datenfürliedanderwand, Wieoftlied, Wieoft, lesteslied
@@ -333,8 +416,20 @@ def Textwortübergabe():
     Haupt.Textwortentry.config(bg="orange")
     lesteslied = False
 
+def Eingabe():
+    global Texteingabe, Verseingabe, clicked, opt
+    Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=4)
+    Texteingabe.place(x=30, y=600)
+    Verseingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=7)
+    Verseingabe.place(x=30, y=645)
+    clicked = Haupt.StringVar()
+    clicked.set(Haupt.Buch_Listen[0])
+    opt = Haupt.OptionMenu(Haupt.Textmanager, clicked, *Haupt.Buch_Listen)
+    opt.config(width=12, font=('Helvetica', 12), bg=Haupt.Textmanager_Hintergrund, fg=Haupt.Textmanager_Textfarbe)
+    opt.place(x=170, y=630)
+
 def Nächstelied():
-    global Wieoftlied, Datenfürliedanderwand, Wieoft, lesteslied, Texteingabe, Verseingabe, opt, Darf_ich_Amtswechsel, clicked
+    global Wieoftlied, Datenfürliedanderwand, Wieoft, lesteslied, Darf_ich_Amtswechsel, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Abendmahlslied, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4, Darf_ich_Busslied, Darf_ich_Kinderlied
     Wieoft = 0
     Grundstellung(True)
     Datenfürliedanderwand = []
@@ -342,72 +437,71 @@ def Nächstelied():
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
         if len(Datenfürliedanderwand[3]) == 0:
-            Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=4)
-            Texteingabe.place(x=30,y=600)
-            Verseingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=7)
-            Verseingabe.place(x=30, y=645)
+            Eingabe()
+            Darf_ich_Einganslied = True
     elif int(Haupt.Textwortübergabedaten[0]) == int(Wieoftlied):
         Haupt.Textwortentry.config(bg="orange")
         Datenfürliedanderwand = Haupt.Textwortübergabedaten.copy()
+    elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
+        Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
+        Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Textwortlied = True
     elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
         if len(Datenfürliedanderwand[3]) == 0:
-            Texteingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=4)
-            Texteingabe.place(x=30, y=600)
-            Verseingabe = tkinter.Entry(Haupt.Textmanager, font=("Helvetica", 24), width=7)
-            Verseingabe.place(x=30, y=645)
-            clicked = Haupt.StringVar()
-            clicked.set(Haupt.Buch_Listen[0])
-            Haupt.OptionMenu(Haupt.Textmanager, clicked, *Haupt.Buch_Listen)
-            opt = Haupt.OptionMenu(Haupt.Textmanager, clicked, *Haupt.Buch_Listen)
-            opt.config(width=12, font=('Helvetica', 12), bg=Haupt.Textmanager_Hintergrund, fg=Haupt.Textmanager_Textfarbe)
-            opt.place(x=170, y=630)
+            Eingabe()
             Darf_ich_Amtswechsel = True
-        else:
-            try:
-                Texteingabe.destroy()
-            except:
-                pass
-            try:
-                Verseingabe.destroy()
-            except:
-                pass
-            try:
-                opt.destroy()
-            except:
-                pass
-            Darf_ich_Amtswechsel = False
-    elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
-        Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
-        Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
-    elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
-        Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
-        Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
     elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Bussslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Busslied = True
     elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Abendmahlslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Abendmahlslied = True
     elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Schlusslied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Schlusslied = True
     elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Kinderlied.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Kinderlied = True
     elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Zusatzlied1.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Zusatzlied1 = True
     elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Zusatzlied2.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Zusatzlied2 = True
     elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Zusatzlied3.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Zusatzlied3 = True
     elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
         Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
+        if len(Datenfürliedanderwand[3]) == 0:
+            Eingabe()
+            Darf_ich_Zusatzlied4 = True
     else:
         Haupt.Text_Anzeige_Label.config(text="")
         lesteslied = True
@@ -452,6 +546,7 @@ def Liedgebe():
             Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
             Wieoftlied = 1
             Haupt.Textmanager.update()
+        spontandaten(Wieoftlied)
         Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
         Aktuelllervers = len(AusganneVerse)
         if int(Wieoft) == int(Aktuelllervers):
@@ -478,9 +573,62 @@ def Liedgebe():
             Wieoft = Wieoft + 1
             Haupt.Textmanager.update()
 
+def spontandaten(Liedposition):
+    global Datenfürliedanderwand
+    if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
+    elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
+
+
+def Eingabelöschen():
+        global Darf_ich_Kinderlied, Darf_ich_Busslied, Darf_ich_Abendmahlslied, Darf_ich_Busslied, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Amtswechsel, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4
+        Darf_ich_Einganslied = False
+        Darf_ich_Textwortlied = False
+        Darf_ich_Amtswechsel = False
+        Darf_ich_Kinderlied = False
+        Darf_ich_Busslied = False
+        Darf_ich_Abendmahlslied = False
+        Darf_ich_Schlusslied = False
+        Darf_ich_Zusatzlied1 =False
+        Darf_ich_Zusatzlied2 = False
+        Darf_ich_Zusatzlied3 = False
+        Darf_ich_Zusatzlied4 = False       
+        try:
+            Texteingabe.destroy()
+        except:
+            pass
+        try:
+            Verseingabe.destroy()
+        except:
+            pass
+        try:
+            opt.destroy()
+        except:
+            pass
+
 
 def optisches_fedback(Liedposition):
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Einganslied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F24")
@@ -491,6 +639,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Textwortübergabedaten[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Textwortentry.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F13")
@@ -501,6 +650,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Amtswechsellied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F23")
@@ -511,6 +661,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Textwortlied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F22")
@@ -521,6 +672,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Bussslied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F21")
@@ -531,6 +683,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Abendmahlslied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F20")
@@ -541,6 +694,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Schlusslied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F19")
@@ -551,6 +705,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Kinderlied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F18")
@@ -561,6 +716,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Zusatzlied1.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F17")
@@ -571,6 +727,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Zusatzlied2.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F16")
@@ -581,6 +738,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Zusatzlied3.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F15")
@@ -591,6 +749,7 @@ def optisches_fedback(Liedposition):
         time.sleep(0.5)
         keyboard.release("1")
     elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Liedposition):
+        Eingabelöschen()
         Haupt.Zusatzlied4.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
         keyboard.press("F14")
