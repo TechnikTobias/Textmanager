@@ -252,29 +252,32 @@ class Grafigfuer_ein_Lied:
 
 
     def Livestream_Vorchau_spontan(self, Liedname):
-        if len(Textanzeiger.Verseingabe.get()) >= 1:
-            self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get() + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + self.Dateiliedtext))
-        else:
-            self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
-        Lied_Textueberabe = open(
-        "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + Textanzeiger.clicked.get() + "\\l" +
-        str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
-        Lied_Text = Lied_Textueberabe.read()
-        Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
-        Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
-        Lied_nummer_uebergabe.write(Textanzeiger.Texteingabe.get())
-        Lied_nummer_uebergabe.close()
-        Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
-        Lied_Vers_uebergabe.write(Textanzeiger.Verseingabe.get())
-        Lied_Vers_uebergabe.close()
-        Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
-        Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
-        Lied_Buch_Uebergabe.close()
-        if len(Textanzeiger.Verseingabe.get()) >= 1:
-            Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + Lied_Text)
-        else:
-            Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + "\n" + Lied_Text)
-        Livestream_Text.close()
+        try:
+            if len(Textanzeiger.Verseingabe.get()) >= 1:
+                self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get() + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + self.Dateiliedtext))
+            else:
+                self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
+            Lied_Textueberabe = open(
+            "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + Textanzeiger.clicked.get() + "\\l" +
+            str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
+            Lied_Text = Lied_Textueberabe.read()
+            Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
+            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
+            Lied_nummer_uebergabe.write(Textanzeiger.Texteingabe.get())
+            Lied_nummer_uebergabe.close()
+            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
+            Lied_Vers_uebergabe.write(Textanzeiger.Verseingabe.get())
+            Lied_Vers_uebergabe.close()
+            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
+            Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
+            Lied_Buch_Uebergabe.close()
+            if len(Textanzeiger.Verseingabe.get()) >= 1:
+                Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + Lied_Text)
+            else:
+                Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + "\n" + Lied_Text)
+            Livestream_Text.close()
+        except:
+            pass
 
     def Spontaneingabe_Hintergrund_aktualisierung(self, Welcheslied, Liedposition, Liedname):
         global Hintregrundaktualisierenvariable
