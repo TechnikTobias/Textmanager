@@ -3,7 +3,7 @@ import time
 import Haupt
 import tkinter
 import keyboard
-
+Anzeige = False
 Wieoft = 0
 Wieoftlied = 1
 voherliedzwischensehne = False
@@ -192,7 +192,8 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         ErrorLabel.place(x=0, y=80)
 
 def Grundstellung(Livestreamaktualisierung):
-    global Darf_ich_Kinderlied, Darf_ich_Busslied, Darf_ich_Abendmahlslied, Darf_ich_Busslied, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Amtswechsel, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4
+    global Darf_ich_Kinderlied, Darf_ich_Busslied, Darf_ich_Abendmahlslied, Darf_ich_Busslied, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Amtswechsel, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4, Anzeige
+    Anzeige = False
     Darf_ich_Einganslied = False
     Darf_ich_Textwortlied = False
     Darf_ich_Amtswechsel = False
@@ -762,6 +763,8 @@ def optisches_fedback(Liedposition):
 
 
 def Verse(Hallo123,Wieoft,WelchesBuch):
+    global Anzeige
+    Anzeige = True
     try:
         Texttest = open("C:\\Users\\"+Haupt.Dateiort+"\\Desktop\\Lieder\\Buch\\"+str(WelchesBuch)+"\\"+str(Hallo123)+" Vers " + str(Wieoft) + ".txt",
                     "r", encoding="utf-8")
