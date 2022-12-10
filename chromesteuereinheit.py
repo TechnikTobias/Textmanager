@@ -27,7 +27,7 @@ def Chromestarten():
             options = Options()
             options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
             driver = webdriver.Chrome("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver", chrome_options=options)
-            driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
+            driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming/manage")
             try:
                 time.sleep(3)
                 suche = driver.find_element(By.ID,"video-title")
@@ -299,5 +299,5 @@ def stream_planen():
                     "/html/body/div[14]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
                 eingabe24.click()
                 time.sleep(4)
-                driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")
+                driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming/manage")
                 Videobeschreibungaktionvarable = "Wahr"

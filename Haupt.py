@@ -43,9 +43,9 @@ Testeneingeben = True
 Textwortwiederherstellen = False
 Textworteingabeübergabe = False
 Textwortübergabe = None
-Buchclickedladen = None
-Verseingabeladen = None
-Liedeingabeladen = None
+Buchclickedladen = "0"
+Verseingabeladen = "0"
+Liedeingabeladen = "0"
 Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
@@ -697,8 +697,14 @@ def Verskontrolleloop():
         Verse = 1
     else:
         Verse = Verseingabe.get()
-    Liedverse_eingabe.get("1.0","end-1c")
+    Liedeingabekontrolle = Liedverse_eingabe.get("1.0","end-1c")
     if not Buchclicked.get() == Buchclickedladen or not Verseingabe.get() == Verseingabeladen or not Liedeingabe.get() == Liedeingabeladen:
+        try:
+            hi = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclickedladen+"\\"+Liedeingabeladen+" Vers "+Verse+".txt", 'r', encoding='utf8')
+            if not Liedeingabekontrolle == hi.read():
+                print("ya")
+        except:
+            pass
         if len(Liedeingabe.get()) > 0:
             try:
                 Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'r', encoding='utf8')
