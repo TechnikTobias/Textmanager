@@ -103,68 +103,75 @@ def Videobeschreibung():
                     Texteingabeclick = Texteingabeclick.read()
                     eingabe3 = driver.find_element(By.XPATH,Texteingabeclick)
                     eingabe3.clear()
-                if len(Haupt.Einganslied.Liedversefest) >= 1:
-                    Texteingabe1 = str(
-                        "\n\n\nLieder für den Gottesdienst \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
-                            Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                else:
-                    Texteingabe1 = str(
-                        "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest +"\n" + str(Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                if len(Haupt.Textwortlied.Liedversefest) >= 1:
-                    Texteingabe1 = str(
-                        "TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + " Vers " + " " + Haupt.Textwortlied.Liedversefest + "\n" + str(
-                            Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                else:
-                    Texteingabe1 = str("TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + "\n" + str(
-                        Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                if len(Haupt.Amtswechsellied.Liedversefest) >= 1:
-                    Texteingabe1 = str(
-                        "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                else:
-                    Texteingabe1 = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
-                        Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                if Haupt.Kinderlied.aktualisieren_wahl == "True":
-                    if len(Haupt.Kinderlied.Liedversefest) >= 1:
+                if len(Haupt.Einganslied.Liednummerfest) > 0:
+                    if len(Haupt.Einganslied.Liedversefest) >= 1:
                         Texteingabe1 = str(
-                            "Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + " Vers " + " " + Haupt.Kinderlied.Liedversefest + "\n" + str(
-                                Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                            "\n\n\nLieder für den Gottesdienst \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest + " Vers " + " " + Haupt.Einganslied.Liedversefest + "\n" + str(
+                                Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
                         Texteingabe = Texteingabe + Texteingabe1
                     else:
-                        Texteingabe1 = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
-                            Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe1 = str(
+                            "Lieder \nE " + Haupt.Einganslied.Buch + " " + Haupt.Einganslied.Liednummerfest +"\n" + str(Haupt.Einganslied.Dateiliedtext) + "\n\n\n")
                         Texteingabe = Texteingabe + Texteingabe1
-                if len(Haupt.Bussslied.Liedversefest) >= 1:
-                    Texteingabe1 = str(
-                        "B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + " Vers " + " " + Haupt.Bussslied.Liedversefest + "\n" + str(
-                        Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                else:
-                    Texteingabe1 = str("B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + "\n" + str(
-                        Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                if len(Haupt.Abendmahlslied.Liedversefest) >= 1:
-                    Texteingabe1 = str(
-                        "A " + Haupt.Abendmahlslied.Buch + " " + Haupt.Abendmahlslied.Liednummerfest + " Vers " + " " + Haupt.Abendmahlslied.Liedversefest + "\n" + str(
+                if len(Haupt.Textwortlied.Liednummerfest) > 0:                
+                    if len(Haupt.Textwortlied.Liedversefest) >= 1:
+                        Texteingabe1 = str(
+                            "TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + " Vers " + " " + Haupt.Textwortlied.Liedversefest + "\n" + str(
+                                Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                    else:
+                        Texteingabe1 = str("TW " + Haupt.Textwortlied.Buch + " " + Haupt.Textwortlied.Liednummerfest + "\n" + str(
+                            Haupt.Textwortlied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                if len(Haupt.Amtswechsellied.Liednummerfest) > 0:
+                    if len(Haupt.Amtswechsellied.Liedversefest) >= 1:
+                        Texteingabe1 = str(
+                            "AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + " Vers " + " " + Haupt.Amtswechsellied.Liedversefest + "\n" + str(Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                    else:
+                        Texteingabe1 = str("AW " + Haupt.Amtswechsellied.Buch + " " + Haupt.Amtswechsellied.Liednummerfest + "\n" + str(
+                            Haupt.Amtswechsellied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                if Haupt.Kinderlied.aktualisieren_wahl == "True":
+                    if len(Haupt.Kinderlied.Liednummerfest) > 0:
+                        if len(Haupt.Kinderlied.Liedversefest) >= 1:
+                            Texteingabe1 = str(
+                                "Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + " Vers " + " " + Haupt.Kinderlied.Liedversefest + "\n" + str(
+                                    Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                            Texteingabe = Texteingabe + Texteingabe1
+                        else:
+                            Texteingabe1 = str("Kinder " + Haupt.Kinderlied.Buch + " " + Haupt.Kinderlied.Liednummerfest + "\n" + str(
+                                Haupt.Kinderlied.Dateiliedtext) + "\n\n\n")
+                            Texteingabe = Texteingabe + Texteingabe1
+                if len(Haupt.Bussslied.Liednummerfest) > 0:
+                    if len(Haupt.Bussslied.Liedversefest) >= 1:
+                        Texteingabe1 = str(
+                            "B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + " Vers " + " " + Haupt.Bussslied.Liedversefest + "\n" + str(
+                            Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                    else:
+                        Texteingabe1 = str("B " + Haupt.Bussslied.Buch + " " + Haupt.Bussslied.Liednummerfest + "\n" + str(
+                            Haupt.Bussslied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                if len(Haupt.Abendmahlslied.Liednummerfest) > 0:
+                    if len(Haupt.Abendmahlslied.Liedversefest) >= 1:
+                        Texteingabe1 = str(
+                            "A " + Haupt.Abendmahlslied.Buch + " " + Haupt.Abendmahlslied.Liednummerfest + " Vers " + " " + Haupt.Abendmahlslied.Liedversefest + "\n" + str(
+                                Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                    else:
+                        Texteingabe1 = str("A " + Haupt.Abendmahlslied.Buch + " " +Haupt.Abendmahlslied.Liednummerfest + "\n" + str(
                             Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                else:
-                    Texteingabe1 = str("A " + Haupt.Abendmahlslied.Buch + " " +Haupt.Abendmahlslied.Liednummerfest + "\n" + str(
-                        Haupt.Abendmahlslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                if len(Haupt.Schlusslied.Liedversefest) >= 1:
-                    Texteingabe1 = str(
-                        "S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + " Vers " + " " + Haupt.Schlusslied.Liedversefest + "\n" + str(
-                                Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
-                else:
-                    Texteingabe1 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
-                    Texteingabe = Texteingabe + Texteingabe1
+                        Texteingabe = Texteingabe + Texteingabe1
+                if len(Haupt.Schlusslied.Liednummerfest) > 0:
+                    if len(Haupt.Schlusslied.Liedversefest) >= 1:
+                        Texteingabe1 = str(
+                            "S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + " Vers " + " " + Haupt.Schlusslied.Liedversefest + "\n" + str(
+                                    Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
+                    else:
+                        Texteingabe1 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
+                        Texteingabe = Texteingabe + Texteingabe1
                 Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
                 Textwortübergabe = Textwortauslesen1.read()
                 Textwortauslesen1.close()

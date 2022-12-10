@@ -363,6 +363,7 @@ class Grafigfuer_ein_Lied:
                 self.Liednummerfest = self.Liednummer.get()
                 self.Liedversefest = self.Liedverse.get()
                 Hintregrundaktualisierenvariable = True
+                Datei_Kontrolle(self.clicked.get() , self.Liednummer.get())
         except:
             self.Liedversefest = 0
             self.Liednummerfest = 0
@@ -738,6 +739,23 @@ def Verskontrolleloop():
     Liedeingabeladen= Liedeingabe.get()
     Liedeingabe.after(100, lambda: Verskontrolleloop())
 
+def Datei_Kontrolle(Buch, Lied):
+    try:
+        wieoft = 0
+        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buch+"\\"+Lied+".txt", 'r', encoding='utf8')
+        Hi = Text1.read()
+        while not wieoft == int(Hi):
+            Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buch+"\\"+Lied+" Vers "+str(wieoft+1)+".txt", 'r', encoding='utf8')
+            wieoft = wieoft + 1
+    except:
+            Errorbild = Toplevel(Textmanager)
+            Errorbild.geometry("560x350+500+400")
+            Errorbild.config(bg="black")
+            Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg="black", fg="green", wraplength=560)
+            Error.place(x=210, y=0)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Die Liednummer "+str(Lied)+" ist noch nicht im System", bg="black", fg="green", wraplength=560)
+            ErrorLabel.place(x=0, y=80)
+
 
 def zusaetzlicheslied3():
     global Wie_viele_zusatzlieder, Zusatzlied4, Zusatzlied4_obwahr, Zusatzlied3_obwahr
@@ -926,6 +944,25 @@ def Hintergrund_aktualisieren():
                     pass
                 Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
                 Textanzeiger.Nächstelied()
+            elif keyboard.is_pressed("."):
+                while keyboard.is_pressed("."):
+                    pass
+                if Textanzeiger.Anzeige == True:
+                    Hi = ""
+                    Text_Anzeige_Label.config(text=Hi)
+                    Textmanager.update()
+                    Textanzeiger.Anzeige = False
+                    keyboard.press("0")
+                    time.sleep(0.5)
+                    keyboard.release("0")
+                    time.sleep(0.5)
+                    keyboard.press("1")
+                    time.sleep(0.5)
+                    keyboard.release("1")
+                else:
+                    Textanzeiger.Wieoft = Textanzeiger.Wieoft -1
+                    Textanzeiger.Liedgebe()
+                    Textanzeiger.Anzeige = True
         if keyboard.is_pressed("strg"):
             if keyboard.is_pressed("y"):
                 while keyboard.is_pressed("y"):
@@ -934,6 +971,7 @@ def Hintergrund_aktualisieren():
                     Testeneingeben = True
                 else:
                     Testeneingeben = False
+        
     if float(datetime.datetime.now().strftime("%H.%M")) == Zeit or float(datetime.datetime.now().strftime("%H.%M")) == Zeit1:
         Textanzeiger.Grundstellung(True)
         Zeit1 = 100
