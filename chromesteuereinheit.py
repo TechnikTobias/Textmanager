@@ -292,18 +292,18 @@ def stream_planen():
                 driver.get("https://rebrandly.com/links")
                 time.sleep(10)
                 eingabe21 = driver.find_element(By.XPATH,
-                    "/html/body/div[1]/div[2]/div[2]/div[2]/ul/li/div/div/div[1]/div/div[1]/div/a")
+                    "/html/body/div[1]/div[2]/div[3]/div[2]/ul/li/div/div/div[1]/div/div[1]/div/a")
                 eingabe21.click()
                 time.sleep(1)
-                eingabe22 = driver.find_element(By.XPATH,"/html/body/div[14]/div/div/div/header/div[3]/div[1]/div/span/p")
+                eingabe22 = driver.find_element(By.XPATH,"/html/body/div[12]/div/div/div/header/div[3]/div[1]/div/span/p")
                 eingabe22.click()
                 time.sleep(1)
                 eingabe23 = driver.find_element(By.XPATH,
-                    "/html/body/div[14]/div/div/div/header/div[3]/div[1]/div/form/label/div/div/textarea")
+                    "/html/body/div[12]/div/div/div/header/div[3]/div[1]/div/form/label/div/div/textarea")
                 eingabe23.clear()
                 eingabe23.send_keys(pyperclip.paste())
                 eingabe24 = driver.find_element(By.XPATH,
-                    "/html/body/div[14]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
+                    "/html/body/div[12]/div/div/div/header/div[3]/div[1]/div/form/div/button[1]")
                 eingabe24.click()
                 time.sleep(4)
                 driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming")

@@ -397,8 +397,6 @@ class Grafigfuer_ein_Lied:
     def Hintergrund(self, Hintergrund, Vordergrund):
         if self.aktualisieren_wahl == "True":
             self.opt.config(bg=Hintergrund, fg=Vordergrund)
-            self.Liednummer.config(bg=Hintergrund, fg=Vordergrund)
-            self.Liedverse.config(bg=Hintergrund, fg=Vordergrund)
             self.Lied.config(bg=Hintergrund, fg=Vordergrund)
             self.Verse.config(bg=Hintergrund, fg=Vordergrund)
             self.Liedtextanzeige.config(bg=Hintergrund, fg=Vordergrund)
@@ -487,8 +485,7 @@ def Textmamager_erstellen():
     Zusatzlied3 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied2", Zusatzlied3_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Zusatzlied4 = Grafigfuer_ein_Lied(1000+83*Kinder_Position, "Zusatzlied3", Zusatzlied4_obwahr, Textmanager_Hintergrund, Textmanager_Textfarbe)
     Textmanager.config(bg=Textmanager_Hintergrund)
-    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Weiters Lied", command=zusaetzlicheslied)
-    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)    
+    zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Textfarbe, bg=Textmanager_Hintergrund, text="Weiters Lied", command=zusaetzlicheslied, border=0)
     zusaetzliches_lied.place(x=300, y=500+41+83*Kinder_Position)
     Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
     Button_bestaetigen.place(x=800, y=200)
@@ -828,7 +825,7 @@ def zusaetzlicheslied():
                                       "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied1_obwahr = True
-    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Hintergrund, bg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
+    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Textfarbe, bg=Textmanager_Hintergrund, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer, border=0)
     zusaetzliches_lied.config(command=zusaetzlicheslied1)
     Aktualiesierung_Grafick()
 
@@ -1111,6 +1108,7 @@ def Farben_in_Zahl(uebergabe):
 
 
 def Hintergrund():
+    global Textmanager_Hintergrund, Textmanager_Textfarbe
     Textmanager.config(bg=Hintergrund_clicked.get())
     Einganslied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
     Textwortlied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
@@ -1128,6 +1126,8 @@ def Hintergrund():
     Hintergrundlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
     Vordergrund_opt.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
     Textlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
+    Textwortentry.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
+    Textwortlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
     Hintergrund = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
     Hintergrund.write(Hintergrund_clicked.get())
     Hintergrund.close()
@@ -1135,7 +1135,9 @@ def Hintergrund():
     Textfarbe.write(Vordergrund_clicked.get())
     Textfarbe.close()
     Buttonfarben.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    zusaetzliches_lied.config(bg=Vordergrund_clicked.get(), fg=Hintergrund_clicked.get())
+    zusaetzliches_lied.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
+    Textmanager_Textfarbe = Vordergrund_clicked.get()
+    Textmanager_Hintergrund = Hintergrund_clicked.get()
 
 
 def Einstellungen():
