@@ -39,7 +39,6 @@ def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
             if Hallo == [""]:
                 break
             if int(Hallo.pop()) > int(Verzanzahl):
-                print(str(Hallo) +"g"+str(Verzanzahl))
                 return True
             if len(Hallo) == 0:
                 break
