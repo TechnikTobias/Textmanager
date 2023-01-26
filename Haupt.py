@@ -8,6 +8,7 @@ from threading import Thread
 import threading
 import time
 from tkinter import *
+from PIL import Image, ImageTk
 from turtle import goto
 import chromesteuereinheit
 import Textanzeiger
@@ -43,9 +44,9 @@ Testeneingeben = True
 Textwortwiederherstellen = False
 Textworteingabeübergabe = False
 Textwortübergabe = None
-Buchclickedladen = None
-Verseingabeladen = None
-Liedeingabeladen = None
+Buchclickedladen = "0"
+Verseingabeladen = "0"
+Liedeingabeladen = "0"
 Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
@@ -61,8 +62,10 @@ Buch_Listen = [
     "Spanisches Chorbuch",
     "Sonderheft"]
 
-
-
+Streameinblendungladen = None
+Liedverse_eingabeladen = None
+Verszahlinfo = None
+hi = True
 
 
 class Grafigfuer_ein_Lied:
@@ -503,9 +506,25 @@ def Textmamager_erstellen():
     Stream_erstell_button.place(x=800, y=480)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom)
-    Hauptbildschirmbutton.place(x=800, y=720)
+    Hauptbildschirmbutton.place(x=800, y=680)
     Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle)
     Verskontroll_Button.place(x=800, y=110)
+    Info = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Info", command=info)
+    Info.place(x=800,y=800)
+
+def info():
+    global Info_manager
+    Info_manager = Toplevel(Textmanager)
+    Info_manager.geometry("800x600")
+    Info_manager.config(bg="black")
+    Text_für_Info = "Entwickler/ Uhrheber: Tobias Giebelhaus\nIn gedenken an meinen Geliebten Opa der bis zum Schluss Geistig fit war und sorgen kurz vor dem Tod im Internet war. Er war ein sehr lieber Opa"
+    Info_zum_programm = Label(Info_manager, font=("Halvetica", 15), bg="black", fg="#FFEBCD", text=Text_für_Info, wraplength=800)
+    Info_zum_programm["justify"] = "left"
+    Info_zum_programm.place(x=0,y=0)
+    Bild_für_opa = ImageTk.PhotoImage(Image.open("Sterbe Anzeige Opa.jpg")) 
+    Bild_für_opa_Label = Label(Info_manager,image=Bild_für_opa)
+    Bild_für_opa_Label.place(x=0,y=100)
+    Bild_für_opa_Label.draw()
 
 def Textwortcommand():
     global Textworteingabe, Textwort_manager, Textworteingabeübergabe
@@ -644,7 +663,7 @@ def Grifickeingabe():
     Textanzeiger.Grundstellung(False)
 
 def Verskontrolle():
-    global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked, Streameinblendung 
+    global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked, Streameinblendung, Versbestätigen, hi
     Verskontroller = Toplevel(Textmanager)
     Verskontroller.geometry("800x800")
     Verskontroller.title("Vers Kontrolle")
@@ -670,64 +689,136 @@ def Verskontrolle():
     Buchopt.config(width=20, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Buchopt.place(x=10,y=10)
     Versbestätigen = Button(Verskontroller, font=("Helvetica", 24), text="Bestätigen", command=Versbestätigendef)
-    Versbestätigen.place(x=300, y=755)
+    Versbestätigen.place(x=300, y=705)
     Streameinblendung = Entry(Verskontroller, font=("Helvetica", 24), width=30, bg="#FFEBCD")
     Streameinblendung.place(x=10, y=205)
+    hi = True
     Verskontrolleloop()
 
 def Versbestätigendef():
-    Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'w', encoding='utf8')
-    Text.write(Liedverse_eingabe.get("1.0","end-1c"))
-    Text.close()
-    Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
-    Text1.write(Verszahl.get())
-    Text1.close()
-    Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
-    Text1.write(Streameinblendung.get())
-    Text1.close()
+    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen
+    if len(Liedeingabe.get()) > 0:
+        Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'w', encoding='utf8')
+        Text.write(Liedverse_eingabe.get("1.0","end-1c"))
+        Text.close()
+        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1.write(Verszahl.get())
+        Text1.close()
+        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1.write(Streameinblendung.get())
+        Text1.close()
+        Versbestätigen.config(text="Gespeichert")
+        Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+        Streameinblendungladen = Streameinblendung.get()
+        Verseingabeladen = Verseingabe.get()
 
+def Dateispeicherndef():
+    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi 
+    if len(Liedeingabe.get()) > 0:
+        Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Versgespeichert)+".txt", 'w', encoding='utf8')
+        Text.write(Liedverse_eingabe.get("1.0","end-1c"))
+        Text.close()
+        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1.write(Verszahl.get())
+        Text1.close()
+        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1.write(Streameinblendung.get())
+        Text1.close()
+        Versbestätigen.config(text="Gespeichert")
+        Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+        Streameinblendungladen = Streameinblendung.get()
+        Verseingabeladen = Verseingabe.get()
+    Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+    Streameinblendungladen = Streameinblendung.get()
+    Verseingabeladen = 100
+    hi = False
+    Verskontrollerdateispeichern.destroy()
+
+def DAtennichtspeicherndef():
+    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi
+    Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+    Streameinblendungladen = Streameinblendung.get()
+    hi = False
+    Verseingabeladen = 100
+    Verskontrollerdateispeichern.destroy()
+
+def Abbrechendef():
+    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi
+    Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+    Streameinblendungladen = Streameinblendung.get()
+    Verseingabeladen = 100
+    hi = False
+    Verskontrollerdateispeichern.destroy()
 
 def Verskontrolleloop():
-    global Buchclickedladen, Verszahlladen, Verseingabeladen, Liedeingabeladen, Verse
+    global Buchclickedladen, Verszahlladen, Verseingabeladen, Liedeingabeladen, Verse, Verszahlinfo, Streameinblendungladen, Liedverse_eingabeladen, hi, Verskontrollerdateispeichern, Versgespeichert
     Verszahl.get()
     erstart = ""
     if Verseingabe.get() == erstart:
         Verse = 1
     else:
         Verse = Verseingabe.get()
-    Liedverse_eingabe.get("1.0","end-1c")
     if not Buchclicked.get() == Buchclickedladen or not Verseingabe.get() == Verseingabeladen or not Liedeingabe.get() == Liedeingabeladen:
-        if len(Liedeingabe.get()) > 0:
-            try:
-                Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'r', encoding='utf8')
-                Textfertig = Text.read()
-                Text.close()
+        if not Streameinblendungladen == Streameinblendung.get() or not Liedverse_eingabeladen == Liedverse_eingabe.get("1.0","end-1c") or not Verszahlinfo == Verszahl.get():
+            Versbestätigen.config(text="Bestätigen")
+            if hi == True:
+                Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+                Streameinblendungladen = Streameinblendung.get()
+                Verseingabeladen = Verseingabe.get()
+                hi = False
+            else:
+                Verskontrollerdateispeichern = Toplevel(Textmanager)
+                Verskontrollerdateispeichern.geometry("600x200")
+                Verskontrollerdateispeichern.title("Vers Speichern")
+                Verskontrollerdateispeichern.config(bg=Textmanager_Hintergrund)
+                Dateispeichern = Button(Verskontrollerdateispeichern, font=("Helvetica", 18), text="Speichern", command=Dateispeicherndef)
+                Dateispeichern.place(x=50, y=80)
+                Dateinichtspeichern = Button(Verskontrollerdateispeichern, font=("Helvetica", 18), text="Nicht Speichern", command=DAtennichtspeicherndef)
+                Dateinichtspeichern.place(x=200, y=80)
+                Abbrechen = Button(Verskontrollerdateispeichern, font=("Helvetica", 18), text="Abbrechen", command=Abbrechendef)
+                Abbrechen.place(x=420, y=80)
+                Infoanzeige = Label(Verskontrollerdateispeichern, font=("Helvetica", 15), text="Das Lied wurde noch nicht gespeichert", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
+                Infoanzeige.place(x=120, y=20)
+        else:
+            Versgespeichert = Verse
+            Versbestätigen.config(text="Bestätigen")
+            Streameinblendung.get()
+            if len(Liedeingabe.get()) > 0:
+                try:
+                    Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'r', encoding='utf8')
+                    Textfertig = Text.read()
+                    Text.close()
+                    Liedverse_eingabe.delete("1.0","end-1c")
+                    Liedverse_eingabe.insert(END,Textfertig)
+                except:
+                    Liedverse_eingabe.delete("1.0","end-1c")
+                try:
+                    Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
+                    text1 = Text1.read()
+                    Verszahl.delete(0, "end")
+                    Verszahl.insert(0, text1)
+                except:
+                    Verszahl.delete(0, "end")
+                try:
+                    Einblendung = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
+                    Einblendungfertig = Einblendung.read()
+                    Einblendung.close()
+                    Streameinblendung.delete(0, "end")
+                    Streameinblendung.insert(END,Einblendungfertig)
+                except:
+                    Streameinblendung.delete(0, "end")
+            else:
                 Liedverse_eingabe.delete("1.0","end-1c")
-                Liedverse_eingabe.insert(END,Textfertig)
-            except:
-                Liedverse_eingabe.delete("1.0","end-1c")
-            try:
-                Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
-                text1 = Text1.read()
                 Verszahl.delete(0, "end")
-                Verszahl.insert(0, text1)
-            except:
-                Verszahl.delete(0, "end")
-            try:
-                Einblendung = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
-                Einblendungfertig = Einblendung.read()
-                Einblendung.close()
                 Streameinblendung.delete(0, "end")
-                Streameinblendung.insert(END,Einblendungfertig)
-            except:
-                Streameinblendung.delete(0, "end")
-                print("error")
-                print("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt")
-                print(Verse)
-    Buchclickedladen = Buchclicked.get()
-    Verseingabeladen = Verseingabe.get()
-    Verszahlladen = Liedeingabe.get()
-    Liedeingabeladen= Liedeingabe.get()
+            Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
+            Streameinblendungladen = Streameinblendung.get()
+            Verseingabeladen = Verseingabe.get()
+        Buchclickedladen = Buchclicked.get()
+        Verseingabeladen = Verseingabe.get()
+        Verszahlladen = Liedeingabe.get()
+        Liedeingabeladen = Liedeingabe.get()
+        Verszahlinfo= Verszahl.get()
     Liedeingabe.after(100, lambda: Verskontrolleloop())
 
 def Datei_Kontrolle(Buch, Lied):
@@ -1033,7 +1124,7 @@ def Streambeenden():
     keyboard.press("strg")
     time.sleep(0.1)
     keyboard.press("q")
-    time.sleep(0.5)
+    time.sleep(1.5)
     keyboard.release("strg")
     keyboard.release("q")
     time.sleep(0.1)
