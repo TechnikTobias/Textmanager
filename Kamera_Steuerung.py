@@ -148,3 +148,4 @@ class ptzControl(object):
 
 Kamera = ptzControl()
 Kamera.goto_preset()
+
