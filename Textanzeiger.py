@@ -231,6 +231,7 @@ def Grundstellung(Livestreamaktualisierung):
     Haupt.Textwortentry.config(bg=Haupt.Textmanager_Hintergrund, fg=Haupt.Textmanager_Textfarbe)
     Haupt.Text_Anzeige_Label.config(text="")
     Haupt.Textmanager.update()
+
     if Livestreamaktualisierung == True:
         keyboard.press("0")
         time.sleep(0.5)
@@ -239,6 +240,8 @@ def Grundstellung(Livestreamaktualisierung):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Kamera_Steuerung.Kamera.goto_preset(1)
+
 
 
 def vorherübergabeTextandiewand():
@@ -632,13 +635,14 @@ def optisches_fedback(Liedposition):
         Eingabelöschen()
         Haupt.Einganslied.Liedtextanzeige.config(bg="green")
         Haupt.Textmanager.update()
-        keyboard.press("F24")
-        time.sleep(0.5)
-        keyboard.release("F24")
-        time.sleep(0.5)
-        keyboard.press("1")
-        time.sleep(0.5)
-        keyboard.release("1")
+        if len(Haupt.Einganslied.Daten_fürTextanderwand[3]) > 0:
+            keyboard.press("F24")
+            time.sleep(0.5)
+            keyboard.release("F24")
+            time.sleep(0.5)
+            keyboard.press("1")
+            time.sleep(0.5)
+            keyboard.release("1")
         Haupt.Einganslied.Kamerapositiondef()
         Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
 
@@ -664,6 +668,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Amtswechsellied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Amtswechsellied.Kameraposition)
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Textwortlied.Liedtextanzeige.config(bg="green")
@@ -675,6 +681,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Textwortlied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Textwortlied.Kameraposition)
     elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Bussslied.Liedtextanzeige.config(bg="green")
@@ -686,6 +694,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Bussslied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Bussslied.Kameraposition)
     elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Abendmahlslied.Liedtextanzeige.config(bg="green")
@@ -697,6 +707,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Abendmahlslied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Abendmahlslied.Kameraposition)
     elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Schlusslied.Liedtextanzeige.config(bg="green")
@@ -708,6 +720,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Schlusslied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Schlusslied.Kameraposition)
     elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Kinderlied.Liedtextanzeige.config(bg="green")
@@ -719,6 +733,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Kinderlied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Kinderlied.Kameraposition)
     elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Zusatzlied1.Liedtextanzeige.config(bg="green")
@@ -730,6 +746,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Zusatzlied1.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
     elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Zusatzlied2.Liedtextanzeige.config(bg="green")
@@ -741,6 +759,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Zusatzlied2.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
     elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Zusatzlied3.Liedtextanzeige.config(bg="green")
@@ -752,6 +772,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Zusatzlied3.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied3.Kameraposition)
     elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Zusatzlied4.Liedtextanzeige.config(bg="green")
@@ -763,6 +785,8 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Zusatzlied4.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied4.Kameraposition)
 
 
 def Verse(Hallo123,Wieoft,WelchesBuch):
