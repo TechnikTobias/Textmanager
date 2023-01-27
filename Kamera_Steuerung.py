@@ -3,7 +3,7 @@ from onvif import ONVIFCamera
 IP = "192.168.178.58"  # Camera IP address
 PORT = 8080  # Port
 USER = "admin"  # Username
-PASS = "4Hasen+Voegel"  # Password
+PASS = ""  # Password
 
 class ptzControl(object):
     def __init__(self):
