@@ -1,18 +1,19 @@
-from ast import Str
 import datetime
 import os
 import subprocess
 from re import T
 import sys
 from threading import Thread
-import threading
 import time
 from tkinter import *
 from PIL import Image, ImageTk
-from turtle import goto
+import keyboard
+
 import chromesteuereinheit
 import Textanzeiger
-import keyboard
+import Kamera_Steuerung
+
+
 Zeit = 9.20
 Zeit1 = 19.50
 Zeit2 = 9.25
@@ -62,6 +63,16 @@ Buch_Listen = [
     "Spanisches Chorbuch",
     "Sonderheft"]
 
+Kameralisten = [
+    "Altar",
+    "Orgel",
+    "Klavinova",
+    "Vorlesung",
+    "Chor",
+    "Gemeinde",
+    "Altar Schmuck"
+]
+
 Streameinblendungladen = None
 Liedverse_eingabeladen = None
 Verszahlinfo = None
@@ -87,6 +98,7 @@ class Grafigfuer_ein_Lied:
     gespeichertestlied = None
     gespeichertestvers = None
     gespeichertestBuch = None
+    Kameraposition = None
     Daten_fürTextanderwand = [0]
 
 
@@ -95,21 +107,24 @@ class Grafigfuer_ein_Lied:
         if Wahl == "True":
             self.clicked = StringVar()
             self.clicked.set(Buch_Listen[0])
-            OptionMenu(Textmanager, self.clicked, *Buch_Listen)
             self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
             self.opt.config(width=12, font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
+            self.Kameraclicked = StringVar()
+            self.Kameraclicked.set(Kameralisten[0])
+            self.Kameraopt = OptionMenu(Textmanager, self.Kameraclicked, *Kameralisten)
             self.Lied = Label(Textmanager, font=("Helvetica", 15), pady=5, text=Liedname, bg=Hintergrund, fg=Vordergrund)
             self.Verse = Label(Textmanager, font=("Helvetica", 15), text="Verse", bg=Hintergrund, fg=Vordergrund)
             self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10)
             self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
             self.Liedtextanzeige = Button(Textmanager, font=12, pady=5, bg=Hintergrund, border=0, fg=Vordergrund)
             self.Liedtextanzeige["justify"] = "left"
-            self.opt.place(x=340, y=25 + Position)
-            self.Liedtextanzeige.place(x=495, y=15 + Position)
+            self.Kameraopt.place(x=80, y=40 + Position)
+            self.opt.place(x=370, y=25 + Position)
+            self.Liedtextanzeige.place(x=555, y=15 + Position)
             self.Lied.place(x=0, y=0 + Position)
             self.Verse.place(y=40 + Position)
-            self.Liednummer.place(x=150, y=0 + Position)
-            self.Liedverse.place(x=150, y=40 + Position)
+            self.Liednummer.place(x=180, y=0 + Position)
+            self.Liedverse.place(x=180, y=40 + Position)
             self.aktualisieren_wahl = "True"
             Liedpositionübergabe = Liedpositionübergabe + 1
         else:
@@ -153,6 +168,8 @@ class Grafigfuer_ein_Lied:
         self.Liednummer.destroy()
         self.Liedverse.destroy()
         self.Liedtextanzeige.destroy()
+        self.Kameraopt.destroy()
+        self.Kameraopt = None
         self.opt = None
         self.Lied = None
         self.Verse = None
@@ -233,6 +250,22 @@ class Grafigfuer_ein_Lied:
             self.Buch = "SdH Band 3"
             self.Buchzahl_clicked = 6
 
+    def Kamerapositiondef(self):
+        global Kameraposition
+        if self.Kameraclicked.get() == "Altar":
+            self.Kameraposition = 1
+        elif self.Kameraclicked.get() == "Orgel":
+            self.Kameraposition = 2
+        elif self.Kameraclicked.get() == "Klavinova":
+            self.Kameraposition = 3
+        elif self.Kameraclicked.get() == "Vorlesung":
+            self.Kameraposition = 4
+        elif self.Kameraclicked.get() == "Chor":
+            self.Kameraposition = 5
+        elif self.Kameraclicked.get() == "Gemeinde":
+            self.Kameraposition = 6
+        elif self.Kameraclicked.get() == "Altar Schmuck":
+            self.Kameraposition = 7
 
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
@@ -406,11 +439,11 @@ class Grafigfuer_ein_Lied:
 
     def Aktualiesieren(self, Position):
         if self.aktualisieren_wahl == "True":
-            self.Liednummer.place(x=150, y=Position)
+            self.Liednummer.place(x=180, y=Position)
             self.Lied.place(x=0, y=Position)
-            self.opt.place(x=340, y=25 + Position)
-            self.Liedtextanzeige.place(x=495, y=15 + Position)
-            self.Liedverse.place(x=150, y=40 + Position)
+            self.opt.place(x=380, y=25 + Position)
+            self.Liedtextanzeige.place(x=555, y=15 + Position)
+            self.Liedverse.place(x=180, y=40 + Position)
             self.Verse.place(y=40 + Position)
     
     def Grafikresetten(self):
@@ -421,7 +454,7 @@ class Grafigfuer_ein_Lied:
         if self.aktualisieren_wahl == "True":
             self.Liednummer.destroy()
             self.Liedverse.destroy()
-            self.Liedtextanzeige.place(x=180)
+            self.Liedtextanzeige.place(x=210)
             self.opt.destroy()
             self.Liedtextanzeige.config(command=Liedcommand)
 
@@ -435,12 +468,12 @@ class Grafigfuer_ein_Lied:
             self.opt.config(width=12, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
             self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10)
             self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
-            self.opt.place(x=340, y=25 + Position)
-            self.Liedtextanzeige.place(x=495, y=15 + Position)
+            self.opt.place(x=370, y=25 + Position)
+            self.Liedtextanzeige.place(x=425, y=15 + Position)
             self.Lied.place(x=0, y=0 + Position)
             self.Verse.place(y=40 + Position)
-            self.Liednummer.place(x=150, y=0 + Position)
-            self.Liedverse.place(x=150, y=40 + Position)
+            self.Liednummer.place(x=180, y=0 + Position)
+            self.Liedverse.place(x=180, y=40 + Position)
             self.Eingabe_wiederherstellen(Liedname)
             Hauptbildschirmbutton.place(x=800)
             self.Liedtextanzeige.config(command="")
@@ -490,6 +523,7 @@ def Textmamager_erstellen():
     Textmanager.config(bg=Textmanager_Hintergrund)
     zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Textfarbe, bg=Textmanager_Hintergrund, text="Weiters Lied", command=zusaetzlicheslied, border=0)
     zusaetzliches_lied.place(x=300, y=500+41+83*Kinder_Position)
+    zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer)
     Button_bestaetigen = Button(Textmanager, font=("Helvetica", 24), text="Bestätigen", command=Button_command)
     Button_bestaetigen.place(x=800, y=200)
     loeschenbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Löschen", command=Eingabe_loeschen)
@@ -501,7 +535,7 @@ def Textmamager_erstellen():
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Textwort")
     Textwortlabel.place(y=83)
     Textwortentry = Button(Textmanager, font=("Helvetica", 15), text="Bitte hier das Textwort eingeben", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, command=Textwortcommand, border=0)
-    Textwortentry.place(x=150,y=83)
+    Textwortentry.place(x=180,y=83)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten)
@@ -564,7 +598,7 @@ def Grifuckfürpräsantatiom():
         global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Stream_beenden_button, Tastensperren
         Hintregrundaktualisieren = False
         zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher)
-        zurueck.place(x=430, y=630)
+        zurueck.place(x=430, y=600)
         klick = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="weiter", command=Textanzeiger.Liedgebe)
         klick.place(x=430,y=500)
         AnfangHaupt = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Anfang", command = Textanzeiger.Anfang)

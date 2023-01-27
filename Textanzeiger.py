@@ -3,6 +3,7 @@ import time
 import Haupt
 import tkinter
 import keyboard
+import Kamera_Steuerung
 Anzeige = False
 Wieoft = 0
 Wieoftlied = 1
@@ -638,6 +639,9 @@ def optisches_fedback(Liedposition):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+        Haupt.Einganslied.Kamerapositiondef()
+        Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
+
     elif int(Haupt.Textwortübergabedaten[0]) == int(Liedposition):
         Eingabelöschen()
         Haupt.Textwortentry.config(bg="green")
