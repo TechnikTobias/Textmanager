@@ -108,9 +108,9 @@ class Grafigfuer_ein_Lied:
             self.clicked = StringVar()
             self.clicked.set(Buch_Listen[0])
             self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
-            self.opt.config(width=12, font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
+            self.opt.config(font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
             self.Kameraclicked = StringVar()
-            self.Kameraclicked.set(Kameralisten[0])
+            self.Kameraclicked.set(Kameralisten[4])
             self.Kameraopt = OptionMenu(Textmanager, self.Kameraclicked, *Kameralisten)
             self.Lied = Label(Textmanager, font=("Helvetica", 15), pady=5, text=Liedname, bg=Hintergrund, fg=Vordergrund)
             self.Verse = Label(Textmanager, font=("Helvetica", 15), text="Verse", bg=Hintergrund, fg=Vordergrund)
@@ -118,8 +118,9 @@ class Grafigfuer_ein_Lied:
             self.Liedverse = Entry(Textmanager, font=("Helvetica", 24), width=10)
             self.Liedtextanzeige = Button(Textmanager, font=12, pady=5, bg=Hintergrund, border=0, fg=Vordergrund)
             self.Liedtextanzeige["justify"] = "left"
+            self.Kameraopt.config(font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
             self.Kameraopt.place(x=80, y=40 + Position)
-            self.opt.place(x=370, y=25 + Position)
+            self.opt.place(x=380, y=25 + Position)
             self.Liedtextanzeige.place(x=555, y=15 + Position)
             self.Lied.place(x=0, y=0 + Position)
             self.Verse.place(y=40 + Position)
@@ -444,6 +445,7 @@ class Grafigfuer_ein_Lied:
             self.opt.place(x=380, y=25 + Position)
             self.Liedtextanzeige.place(x=555, y=15 + Position)
             self.Liedverse.place(x=180, y=40 + Position)
+            self.Kameraopt.place(x=80, y=40+ Position)
             self.Verse.place(y=40 + Position)
     
     def Grafikresetten(self):
@@ -1373,7 +1375,7 @@ def Aktualiesierung_Grafick():
             zusaetzliches_liedzerstörer.place(x=30, y=500+41 + Wie_viele_zusatzlieder * 83+83*Kinder_Position)
     if Wie_viele_zusatzlieder < 4:
         zusaetzliches_lied.place(x=300, y=(500+41 + Wie_viele_zusatzlieder * 83+83*Kinder_Position))
-    Textwortentry.place(x=150,y=83)
+    Textwortentry.place(x=180,y=83)
     
 
 
