@@ -1,12 +1,11 @@
 from onvif import ONVIFCamera
-from Haupt import Dateiort
-
-IP_Adresse = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
+import os 
+IP_Adresse = open("C:\\Users\\" +  os.getlogin() + "\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
 
 IP = IP_Adresse.read()  # Camera IP address
 PORT = 8080  # Port
 USER = "admin"  # Username
-PASS = ""  # Password
+PASS = "admin"  # Password
 
 class ptzControl(object):
     def __init__(self):
