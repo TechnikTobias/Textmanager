@@ -1,6 +1,9 @@
 from onvif import ONVIFCamera
+from Haupt import Dateiort
 
-IP = "192.168.178.58"  # Camera IP address
+IP_Adresse = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
+
+IP = IP_Adresse.read()  # Camera IP address
 PORT = 8080  # Port
 USER = "admin"  # Username
 PASS = "4Hasen+Voegel"  # Password
