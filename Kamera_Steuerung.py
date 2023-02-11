@@ -138,8 +138,12 @@ class ptzControl(object):
         self.ptzPresetsList = self.ptz.GetPresets(self.requestc)
 
     def goto_preset(self, Position):
-        self.requestg.PresetToken = Position
-        self.ptz.GotoPreset(self.requestg)
-
-
-Kamera = ptzControl()
+        try:
+            self.requestg.PresetToken = Position
+            self.ptz.GotoPreset(self.requestg)
+        except:
+            pass
+try:
+    Kamera = ptzControl()
+except:
+    pass
