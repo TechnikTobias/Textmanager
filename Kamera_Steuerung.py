@@ -18,7 +18,12 @@ class ptzControl(object):
         self.requestg.ProfileToken = self.media_profile.token
 
     def goto_preset(self, Position):
-        self.requestg.PresetToken = Position
-        self.ptz.GotoPreset(self.requestg)
-
-Kamera = ptzControl()
+        try:
+            self.requestg.PresetToken = Position
+            self.ptz.GotoPreset(self.requestg)
+        except:
+            pass
+try:
+    Kamera = ptzControl()
+except:
+    pass

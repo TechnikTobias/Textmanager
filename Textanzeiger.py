@@ -615,7 +615,7 @@ def Eingabelöschen():
         Darf_ich_Zusatzlied1 =False
         Darf_ich_Zusatzlied2 = False
         Darf_ich_Zusatzlied3 = False
-        Darf_ich_Zusatzlied4 = False       
+        Darf_ich_Zusatzlied4 = False
         try:
             Texteingabe.destroy()
         except:
