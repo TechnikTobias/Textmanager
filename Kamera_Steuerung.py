@@ -142,8 +142,8 @@ class ptzControl(object):
             self.requestg.PresetToken = Position
             self.ptz.GotoPreset(self.requestg)
         except:
-            pass
+            print("Error")
 try:
     Kamera = ptzControl()
 except:
-    pass
+    print("Kamera Verbindung fehlgeschlagen")
