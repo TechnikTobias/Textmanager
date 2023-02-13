@@ -1,5 +1,6 @@
 from onvif import ONVIFCamera
 import os 
+from threading import *
 IP_Adresse = open("C:\\Users\\" +  os.getlogin() + "\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
 
 IP = IP_Adresse.read()  # Camera IP address
@@ -23,7 +24,14 @@ class ptzControl(object):
             self.ptz.GotoPreset(self.requestg)
         except:
             pass
-try:
-    Kamera = ptzControl()
-except:
-    pass
+
+def Kamera_erstellen():
+    global Kamera, Ist_Kamer_aktiv
+    try:
+        Kamera = ptzControl()
+        Ist_Kamer_aktiv = True
+    except:
+        Ist_Kamer_aktiv = False
+        pass
+
+Thread(target=Kamera_erstellen)
