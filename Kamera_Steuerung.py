@@ -154,4 +154,6 @@ def Kamera_erstellen():
         Ist_Kamer_aktiv = False
         print("Kamera Verbindung fehlgeschlagen")
 
-Thread(target=Kamera_erstellen)
+def Kamera_erstellen_Thread():
+    Kamera_Thread = Thread(target=Kamera_erstellen)
+    Kamera_Thread.start()

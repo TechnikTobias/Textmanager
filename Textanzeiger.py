@@ -240,7 +240,8 @@ def Grundstellung(Livestreamaktualisierung):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
-        Kamera_Steuerung.Kamera.goto_preset(1)
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            Kamera_Steuerung.Kamera.goto_preset(1)
 
 
 

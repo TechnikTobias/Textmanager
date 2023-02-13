@@ -1382,4 +1382,4 @@ def Aktualiesierung_Grafick():
 Einstellungen_Laden()
 Textmamager_erstellen()
 Hintergrund_aktualisieren()
-Kamera_Steuerung.Kamera_erstellen()
+Kamera_Steuerung.Kamera_erstellen_Thread()
