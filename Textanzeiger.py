@@ -643,11 +643,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Einganslied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Einganslied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Textwortübergabedaten[0]) == int(Liedposition):
         Eingabelöschen()
@@ -673,11 +674,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Amtswechsellied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Amtswechsellied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Amtswechsellied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Amtswechsellied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
     
     elif int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -691,11 +693,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Textwortlied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Textwortlied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Textwortlied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Textwortlied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -709,11 +712,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Bussslied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Bussslied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Bussslied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Bussslied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -727,11 +731,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Abendmahlslied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Abendmahlslied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Abendmahlslied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Abendmahlslied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -745,11 +750,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Schlusslied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Schlusslied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Schlusslied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Schlusslied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Kinderlied.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -763,11 +769,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Kinderlied.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Kinderlied.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Kinderlied.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Kinderlied.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -781,11 +788,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Zusatzlied1.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Zusatzlied1.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -799,11 +807,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Zusatzlied2.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Zusatzlied2.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -817,11 +826,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Zusatzlied3.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied3.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Zusatzlied3.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied3.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
     elif int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Liedposition):
         Eingabelöschen()
@@ -835,11 +845,12 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        try:
-            Haupt.Zusatzlied4.Kamerapositiondef()
-            Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied4.Kameraposition)
-        except:
-            print("error kei1ne Kamera")
+        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+            try:
+                Haupt.Zusatzlied4.Kamerapositiondef()
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied4.Kameraposition)
+            except:
+                print("error kei1ne Kamera")
 
 
 def Verse(Hallo123,Wieoft,WelchesBuch):
