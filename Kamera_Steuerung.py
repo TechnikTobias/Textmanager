@@ -6,7 +6,7 @@ IP_Adresse = open("C:\\Users\\" +  os.getlogin() + "\\Desktop\\Lieder\\IP-Adress
 IP = IP_Adresse.read()  # Camera IP address
 PORT = 8080  # Port
 USER = "admin"  # Username
-PASS = "4Hasen+Voegel"  # Password
+PASS = "admin"  # Password
 
 class ptzControl(object):
     def __init__(self):
