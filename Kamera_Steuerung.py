@@ -1,12 +1,16 @@
 from onvif import ONVIFCamera
 import os 
 from threading import *
+import tkinter
+import Haupt
+import Textanzeiger
+
 IP_Adresse = open("C:\\Users\\" +  os.getlogin() + "\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
 
 IP = IP_Adresse.read()  # Camera IP address
 PORT = 8080  # Port
 USER = "admin"  # Username
-PASS = "admin"  # Password
+PASS = "4Hasen+Voegel"  # Password
 
 class ptzControl(object):
     def __init__(self):
@@ -143,17 +147,74 @@ class ptzControl(object):
             self.requestg.PresetToken = Position
             self.ptz.GotoPreset(self.requestg)
         except:
-            print("Error")
+            Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
+            Errorkamera.geometry("560x350+500+400")
+            Errorkamera.config(bg="black")
+            Error = tkinter.Button(Errorkamera, font=("Helvetica", 18),
+                            text="Erneut versuchen", bg="black",
+                            fg="green", command= Erneut_position)
+            Error.place(x=50, y=0)
+            ErrorLabel = tkinter.Label(Errorkamera, font=("Helvetica", 20),
+                            text="Die Kamera kann aktuell sich nicht bewegen\nBitte versuchen sie es öfters und geben sie dem Etwickler bescheid", bg="black",
+                            fg="green", wraplength=560)
+            ErrorLabel.place(x=0, y=80)
 
 def Kamera_erstellen():
-    global Kamera, Ist_Kamer_aktiv
+    global Kamera, Ist_Kamer_aktiv, Errorkamera
     try:
         Kamera = ptzControl()
         Ist_Kamer_aktiv = True
     except:
         Ist_Kamer_aktiv = False
-        print("Kamera Verbindung fehlgeschlagen")
+        Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
+        Errorkamera.geometry("560x350+500+400")
+        Errorkamera.config(bg="black")
+        Error = tkinter.Button(Errorkamera, font=("Helvetica", 18),
+                          text="Erneut versuchen", bg="black",
+                          fg="green", command= Erneut_verbinden)
+        Error.place(x=50, y=0)
+        ErrorLabel = tkinter.Label(Errorkamera, font=("Helvetica", 20),
+                           text="Es gibt ein problem mit der Kamera", bg="black",
+                           fg="green", wraplength=560)
+        ErrorLabel.place(x=0, y=80)
+
+
+def Erneut_position():
+    if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Einganslied.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
+    if int(Haupt.Textwortlied.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Textwortlied.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Textwortlied.Kameraposition)
+    if int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Amtswechsellied.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Amtswechsellied.Kameraposition)
+    if int(Haupt.Bussslied.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Bussslied.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Bussslied.Kameraposition)
+    if int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Abendmahlslied.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Abendmahlslied.Kameraposition)
+    if int(Haupt.Schlusslied.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Schlusslied.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Schlusslied.Kameraposition)
+    if int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Zusatzlied1.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Zusatzlied1.Kameraposition)
+    if int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Zusatzlied2.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
+    if int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Zusatzlied3.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Zusatzlied3.Kameraposition)
+    if int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0]) == int(Textanzeiger.Liedposition):
+        Haupt.Zusatzlied4.Kamerapositiondef()
+        Kamera.goto_preset(Haupt.Zusatzlied4.Kameraposition)
 
 def Kamera_erstellen_Thread():
     Kamera_Thread = Thread(target=Kamera_erstellen)
     Kamera_Thread.start()
+
+def Erneut_verbinden():
+    Errorkamera.destroy()
+    Kamera_erstellen()
