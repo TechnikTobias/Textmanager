@@ -183,12 +183,12 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
         Errorbild.geometry("560x350+500+400")
         Errorbild.config(bg="black")
         Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
-                      text="Error", bg="black",
-                      fg="green", wraplength=560)
+                      text="Error", bg=Haupt.Textmanager_Hintergrund,
+                      fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         Error.place(x=210, y=0)
         ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="In 0rdner Lieder im Odner Versanzahl fehlt die Datei für das Lied "+Welcheart, bg="black",
-                           fg="green", wraplength=560)
+                           text="In 0rdner Lieder im Odner Versanzahl fehlt die Datei für das Lied "+Welcheart, bg=Haupt.Textmanager_Hintergrund,
+                           fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         ErrorLabel.place(x=0, y=80)
 
 def Grundstellung(Livestreamaktualisierung):
@@ -645,11 +645,10 @@ def optisches_fedback(Liedposition):
             time.sleep(0.5)
             keyboard.release("1")
         if Kamera_Steuerung.Ist_Kamer_aktiv == True:
-            try:
+
                 Haupt.Einganslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
-            except:
-                print("error kei1ne Kamera")
+
 
     elif int(Haupt.Textwortübergabedaten[0]) == int(Liedposition):
         Eingabelöschen()
@@ -868,11 +867,11 @@ def Verse(Hallo123,Wieoft,WelchesBuch):
         Errorbild.geometry("560x350+500+400")
         Errorbild.config(bg="black")
         Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
-                      text="Error", bg="black",
-                      fg="green", wraplength=560)
+                      text="Error", bg=Haupt.Textmanager_Hintergrund,
+                      fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         Error.place(x=210, y=0)
         ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="Das Lied "+str(Hallo123)+" im Buch "+str(WelchesBuch)+" Vers "+str(Wieoft)+" Exesitert nicht", bg="black",
-                           fg="green", wraplength=560)
+                           text="Das Lied "+str(Hallo123)+" im Buch "+str(WelchesBuch)+" Vers "+str(Wieoft)+" Exesitert nicht", bg=Haupt.Textmanager_Hintergrund,
+                           fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         ErrorLabel.place(x=0, y=80)
     optisches_fedback(Wieoftlied)

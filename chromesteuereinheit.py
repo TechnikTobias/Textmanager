@@ -46,7 +46,7 @@ def Chromestarten():
             Chromeaktuell =  True
     except WebDriverException:
         print("Error")
-        Chromeupdate = tkinter.Label(Haupt.Textmanager, font=("Helvetica", 15), text="Bitte Chromedriver aktualiesieren", bg="white", fg="green")
+        Chromeupdate = tkinter.Label(Haupt.Textmanager, font=("Helvetica", 15), text="Bitte Chromedriver aktualiesieren", bg=Haupt.Textmanager_Hintergrund, fg=Haupt.Textmanager_Textfarbe)
         Chromeupdate.place(y=760)
         Videobeschreibungaktionvarable = "Falsch"
         Chromeaktuell =  False
@@ -202,12 +202,12 @@ def Videobeschreibung():
             Errorbild.geometry("560x350+500+400")
             Errorbild.config(bg="black")
             Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
-                          text="Error", bg="black",
-                          fg="green", wraplength=560)
+                          text="Error", bg=Haupt.Textmanager_Hintergrund,
+                          fg=Haupt.Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
             ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="Es gibt ein Problem mit dem Browser", bg="black",
-                           fg="green", wraplength=560)
+                           text="Es gibt ein Problem mit dem Browser", bg=Haupt.Textmanager_Hintergrund,
+                           fg=Haupt.Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
 
 def Stream_planen_Thread():

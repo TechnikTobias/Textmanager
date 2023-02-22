@@ -151,9 +151,9 @@ class Grafigfuer_ein_Lied:
             Errorbild = Toplevel(Textmanager)
             Errorbild.geometry("560x350+500+400")
             Errorbild.config(bg="black")
-            Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg="black", fg="green", wraplength=560)
+            Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
-            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg="black", fg="green", wraplength=560)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
             if len(self.Liednummer.get()) > 3:
                 Hi = self.Liednummer.get()
@@ -869,9 +869,9 @@ def Datei_Kontrolle(Buch, Lied):
             Errorbild = Toplevel(Textmanager)
             Errorbild.geometry("560x350+500+400")
             Errorbild.config(bg="black")
-            Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg="black", fg="green", wraplength=560)
+            Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
-            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Die Liednummer "+str(Lied)+" ist noch nicht im System", bg="black", fg="green", wraplength=560)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Die Liednummer "+str(Lied)+" ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
 
 
