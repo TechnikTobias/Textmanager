@@ -39,7 +39,7 @@ class ptzControl(object):
                             fg="green", command= Erneut_position)
             Error.place(x=50, y=0)
             ErrorLabel = tkinter.Label(Errorkamera, font=("Helvetica", 20),
-                            text="Die Kamera kann aktuell sich nicht bewegen\nBitte versuchen sie es öfters und geben sie dem Etwickler bescheid\n\nError Token not fond", bg="black",
+                            text="Die Kamera kann aktuell sich nicht bewegen\nUm das Problm zu lösen wird aktuell geraten onvif device manager zu öffnen, ptz steuerung anklicken und das programm wieder zu schließen. Dann versuchen sie es erneut\n\nError Token not fond", bg="black",
                             fg="green", wraplength=560)
             ErrorLabel.place(x=0, y=80)
         except:
@@ -61,7 +61,7 @@ def Kamera_erstellen():
     try:
         Kamera = ptzControl()
         Ist_Kamer_aktiv = True
-    except:
+    except onvif.exceptions.ONVIFError:
         Ist_Kamer_aktiv = False
         Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
         Errorkamera.geometry("560x350+500+400")
