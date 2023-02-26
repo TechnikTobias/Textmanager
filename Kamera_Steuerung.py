@@ -19,27 +19,15 @@ class ptzControl(object):
         self.mycam = ONVIFCamera(IP,PORT,USER,PASS)
         self.media = self.mycam.create_media_service()
         self.media_profile = self.media.GetProfiles()[0]
+        token = self.media_profile.token
         self.ptz = self.mycam.create_ptz_service()
-        self.requests.ProfileToken = self.media_profile.token
-
+        self.requestg = self.ptz.create_type('GotoPreset')
+        self.requestg.ProfileToken = self.media_profile.token
 
     def goto_preset(self, Position):
         global Errorkamera
-        try:
-            self.requestg.PresetToken = Position
-            self.ptz.GotoPreset(self.requestg)
-        except:
-            Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
-            Errorkamera.geometry("560x350+500+400")
-            Errorkamera.config(bg="black")
-            Error = tkinter.Button(Errorkamera, font=("Helvetica", 18),
-                            text="Erneut versuchen", bg="black",
-                            fg="green", command= Erneut_position)
-            Error.place(x=50, y=0)
-            ErrorLabel = tkinter.Label(Errorkamera, font=("Helvetica", 20),
-                            text="Die Kamera kann aktuell sich nicht bewegen\nUm das Problm zu lösen wird aktuell geraten onvif device manager zu öffnen, ptz steuerung anklicken und das programm wieder zu schließen. Dann versuchen sie es erneut\n\nError Token not fond", bg="black",
-                            fg="green", wraplength=560)
-            ErrorLabel.place(x=0, y=80)
+        self.requestg.PresetToken = Position
+        self.ptz.GotoPreset(self.requestg)
 
 
 

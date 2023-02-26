@@ -645,11 +645,9 @@ def optisches_fedback(Liedposition):
             time.sleep(0.5)
             keyboard.release("1")
         if Kamera_Steuerung.Ist_Kamer_aktiv == True:
-            try:
                 Haupt.Einganslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
-            except:
-                print("Keine Kamera")
+
 
 
     elif int(Haupt.Textwortübergabedaten[0]) == int(Liedposition):
