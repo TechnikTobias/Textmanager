@@ -11,8 +11,7 @@ import keyboard
 
 import chromesteuereinheit
 import Textanzeiger
-import Kamera_Steuerung
-
+import Einstellungen
 
 Zeit = 9.20
 Zeit1 = 19.50
@@ -150,7 +149,7 @@ class Grafigfuer_ein_Lied:
         except FileNotFoundError:
             Errorbild = Toplevel(Textmanager)
             Errorbild.geometry("560x350+500+400")
-            Errorbild.config(bg="black")
+            Errorbild.config(bg=Textmanager_Hintergrund)
             Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
             ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
@@ -437,6 +436,7 @@ class Grafigfuer_ein_Lied:
             self.Lied.config(bg=Hintergrund, fg=Vordergrund)
             self.Verse.config(bg=Hintergrund, fg=Vordergrund)
             self.Liedtextanzeige.config(bg=Hintergrund, fg=Vordergrund)
+            self.Kameraopt.config(bg=Hintergrund,fg=Vordergrund)
 
     def Aktualiesieren(self, Position):
         if self.aktualisieren_wahl == "True":
@@ -532,7 +532,7 @@ def Textmamager_erstellen():
     loeschenbutton.place(x=800, y=396)
     wiederherstellen = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Wiederherstellen", command=Eingabe_wiederherstellen)
     wiederherstellen.place(x=800, y=333)
-    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen)
+    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen.Einstellungen)
     Einstellungen_button.place(x=800, y=270)
     Textwortlabel = Label(Textmanager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Textwort")
     Textwortlabel.place(y=83)
@@ -552,9 +552,9 @@ def info():
     global Info_manager
     Info_manager = Toplevel(Textmanager)
     Info_manager.geometry("800x600")
-    Info_manager.config(bg="black")
+    Info_manager.config(bg=Textmanager_Hintergrund)
     Text_für_Info = "Entwickler/ Uhrheber: Tobias Giebelhaus\nIn gedenken an meinen Geliebten Opa der bis zum Schluss Geistig fit war und sorgen kurz vor dem Tod im Internet war. Er war ein sehr lieber Opa"
-    Info_zum_programm = Label(Info_manager, font=("Halvetica", 15), bg="black", fg="#FFEBCD", text=Text_für_Info, wraplength=800)
+    Info_zum_programm = Label(Info_manager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text=Text_für_Info, wraplength=800)
     Info_zum_programm["justify"] = "left"
     Info_zum_programm.place(x=0,y=0)
     Bild_für_opa = ImageTk.PhotoImage(Image.open("Sterbe Anzeige Opa.jpg")) 
@@ -683,7 +683,7 @@ def Grifickeingabe():
     loeschenbutton.place(x=800, y=396)
     wiederherstellen = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Wiederherstellen", command=Eingabe_wiederherstellen)
     wiederherstellen.place(x=800, y=333)
-    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen)
+    Einstellungen_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Einstellung", command=Einstellungen.Einstellungen)
     Einstellungen_button.place(x=800, y=270)
     Stream_erstell_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream Erstellen", command = chromesteuereinheit.Stream_planen_Thread)
     Stream_erstell_button.place(x=800, y=480)
@@ -868,7 +868,7 @@ def Datei_Kontrolle(Buch, Lied):
     except:
             Errorbild = Toplevel(Textmanager)
             Errorbild.geometry("560x350+500+400")
-            Errorbild.config(bg="black")
+            Errorbild.config(bg=Textmanager_Hintergrund)
             Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
             ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Die Liednummer "+str(Lied)+" ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
@@ -877,7 +877,7 @@ def Datei_Kontrolle(Buch, Lied):
 
 def zusaetzlicheslied3():
     global Wie_viele_zusatzlieder, Zusatzlied4, Zusatzlied4_obwahr, Zusatzlied3_obwahr
-    Zusatzlied4 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Zusatzlied4 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied4_obwahr = True
     Zusatzlied3_obwahr = False
@@ -899,7 +899,7 @@ def zusaetzlichesliedzerstörer3():
 
 def zusaetzlicheslied2():
     global Wie_viele_zusatzlieder, Zusatzlied3, Zusatzlied3_obwahr, Zusatzlied2_obwahr
-    Zusatzlied3 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Zusatzlied3 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied3_obwahr = True
     Zusatzlied2_obwahr = False
@@ -927,8 +927,7 @@ def zusaetzlichesliedzerstörer2():
 
 def zusaetzlicheslied1():
     global Wie_viele_zusatzlieder, Zusatzlied2, Zusatzlied2_obwahr, Zusatzlied1_obwahr
-    Zusatzlied2 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1),
-                                      "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Zusatzlied2 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied2_obwahr = True
     Zusatzlied1_obwahr = False
@@ -948,8 +947,7 @@ def zusaetzlichesliedzerstörer1():
 
 def zusaetzlicheslied():
     global Wie_viele_zusatzlieder, Zusatzlied1, Zusatzlied1_obwahr, zusaetzliches_liedzerstörer
-    Zusatzlied1 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1),
-                                      "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
+    Zusatzlied1 = Grafigfuer_ein_Lied(498 + 83 * Wie_viele_zusatzlieder+83*Kinder_Position, "Zusatzlied" + str(Wie_viele_zusatzlieder + 1), "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
     Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
     Zusatzlied1_obwahr = True
     zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), fg=Textmanager_Textfarbe, bg=Textmanager_Hintergrund, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer, border=0)
@@ -1234,130 +1232,6 @@ def Farben_in_Zahl(uebergabe):
         return 4
 
 
-def Hintergrund():
-    global Textmanager_Hintergrund, Textmanager_Textfarbe
-    Textmanager.config(bg=Hintergrund_clicked.get())
-    Einganslied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Textwortlied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Amtswechsellied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Kinderlied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Bussslied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Abendmahlslied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Schlusslied.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Zusatzlied1.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Zusatzlied2.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Zusatzlied3.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Zusatzlied4.Hintergrund(Hintergrund_clicked.get(), Vordergrund_clicked.get())
-    Einstellungen_Textmanager.config(bg=Hintergrund_clicked.get())
-    Hintergrund_opt.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Hintergrundlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Vordergrund_opt.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Textlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Textwortentry.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Textwortlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Hintergrund = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
-    Hintergrund.write(Hintergrund_clicked.get())
-    Hintergrund.close()
-    Textfarbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
-    Textfarbe.write(Vordergrund_clicked.get())
-    Textfarbe.close()
-    Buttonfarben.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    zusaetzliches_lied.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Textmanager_Textfarbe = Vordergrund_clicked.get()
-    Textmanager_Hintergrund = Hintergrund_clicked.get()
-
-
-def Einstellungen():
-    Einstellungen_Laden()
-    global Hintergrund_clicked, Vordergrund_clicked, Einstellungen_Textmanager, Hintergrund_opt, Vordergrund_clicked, \
-        Vordergrund_opt, Hintergrundlabel, Textlabel, Buttonfarben, Kinder_Anzeigen_Grafig, Kinder_Position, Kinderbutton, Browserbutton
-    Einstellungen_Textmanager = Toplevel(Textmanager)
-    Einstellungen_Textmanager.geometry("500x300")
-    Einstellungen_Textmanager.title("Einstellungen")
-    Einstellungen_Textmanager.config(bg=Textmanager_Hintergrund)
-    Farben_liste = [
-        "black",
-        "white",
-        "green",
-        "yellow",
-        "pink"]
-    Buttonfarben = Button(Einstellungen_Textmanager, text="Hintergrund", fg=Textmanager_Textfarbe,
-                          bg=Textmanager_Hintergrund, command=Hintergrund)
-    Buttonfarben.place(x=1, y=75)
-    Hintergrund_clicked = StringVar()
-    Hintergrund_clicked.set(Farben_liste[Farben_in_Zahl(Textmanager_Hintergrund)])
-    OptionMenu(Einstellungen_Textmanager, Hintergrund_clicked, *Farben_liste)
-    Hintergrund_opt = OptionMenu(Einstellungen_Textmanager, Hintergrund_clicked, *Farben_liste)
-    Hintergrund_opt.config(width=12, font=('Helvetica', 12), fg=Textmanager_Textfarbe, bg=Textmanager_Hintergrund)
-    Hintergrund_opt.place(x=1, y=35)
-    Vordergrund_clicked = StringVar()
-    Vordergrund_clicked.set(Farben_liste[Farben_in_Zahl(Textmanager_Textfarbe)])
-    OptionMenu(Einstellungen_Textmanager, Vordergrund_clicked, *Farben_liste)
-    Vordergrund_opt = OptionMenu(Einstellungen_Textmanager, Vordergrund_clicked, *Farben_liste)
-    Vordergrund_opt.config(width=12, font=('Helvetica', 12), fg=Textmanager_Textfarbe, bg=Textmanager_Hintergrund)
-    Vordergrund_opt.place(x=150, y=35)
-    Hintergrundlabel = Label(Einstellungen_Textmanager, font=('Helvetica', 12), fg=Textmanager_Textfarbe,
-                             bg=Textmanager_Hintergrund, text="Hintergrund")
-    Hintergrundlabel.place(y=5, x=1)
-    Textlabel = Label(Einstellungen_Textmanager, font=('Helvetica', 12), fg=Textmanager_Textfarbe,
-                      bg=Textmanager_Hintergrund, text="Textfarbe")
-    Textlabel.place(x=150, y=5)
-    Textfarbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
-    Textfarbe.write(Textmanager_Textfarbe)
-    Textfarbe.close()
-    Hintergrunddatei = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
-    Hintergrunddatei.write(Textmanager_Hintergrund)
-    Hintergrunddatei.close()
-    if Kinder_anzeigen == "Falsch":
-        Kinderbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="red", text="Kein Kinderlied", command=Kinder_Anzeigen)
-    else:
-        Kinderbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
-    Kinderbutton.place(x=0, y=110)
-    if Browseröffnen == "Wahr":
-        Browserbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="green", text="Browser offen", command=Browsergeschlossen)
-    else:
-        Browserbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="red", text="Kein Browser", command=Browseroffen)
-    Browserbutton.place(y=150)
-
-def Browseroffen():
-    Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
-    Browseröffnen.write("Wahr")
-    Browseröffnen.close()
-    Browserbutton.config(bg="green", text="Browser offen", command=Browsergeschlossen)
-    chromesteuereinheit.Chromestarten_Thread()
-
-def Browsergeschlossen():
-    Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
-    Browseröffnen.write("Falsch")
-    Browseröffnen.close()
-    Browserbutton.config(bg="red", text="Kein Browser", command=Browseroffen)
-
-def Kinder_Anzeigen():
-    global Kinder_Anzeigen_Grafig, Kinder_Position, Kinderlied
-    Kinderbutton.config(bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
-    Kinder_Anzeigen_Grafig = "False"
-    Kinder_Position = 1
-    Kinderladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
-    Kinderladen.write("Wahr")
-    Kinderladen.close()
-    Kinderlied = Grafigfuer_ein_Lied(166+41 +83*Kinder_Position, "Kinderlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe)
-    if Kindeladen == True:
-        Kinderlied.Eingabe_wiederherstellen("Kinderlied")
-    Aktualiesierung_Grafick()
-
-
-def Kinder_Nicht_Anzeigen():
-    global Kinder_Anzeigen_Grafig, Kinder_Position
-    Kinderbutton.config(bg="red", text="Kein Kinderlied", command=Kinder_Anzeigen)
-    Kinder_Anzeigen_Grafig = "True"
-    Kinder_Position = 0
-    Kinderladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
-    Kinderladen.write("Falsch")
-    Kinderladen.close()
-    Kinderlied.Zerstören()
-    Aktualiesierung_Grafick()
-
-
 def Aktualiesierung_Grafick():
     global Wie_viele_zusatzlieder
     Einganslied.Aktualiesieren(0)
@@ -1381,4 +1255,3 @@ def Aktualiesierung_Grafick():
 
 Textmamager_erstellen()
 Hintergrund_aktualisieren()
-Kamera_Steuerung.Kamera_erstellen_Thread()

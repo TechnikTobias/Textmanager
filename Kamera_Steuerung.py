@@ -33,26 +33,26 @@ class ptzControl(object):
         except onvif.exceptions.ONVIFError:
             Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
             Errorkamera.geometry("560x350+500+400")
-            Errorkamera.config(bg="black")
+            Errorkamera.config(bg=Haupt.Textmanager_Hintergrund)
             Error = tkinter.Button(Errorkamera, font=("Helvetica", 18),
-                            text="Erneut versuchen", bg="black",
-                            fg="green", command= Erneut_position)
+                            text="Erneut versuchen", bg=Haupt.Textmanager_Hintergrund,
+                            fg=Haupt.Textmanager_Textfarbe, command= Erneut_position)
             Error.place(x=50, y=0)
             ErrorLabel = tkinter.Label(Errorkamera, font=("Helvetica", 20),
-                            text="Die Kamera kann aktuell sich nicht bewegen\nUm das Problm zu lösen wird aktuell geraten onvif device manager zu öffnen, ptz steuerung anklicken und das programm wieder zu schließen. Dann versuchen sie es erneut\n\nError Token not fond", bg="black",
-                            fg="green", wraplength=560)
+                            text="Die Kamera kann aktuell sich nicht bewegen\nUm das Problm zu lösen wird aktuell geraten onvif device manager zu öffnen, ptz steuerung anklicken und das programm wieder zu schließen. Dann versuchen sie es erneut\n\nError Token not fond", bg=Haupt.Textmanager_Hintergrund,
+                            fg=Haupt.Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
         except:
             Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
             Errorkamera.geometry("560x350+500+400")
-            Errorkamera.config(bg="black")
+            Errorkamera.config(bg=Haupt.Textmanager_Hintergrund)
             Error = tkinter.Button(Errorkamera, font=("Helvetica", 18),
-                            text="Erneut versuchen", bg="black",
-                            fg="green", command= Erneut_position)
+                            text="Erneut versuchen", bg=Haupt.Textmanager_Hintergrund,
+                            fg=Haupt.Textmanager_Textfarbe, command= Erneut_position)
             Error.place(x=50, y=0)
             ErrorLabel = tkinter.Label(Errorkamera, font=("Helvetica", 20),
-                            text="Die Kamera kann aktuell sich nicht bewegen\nBitte versuchen sie es öfters und geben sie dem Etwickler bescheid", bg="black",
-                            fg="green", wraplength=560)
+                            text="Die Kamera kann aktuell sich nicht bewegen\nBitte versuchen sie es öfters und geben sie dem Etwickler bescheid", bg=Haupt.Textmanager_Hintergrund,
+                            fg=Haupt.Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
 
 
@@ -65,7 +65,7 @@ def Kamera_erstellen():
         Ist_Kamer_aktiv = False
         Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
         Errorkamera.geometry("560x350+500+400")
-        Errorkamera.config(bg="black")
+        Errorkamera.config(bg=Haupt.Textmanager_Hintergrund)
         Error = tkinter.Button(Errorkamera, font=("Helvetica", 18),
                           text="Erneut versuchen", bg=Haupt.Textmanager_Hintergrund,
                           fg=Haupt.Textmanager_Textfarbe, command= Erneut_verbinden)

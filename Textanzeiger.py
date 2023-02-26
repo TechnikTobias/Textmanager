@@ -181,7 +181,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
     except:
         Errorbild = tkinter.Toplevel(Haupt.Textmanager)
         Errorbild.geometry("560x350+500+400")
-        Errorbild.config(bg="black")
+        Errorbild.config(bg=Haupt.Textmanager_Hintergrund)
         Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
                       text="Error", bg=Haupt.Textmanager_Hintergrund,
                       fg=Haupt.Textmanager_Textfarbe, wraplength=560)
@@ -867,7 +867,7 @@ def Verse(Hallo123,Wieoft,WelchesBuch):
     except FileNotFoundError:
         Errorbild = tkinter.Toplevel(Haupt.Textmanager)
         Errorbild.geometry("560x350+500+400")
-        Errorbild.config(bg="black")
+        Errorbild.config(bg=Haupt.Textmanager_Hintergrund)
         Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
                       text="Error", bg=Haupt.Textmanager_Hintergrund,
                       fg=Haupt.Textmanager_Textfarbe, wraplength=560)
