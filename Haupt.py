@@ -121,7 +121,7 @@ class Grafigfuer_ein_Lied:
             self.Kameraopt.config(font=('Helvetica', 12), bg=Hintergrund, fg=Vordergrund)
             self.Kameraopt.place(x=80, y=40 + Position)
             self.opt.place(x=410, y=25 + Position)
-            self.Liedtextanzeige.place(x=555, y=15 + Position)
+            self.Liedtextanzeige.place(x=585, y=15 + Position)
             self.Lied.place(x=0, y=0 + Position)
             self.Verse.place(y=40 + Position)
             self.Liednummer.place(x=210, y=0 + Position)
@@ -426,12 +426,13 @@ class Grafigfuer_ein_Lied:
             self.Liednummerfest = 0
 
     # Löscht alle Eingaben für ein Lied
-    def Eingabe_loeschen(self):
+    def Eingabe_loeschen(self, Kamera_position, Lied_buch):
         global Kindeladen
         if self.aktualisieren_wahl == "True":
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
-            self.clicked.set(Buch_Listen[0])
+            self.clicked.set(Buch_Listen[Lied_buch])
+            self.Kameraclicked.set(Kameralisten[Kamera_position])
         Kindeladen= False
 
     # Wiederherstellt, die Alten eingaben
@@ -1290,27 +1291,27 @@ def Streambeenden():
 
 def Eingabe_loeschen():
     global Textworteingabeübergabe, Textwortwiederherstellen, Wie_viele_zusatzlieder
-    Einganslied.Eingabe_loeschen()
-    Textwortlied.Eingabe_loeschen()
-    Amtswechsellied.Eingabe_loeschen()
-    Bussslied.Eingabe_loeschen()
-    Abendmahlslied.Eingabe_loeschen()
-    Schlusslied.Eingabe_loeschen()
-    Kinderlied.Eingabe_loeschen()
+    Einganslied.Eingabe_loeschen(5,0)
+    Textwortlied.Eingabe_loeschen(4,1)
+    Amtswechsellied.Eingabe_loeschen(4,1)
+    Bussslied.Eingabe_loeschen(5,0)
+    Abendmahlslied.Eingabe_loeschen(5,0)
+    Schlusslied.Eingabe_loeschen(4,1)
+    Kinderlied.Eingabe_loeschen(4,1)
     try:
-        Zusatzlied1.Zerstören()
+        Zusatzlied1.Zerstören(4,1)
     except:
         pass
     try:
-        Zusatzlied2.Zerstören()
+        Zusatzlied2.Zerstören(4,1)
     except:
         pass
     try:
-        Zusatzlied3.Zerstören()
+        Zusatzlied3.Zerstören(4,1)
     except:
         pass
     try:    
-        Zusatzlied4.Zerstören()
+        Zusatzlied4.Zerstören(4,1)
     except:
         pass
     try:
