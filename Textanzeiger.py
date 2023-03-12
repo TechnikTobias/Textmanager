@@ -3,6 +3,7 @@ import time
 import Haupt
 import tkinter
 import keyboard
+from threading import *
 import Kamera_Steuerung
 Anzeige = False
 Wieoft = 0
@@ -191,7 +192,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                            fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         ErrorLabel.place(x=0, y=80)
 
-def Grundstellung(Livestreamaktualisierung):
+def Grundstellung(Livestreamaktualisierung, Kamera_stellung):
     global Darf_ich_Kinderlied, Darf_ich_Busslied, Darf_ich_Abendmahlslied, Darf_ich_Busslied, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Amtswechsel, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4, Anzeige
     Anzeige = False
     Darf_ich_Einganslied = False
@@ -240,6 +241,7 @@ def Grundstellung(Livestreamaktualisierung):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
+    if Kamera_stellung == True:
         if Kamera_Steuerung.Ist_Kamer_aktiv == True:
             Kamera_Steuerung.Kamera.goto_preset(1)
 
@@ -248,7 +250,7 @@ def Grundstellung(Livestreamaktualisierung):
 def vorherübergabeTextandiewand():
     global Datenfürliedanderwand, Wieoft, voherliedzwischensehne, lesteslied, Wieoftlied
     Datenfürliedanderwand = []
-    Grundstellung(False)
+    Grundstellung(False, False)
     if Wieoftlied == 0:
         Wieoftlied = 1
     Nächstelied()
@@ -262,14 +264,14 @@ def Anfang():
     Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
     Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
     Haupt.Textmanager.update()
-    Grundstellung(True)
+    Grundstellung(True, True)
 
 def Eingasliedübergabefirst():
     global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Einganslied
     Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Einganslied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(False)
+    Grundstellung(False, False)
     Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -281,7 +283,7 @@ def Eingasliedübergabe():
     Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Einganslied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -293,7 +295,7 @@ def Textwortliedübergabe():
     Datenfürliedanderwand = Haupt.Textwortlied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Textwortlied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Textwortlied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -306,7 +308,7 @@ def Amtswechseliedübergabe():
     Datenfürliedanderwand = Haupt.Amtswechsellied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Amtswechsellied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Amtswechsellied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -318,7 +320,7 @@ def Bußliedübergabe():
     Datenfürliedanderwand = Haupt.Bussslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Bussslied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Bussslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -330,7 +332,7 @@ def Abendmahlsliedübergabe():
     Datenfürliedanderwand = Haupt.Abendmahlslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Abendmahlslied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Abendmahlslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -343,7 +345,7 @@ def Schlussliedübergabe():
     Datenfürliedanderwand = Haupt.Schlusslied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Schlusslied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Schlusslied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -356,7 +358,7 @@ def Kinderliedübergabe():
     Datenfürliedanderwand = Haupt.Kinderlied.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Kinderlied.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Kinderlied.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -369,7 +371,7 @@ def Zusatzlied1übergabe():
     Datenfürliedanderwand = Haupt.Zusatzlied1.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied1.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Zusatzlied1.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -381,7 +383,7 @@ def Zusatzlied2übergabe():
     Datenfürliedanderwand = Haupt.Zusatzlied2.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied2.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Zusatzlied2.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -393,7 +395,7 @@ def Zusatzlied3übergabe():
     Datenfürliedanderwand = Haupt.Zusatzlied3.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied3.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Zusatzlied3.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -405,7 +407,7 @@ def Zusatzlied4übergabe():
     Datenfürliedanderwand = Haupt.Zusatzlied4.Daten_fürTextanderwand.copy()
     Wieoftlied = int(Haupt.Zusatzlied4.Daten_fürTextanderwand[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Zusatzlied4.Liedtextanzeige.config(bg="orange")
     lesteslied = False
     if len(Datenfürliedanderwand[3]) == 0:
@@ -417,7 +419,7 @@ def Textwortübergabe():
     Datenfürliedanderwand = Haupt.Textwortübergabedaten.copy()
     Wieoftlied = int(Haupt.Textwortübergabedaten[0])
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Haupt.Textwortentry.config(bg="orange")
     lesteslied = False
 
@@ -436,7 +438,7 @@ def Eingabe():
 def Nächstelied():
     global Wieoftlied, Datenfürliedanderwand, Wieoft, lesteslied, Darf_ich_Amtswechsel, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Abendmahlslied, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4, Darf_ich_Busslied, Darf_ich_Kinderlied
     Wieoft = 0
-    Grundstellung(True)
+    Grundstellung(True, True)
     Datenfürliedanderwand = []
     if int(Haupt.Einganslied.Daten_fürTextanderwand[0]) == int(Wieoftlied):
         Haupt.Einganslied.Liedtextanzeige.config(bg="orange")
@@ -531,7 +533,7 @@ def Voeherlied():
 
 def Versvorher():
     global Wieoft, voherliedzwischensehne, lesteslied, Wieoftlied
-    Grundstellung(False)
+    Grundstellung(False, True)
     if lesteslied == True:
         lesteslied = False
         Wieoftlied = Wieoftlied - 1
@@ -647,6 +649,7 @@ def optisches_fedback(Liedposition):
         if Kamera_Steuerung.Ist_Kamer_aktiv == True:
                 Haupt.Einganslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
+                
 
 
 

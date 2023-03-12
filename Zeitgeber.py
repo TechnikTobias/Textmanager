@@ -41,6 +41,4 @@ jn2 =(Aktuell+jl4)
 jn3 = (jn + jl5)
 jn4 = (jn2 + jl5)
 Datum = (jn.strftime("%d.%m.%Y"))
-Datum2 = (jn2.strftime("%d.%m.%Y"))
-Datum3 = (jn3.strftime("%d.%m.%Y"))
-Datum4 = (jn4.strftime("%d.%m.%Y"))
+

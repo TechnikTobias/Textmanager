@@ -16,7 +16,7 @@ PASS = "admin"
 class ptzControl(object):
     def __init__(self):
         super(ptzControl, self).__init__()
-        self.mycam = ONVIFCamera(IP,PORT,USER,PASS)
+        self.mycam = ONVIFCamera(IP,PORT,USER,PASS, no_cache=True)
         self.media = self.mycam.create_media_service()
         self.media_profile = self.media.GetProfiles()[0]
         token = self.media_profile.token

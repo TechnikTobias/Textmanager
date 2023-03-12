@@ -2,10 +2,14 @@ import Haupt
 import chromesteuereinheit
 from tkinter import *
 
-def Einstellungen():
+def Einstellungen_erstellen():
     Haupt.Einstellungen_Laden()
     global Hintergrund_clicked, Vordergrund_clicked, Einstellungen_Textmanager, Hintergrund_opt, Vordergrund_clicked, \
         Vordergrund_opt, Hintergrundlabel, Textlabel, Buttonfarben, Kinder_Anzeigen_Grafig, Kinder_Position, Kinderbutton, Browserbutton
+    try:
+        Einstellungen_Textmanager.destroy()
+    except:
+        pass
     Einstellungen_Textmanager = Toplevel(Haupt.Textmanager)
     Einstellungen_Textmanager.geometry("500x300")
     Einstellungen_Textmanager.title("Einstellungen")
@@ -16,7 +20,7 @@ def Einstellungen():
         "green",
         "yellow",
         "pink"]
-    Buttonfarben = Button(Einstellungen_Textmanager, text="Hintergrund", fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, command=Haupt.Hintergrund)
+    Buttonfarben = Button(Einstellungen_Textmanager, text="Hintergrund", fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, command=Hintergrund)
     Buttonfarben.place(x=1, y=75)
     Hintergrund_clicked = StringVar()
     Hintergrund_clicked.set(Farben_liste[Haupt.Farben_in_Zahl(Haupt.Textmanager_Hintergrund)])
@@ -28,11 +32,11 @@ def Einstellungen():
     Vordergrund_clicked.set(Farben_liste[Haupt.Farben_in_Zahl(Haupt.Textmanager_Textfarbe)])
     OptionMenu(Einstellungen_Textmanager, Vordergrund_clicked, *Farben_liste)
     Vordergrund_opt = OptionMenu(Einstellungen_Textmanager, Vordergrund_clicked, *Farben_liste)
-    Vordergrund_opt.config(width=12, font=('Helvetica', 12), fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund)
+    Vordergrund_opt.config(width=12, font=('Helvetica', 12), fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, activebackground="green", )
     Vordergrund_opt.place(x=150, y=35)
     Hintergrundlabel = Label(Einstellungen_Textmanager, font=('Helvetica', 12), fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, text="Hintergrund")
     Hintergrundlabel.place(y=5, x=1)
-    Textlabel = Label(Einstellungen_Textmanager, font=('Helvetica', 12), fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, text="Textfarbe")
+    Textlabel = Label(Einstellungen_Textmanager, font=('Helvetica', 12), fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, text="Textfarbe", bd=0)
     Textlabel.place(x=150, y=5)
     Textfarbe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
     Textfarbe.write(Haupt.Textmanager_Textfarbe)
