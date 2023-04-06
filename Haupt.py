@@ -48,18 +48,10 @@ Liedeingabeladen = "0"
 Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
-Buch_Listen = [
-    "Gesangbuch",
-    "Chorbuch",
-    "Jugendliederbuch",
-    "Kinderliederbuch",
-    "Band 1 Singt dem Herrn",
-    "Band 2 Singt dem Herrn",
-    "Band 3 Singt dem Herrn",
-    "Argentinisches Chorbuch",
-    "Spanisches Chorbuch",
-    "Sonderheft"]
 
+buchladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buchlisten.txt", 'r', encoding='utf8')
+Buch_Listen1 = buchladen.read()
+Buch_Listen = Buch_Listen1.split(sep=",")
 Kameralisten = [
     "Altar",
     "Orgel",
@@ -836,12 +828,17 @@ def Verskontrolle():
         Buchopt = OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
         Buchopt.config(width=20, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
         Buchopt.place(x=10,y=10)
-        Versbestätigen = Button(Verskontroller, font=("Helvetica", 24), text="Bestätigen", command=Versbestätigendef)
+        Buch_hinzufügen = Button(Verskontroller, font=("Helvetica", 24), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="+", command=Buch_hinzufügendef, bd=0) 
+        Buch_hinzufügen.place(y=0, x=240)
+        Versbestätigen = Button(Verskontroller, font=("Helvetica", 24), text="Bestätigen", command=Versbestätigendef, bd=0)
         Versbestätigen.place(x=300, y=705)
         Streameinblendung = Entry(Verskontroller, font=("Helvetica", 24), width=30, bg="#FFEBCD")
         Streameinblendung.place(x=10, y=205)
         hi = True
     Verskontrolleloop()
+
+def Buch_hinzufügendef():
+    pass
 
 def Versbestätigendef():
     global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen
