@@ -644,7 +644,8 @@ def info():
     Info_zum_programm = Label(Info_manager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text=Text_für_Info, wraplength=800)
     Info_zum_programm["justify"] = "left"
     Info_zum_programm.place(x=0,y=0)
-    Bild_für_opa = ImageTk.PhotoImage(Image.open("Sterbe Anzeige Opa.jpg")) 
+    Bild_für_opa1 = Image.open("Sterbe Anzeige Opa.jpg")
+    Bild_für_opa = ImageTk.PhotoImage(image=Bild_für_opa1.resize((472,341))) 
     Bild_für_opa_Label = Label(Info_manager,image=Bild_für_opa)
     Bild_für_opa_Label.place(x=0,y=100)
     Bild_für_opa_Label.draw()
