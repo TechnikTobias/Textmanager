@@ -660,6 +660,7 @@ def Erweiterndef():
 
 def Uhrzeit_speicherndef():
     try:
+        global Uhrzeit
         Uhreingabe1.config(fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund)
         Uhrzeit = Uhreingabeclicked1.get()
         print("1")
@@ -672,15 +673,15 @@ def Uhrzeit_speicherndef():
     Zeit_laden2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Zeit2.txt", 'w', encoding='utf8')
     Uhrzeit1 = Uhrzeit.split(".")
     if int(Uhrzeit1[1]) > 10:
-        Zeit_laden.write(str(round(float(Uhreingabeclicked.get())-0.1, 2)))
-        Zeit_laden2.write(str(round(float(Uhreingabeclicked.get())-0.05, 2)))
+        Zeit_laden.write(str(round(float(Uhrzeit)-0.1, 2)))
+        Zeit_laden2.write(str(round(float(Uhrzeit)-0.05, 2)))
         Zeit_laden.close()
         Zeit_laden2.close()
         Haupt.Zeit = float(Uhrzeit)-0.1
         Haupt.Zeit2 = float(Uhrzeit) -0.05
     else:
-        Zeit_laden.write(str(round(float(Uhreingabeclicked.get())-0.5,2)))
-        Zeit_laden2.write(str(round(float(Uhreingabeclicked.get())-0.45,2)))
+        Zeit_laden.write(str(round(float(Uhrzeit)-0.5,2)))
+        Zeit_laden2.write(str(round(float(Uhrzeit)-0.45,2)))
         Zeit_laden.close()
         Zeit_laden2.close()
         Haupt.Zeit = float(Uhrzeit)-0.8
@@ -743,7 +744,7 @@ def Kinder_Anzeigen():
     Kinderladen.write("Wahr")
     Kinderladen.close()
     Haupt.Kinderlied = Haupt.Grafigfuer_ein_Lied(166+41 +83*Haupt.Kinder_Position, "Kinderlied", "True", Haupt.Textmanager_Hintergrund, Haupt.Textmanager_Textfarbe,4,1)
-    if Haupt.Kindeladen == True:
+    if Haupt.Kindeladen:
         Haupt.Kinderlied.Eingabe_wiederherstellen("Kinderlied", Haupt.Textmanager_Hintergrund, Haupt.Textmanager_Textfarbe,4,1, 166+41 +83*Haupt.Kinder_Position)
     Haupt.Aktualiesierung_Grafick()
 

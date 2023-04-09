@@ -172,7 +172,7 @@ def Videobeschreibung():
                     else:
                         Texteingabe1 = str("S " + Haupt.Schlusslied.Buch + " " + Haupt.Schlusslied.Liednummerfest + "\n" + str(Haupt.Schlusslied.Dateiliedtext) + "\n\n\n")
                         Texteingabe = Texteingabe + Texteingabe1
-                Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+                Textwortauslesen1 = open("C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
                 Textwortübergabe = Textwortauslesen1.read()
                 Textwortauslesen1.close()
                 eingabe3.send_keys(Textwortübergabe +"\n\n\n"+ Texteingabe)
@@ -216,7 +216,7 @@ def Stream_planen_Thread():
 def stream_planen():
     global Videobeschreibungaktionvarable
     if Chromöffnen == "Wahr":
-        if Streamüperprüfen == True:
+        if Streamüperprüfen:
             if Videobeschreibungaktionvarable == "Wahr":
                 print("stream exestiert")
             else:

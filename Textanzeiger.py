@@ -233,7 +233,7 @@ def Grundstellung(Livestreamaktualisierung, Kamera_stellung):
     Haupt.Text_Anzeige_Label.config(text="")
     Haupt.Textmanager.update()
 
-    if Livestreamaktualisierung == True:
+    if Livestreamaktualisierung:
         keyboard.press("0")
         time.sleep(0.5)
         keyboard.release("0")
@@ -241,8 +241,8 @@ def Grundstellung(Livestreamaktualisierung, Kamera_stellung):
         keyboard.press("1")
         time.sleep(0.5)
         keyboard.release("1")
-    if Kamera_stellung == True:
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+    if Kamera_stellung:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             Kamera_Steuerung.Kamera.goto_preset(1)
 
 
@@ -534,20 +534,20 @@ def Voeherlied():
 def Versvorher():
     global Wieoft, voherliedzwischensehne, lesteslied, Wieoftlied
     Grundstellung(False, True)
-    if lesteslied == True:
+    if lesteslied:
         lesteslied = False
         Wieoftlied = Wieoftlied - 1
         vorherübergabeTextandiewand()
         Verinbterprätator(Datenfürliedanderwand[3], Datenfürliedanderwand[2], Datenfürliedanderwand[4])
         Wieoft = len(AusganneVerse) + 1
-    if voherliedzwischensehne == False:
+    if not voherliedzwischensehne:
         Wieoft = Wieoft - 2
         Liedgebe()
     voherliedzwischensehne = False
 
 def Liedgebe():
     global Wieoft, Wieoftlied, Datenfürliedanderwand, voherliedzwischensehne, lesteslied
-    if lesteslied == False:
+    if not lesteslied:
         if Wieoftlied == 0:
             Wieoft = 0
             Datenfürliedanderwand = Haupt.Einganslied.Daten_fürTextanderwand.copy()
@@ -646,7 +646,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
                 Haupt.Einganslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Einganslied.Kameraposition)
                 
@@ -677,7 +677,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Amtswechsellied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Amtswechsellied.Kameraposition)
@@ -696,7 +696,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Textwortlied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Textwortlied.Kameraposition)
@@ -715,7 +715,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Bussslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Bussslied.Kameraposition)
@@ -734,7 +734,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Abendmahlslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Abendmahlslied.Kameraposition)
@@ -753,7 +753,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Schlusslied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Schlusslied.Kameraposition)
@@ -772,7 +772,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Kinderlied.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Kinderlied.Kameraposition)
@@ -791,7 +791,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Zusatzlied1.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
@@ -810,7 +810,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Zusatzlied2.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
@@ -829,7 +829,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Zusatzlied3.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied3.Kameraposition)
@@ -848,7 +848,7 @@ def optisches_fedback(Liedposition):
             keyboard.press("1")
             time.sleep(0.5)
             keyboard.release("1")
-        if Kamera_Steuerung.Ist_Kamer_aktiv == True:
+        if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Zusatzlied4.Kamerapositiondef()
                 Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied4.Kameraposition)

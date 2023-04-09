@@ -13,6 +13,7 @@ import chromesteuereinheit
 import Textanzeiger
 import Einstellungen
 import Kamera_Steuerung
+import Lied_kontrolle
 
 
 Hintregrundaktualisierenvariable = False
@@ -21,7 +22,7 @@ Textmanager = Tk()
 Textmanager.title("Textmanager")
 Textmanager.geometry("1040x800")
 Textmanager.minsize(width=1040, height=850)
-Textmanager.iconbitmap("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\picture_compress 1.ico")
+Textmanager.iconbitmap(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
 AnzeigeText.geometry("1920x1080+1920+0")
@@ -42,14 +43,11 @@ Testeneingeben = True
 Textwortwiederherstellen = False
 Textworteingabeübergabe = False
 Textwortübergabe = None
-Buchclickedladen = "0"
-Verseingabeladen = "0"
-Liedeingabeladen = "0"
 Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
 
-buchladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buchlisten.txt", 'r', encoding='utf8')
+buchladen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buchlisten.txt", 'r', encoding='utf8')
 Buch_Listen1 = buchladen.read()
 Buch_Listen = Buch_Listen1.split(sep=",")
 Kameralisten = [
@@ -62,10 +60,7 @@ Kameralisten = [
     "Altar Schmuck"
 ]
 
-Streameinblendungladen = None
-Liedverse_eingabeladen = None
-Verszahlinfo = None
-hi = True
+
 Zeit = 9.20
 Zeit1 = 19.50
 Zeit2 = 9.25
@@ -138,8 +133,8 @@ class Grafigfuer_ein_Lied:
     def Datein_lesen(self):
         global Errorbild
         try:
-            self.Dateiliedtext1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + str(self.clicked.get()) + "\\l" + str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
-            self.Dateiliedtext = self.Dateiliedtext1.read()
+            with open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Einbledungen\\{self.clicked.get()}\\l{self.Liednummer.get()}.txt", 'r', encoding='utf8') as self.Dateiliedtext1:
+                self.Dateiliedtext = self.Dateiliedtext1.read()
             try:
                 Errorbild.destroy()
             except:
@@ -154,7 +149,7 @@ class Grafigfuer_ein_Lied:
             Errorbild.config(bg=Textmanager_Hintergrund)
             Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
-            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Dieses Liednummer ist zu Groß oder ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text=f"Dieses Liednummer im {self.clicked.get()} ist zu Groß oder ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
             if len(self.Liednummer.get()) > 3:
                 Hi = self.Liednummer.get()
@@ -272,14 +267,14 @@ class Grafigfuer_ein_Lied:
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
         if len(self.Liedverse.get()) >= 1:
-            self.Liedtextanzeige.config(text=str(self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n" + self.Dateiliedtext))
+            self.Liedtextanzeige.config(text=f"{self.Buch} {self.Liednummer.get()} Vers {self.Liedverse.get()}\n{self.Dateiliedtext}")
         else:
-            self.Liedtextanzeige.config(text=str(self.Buch + " " + self.Liednummer.get()+"\n" + self.Dateiliedtext))
+            self.Liedtextanzeige.config(text=f"{self.Buch} {self.Liednummer.get()}\n{self.Dateiliedtext}")
 
 
     def Datein_lesen_spontan(self):
         try:
-            self.Dateiliedtext1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + str(Textanzeiger.clicked.get()) + "\\l" + str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
+            self.Dateiliedtext1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Einbledungen\\({Textanzeiger.clicked.get()}\\l{Textanzeiger.Texteingabe.get()}.txt", 'r', encoding='utf8')
             self.Dateiliedtext = self.Dateiliedtext1.read()
         except:
             if len(Textanzeiger.Texteingabe.get()) > 3:
@@ -292,27 +287,25 @@ class Grafigfuer_ein_Lied:
     def Livestream_Vorchau_spontan(self, Liedname):
         try:
             if len(Textanzeiger.Verseingabe.get()) >= 1:
-                self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get() + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + self.Dateiliedtext))
+                self.Liedtextanzeige.config(text=f"{self.Buch} {Textanzeiger.Texteingabe.get()} Vers {Textanzeiger.Verseingabe.get()}\n{self.Dateiliedtext}")
             else:
-                self.Liedtextanzeige.config(text=str(self.Buch + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
-            Lied_Textueberabe = open(
-            "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + Textanzeiger.clicked.get() + "\\l" +
-            str(Textanzeiger.Texteingabe.get()) + ".txt", 'r', encoding='utf8')
+                self.Liedtextanzeige.config(text=str({self.Buch} + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
+            Lied_Textueberabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Einbledungen\\{Textanzeiger.clicked.get()}\\l{Textanzeiger.Texteingabe.get()}.txt", 'r', encoding='utf8')
             Lied_Text = Lied_Textueberabe.read()
-            Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
-            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
+            Livestream_Text = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\{Liedname}.txt", 'w', encoding='utf8')
+            Lied_nummer_uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Nummer{Liedname}.txt", 'w', encoding='utf8')
             Lied_nummer_uebergabe.write(Textanzeiger.Texteingabe.get())
             Lied_nummer_uebergabe.close()
-            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
+            Lied_Vers_uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Verse{Liedname}.txt", 'w', encoding='utf8')
             Lied_Vers_uebergabe.write(Textanzeiger.Verseingabe.get())
             Lied_Vers_uebergabe.close()
-            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
+            Lied_Buch_Uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}.txt", 'w', encoding='utf8')
             Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
             Lied_Buch_Uebergabe.close()
             if len(Textanzeiger.Verseingabe.get()) >= 1:
-                Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + " Vers " + str(Textanzeiger.Verseingabe.get()) + "\n" + Lied_Text)
+                Livestream_Text.write(f"{self.Buch} {Textanzeiger.Texteingabe.get()} Vers {Textanzeiger.Verseingabe.get()}\n{Lied_Text}")
             else:
-                Livestream_Text.write(self.Buch + " " + str(Textanzeiger.Texteingabe.get()) + "\n" + Lied_Text)
+                Livestream_Text.write(f"{self.Buch} {Textanzeiger.Texteingabe.get()}\n{Lied_Text}")
             Livestream_Text.close()
         except:
             pass
@@ -321,7 +314,7 @@ class Grafigfuer_ein_Lied:
         global Hintregrundaktualisierenvariable
         if Welcheslied:
             Verseüber = Textanzeiger.Verseingabe.get()
-            if Textanzeiger.Versüperprüfen(Textanzeiger.clicked.get() ,Textanzeiger.Texteingabe.get(), Verseüber,Verseüber) == True:
+            if Textanzeiger.Versüperprüfen(Textanzeiger.clicked.get() ,Textanzeiger.Texteingabe.get(), Verseüber,Verseüber):
                 Hi = Textanzeiger.Verseingabe.get()
                 Hi2 = Hi[:-1]
                 Textanzeiger.Verseingabe.delete(0, "end")
@@ -342,7 +335,7 @@ class Grafigfuer_ein_Lied:
         if self.aktualisieren_wahl == "True":
             if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get() or Hintregrundaktualisierenvariable:
                 Verseüber = self.Liedverse.get()
-                if Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber) == True:
+                if Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber):
                     Hi = self.Liedverse.get()
                     Hi2 = Hi[:-1]
                     self.Liedverse.delete(0, "end")
@@ -353,17 +346,17 @@ class Grafigfuer_ein_Lied:
                 Grafigfuer_ein_Lied.Buchabkuerzen(self)
                 Grafigfuer_ein_Lied.Datein_lesen(self)
                 Grafigfuer_ein_Lied.Livestream_Vorchau(self)
-                AktuellerText1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + str(Liedname) + ".txt", 'r', encoding='utf8')
+                AktuellerText1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\{Liedname}.txt", 'r', encoding='utf8')
                 AktuellerText = AktuellerText1.read()
                 if len(self.Liedverse.get()) >= 1:
-                    if AktuellerText == (self.Buch + " " + self.Liednummer.get() + " Vers " + str(self.Liedverse.get()) + "\n" + self.Dateiliedtext):
+                    if AktuellerText == (f"{self.Buch} {self.Liednummer.get()} Vers {self.Liedverse.get()}\n{self.Dateiliedtext}"):
                         self.Liednummer.config(bg="green")
                         self.Liedverse.config(bg="green")
                     else:
                         self.Liednummer.config(bg="red")
                         self.Liedverse.config(bg="red")
                 else:
-                    if AktuellerText == (self.Buch + " " + self.Liednummer.get() + "\n" + self.Dateiliedtext):
+                    if AktuellerText == (f"{self.Buch} {self.Liednummer.get()}\n{self.Dateiliedtext}"):
                         self.Liednummer.config(bg="green")
                         self.Liedverse.config(bg="green")
                     else:
@@ -378,31 +371,29 @@ class Grafigfuer_ein_Lied:
         global Hintregrundaktualisierenvariable 
         try:
             if self.aktualisieren_wahl == "True":
-                Lied_Textueberabe = open(
-                    "C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\" + self.clicked.get() + "\\l" +
-                    str(self.Liednummer.get()) + ".txt", 'r', encoding='utf8')
+                Lied_Textueberabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Einbledungen\\{self.clicked.get()}\\l{self.Liednummer.get()}.txt", 'r', encoding='utf8')
                 Lied_Text = Lied_Textueberabe.read()
-                Livestream_Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\" + Liedname + ".txt", 'w', encoding='utf8')
-                Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer"+Liedname + ".txt", 'w', encoding='utf8')
+                Livestream_Text = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\{Liedname}.txt", 'w', encoding='utf8')
+                Lied_nummer_uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Nummer{Liedname}.txt", 'w', encoding='utf8')
                 Lied_nummer_uebergabe.write(self.Liednummer.get())
                 Lied_nummer_uebergabe.close()
-                Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse"+Liedname + ".txt", 'w', encoding='utf8')
+                Lied_Vers_uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Verse{Liedname}.txt", 'w', encoding='utf8')
                 Lied_Vers_uebergabe.write(self.Liedverse.get())
                 Lied_Vers_uebergabe.close()
-                Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + ".txt", 'w', encoding='utf8')
+                Lied_Buch_Uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}.txt", 'w', encoding='utf8')
                 Lied_Buch_Uebergabe.write(str(self.Buchzahl_clicked))
                 Lied_Buch_Uebergabe.close()
-                Lied_optTrue = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + "_fexisten.txt", 'w', encoding='utf8')
+                Lied_optTrue = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}_fexisten.txt", 'w', encoding='utf8')
                 Lied_optTrue.write("True")
                 Lied_optTrue.close()
-                Kamera_opt = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + "Kamera_position.txt", 'w', encoding='utf8')
+                Kamera_opt = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}Kamera_position.txt", 'w', encoding='utf8')
                 self.Kamerapositiondef()
                 Kamera_opt.write(str(self.Kameraposition-1))
                 Kamera_opt.close()
                 if len(self.Liedverse.get()) >= 1:
-                    Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + " Vers " + str(self.Liedverse.get()) + "\n" + Lied_Text)
+                    Livestream_Text.write(f"{self.Buch} {self.Liednummer.get()} Vers {self.Liedverse.get()}\n{Lied_Text}")
                 else:
-                    Livestream_Text.write(self.Buch + " " + str(self.Liednummer.get()) + "\n" + Lied_Text)
+                    Livestream_Text.write(f"{self.Buch} {self.Liednummer.get()}\n{Lied_Text}")
                 Livestream_Text.close()
                 self.Daten_fürTextanderwand = [Liedposition, False, self.clicked.get(), self.Liednummer.get(), self.Liedverse.get()]
                 self.Liednummerfest = self.Liednummer.get()
@@ -410,7 +401,7 @@ class Grafigfuer_ein_Lied:
                 Hintregrundaktualisierenvariable = True
                 Datei_Kontrolle(self.clicked.get() , self.Liednummer.get())
             else:
-                Lied_optTrue = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + "_fexisten.txt", 'w', encoding='utf8')
+                Lied_optTrue = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}_fexisten.txt", 'w', encoding='utf8')
                 Lied_optTrue.write("False")
                 Lied_optTrue.close()
         except:
@@ -430,7 +421,7 @@ class Grafigfuer_ein_Lied:
     # Wiederherstellt, die Alten eingaben
     def Eingabe_wiederherstellen(self, Liedname, Hintergrund, Vordergrund , Kamera_Grund_position, Lied_standart, Position):
         global Kindeladen, Liedpositionübergabe, Wie_viele_zusatzlieder
-        Lied_optTrue = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + "_fexisten.txt", 'r', encoding='utf8')
+        Lied_optTrue = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}_fexisten.txt", 'r', encoding='utf8')
         if Lied_optTrue.read() == "True":
             self.aktualisieren_wahl = "True"
         if self.aktualisieren_wahl == "True":
@@ -468,10 +459,10 @@ class Grafigfuer_ein_Lied:
                 Textmanager.update()
             self.Liedverse.delete(0, "end")
             self.Liednummer.delete(0, "end")
-            Lied_nummer_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Nummer" + str(Liedname) + ".txt", 'r', encoding='utf8')
-            Lied_Vers_uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Verse" + str(Liedname) + ".txt", 'r', encoding='utf8')
-            Lied_Buch_Uebergabe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch" + str(Liedname) + ".txt", 'r', encoding='utf8')
-            Kamera_option = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch"+Liedname + "Kamera_position.txt", 'r', encoding='utf8')
+            Lied_nummer_uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Nummer" + str(Liedname) + ".txt", 'r', encoding='utf8')
+            Lied_Vers_uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Verse" + str(Liedname) + ".txt", 'r', encoding='utf8')
+            Lied_Buch_Uebergabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch" + str(Liedname) + ".txt", 'r', encoding='utf8')
+            Kamera_option = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}Kamera_position.txt", 'r', encoding='utf8')
             Lied_vers = Lied_Vers_uebergabe.read()
             Lied_Nummer = Lied_nummer_uebergabe.read()
             Lied_Buch = Lied_Buch_Uebergabe.read()
@@ -541,16 +532,16 @@ class Grafigfuer_ein_Lied:
 
 def Einstellungen_Laden():
     global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder, Browseröffnen, Zeit, Zeit1, Zeit2, Zeit3
-    Textfarbe = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'r', encoding='utf8')
+    Textfarbe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textfarbe.txt", 'r', encoding='utf8')
     Textmanager_Textfarbe = Textfarbe.read()
     Textfarbe.close()
-    Hintergrund = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'r', encoding='utf8')
+    Hintergrund = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Hintergrund.txt", 'r', encoding='utf8')
     Textmanager_Hintergrund = Hintergrund.read()
     Hintergrund.close()
-    Kinderladen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'r', encoding='utf8')
+    Kinderladen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Kindereinstellung.txt", 'r', encoding='utf8')
     Kinder_anzeigen = Kinderladen.read()
     Kinderladen.close()
-    Browseröffnen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
+    Browseröffnen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Browseröffnen = Browseröffnen.read()
     if Kinder_anzeigen == "Wahr":
         Kinder_Anzeigen_Grafig = "True"
@@ -597,7 +588,7 @@ def Textmamager_erstellen():
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten, border=0)
     Hauptbildschirmbutton = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Präsentation", command=Grifuckfürpräsantatiom, border=0)
     Hauptbildschirmbutton.place(x=800, y=680)
-    Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle, border=0)
+    Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Lied_kontrolle.Verskontrolle, border=0)
     Verskontroll_Button.place(x=800, y=110)
     Info = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Info", command=info, border=0)
     Info.place(x=800,y=800)
@@ -667,8 +658,8 @@ def Textwortcommand():
         Textwort_manager = Toplevel(Textmanager)
         Textwort_manager.geometry("800x600")
         Textworteingabe = Text(Textwort_manager, font=("Helvetica", 15), height= 20, width=60, bg="#FFEBCD")
-        if Textwortwiederherstellen == True:
-            Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+        if Textwortwiederherstellen:
+            Textwortauslesen = open("C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
             Textwortvariabel = Textwortauslesen.read()
             Textworteingabe.insert(END, Textwortvariabel)
             Textwortauslesen.close()
@@ -682,20 +673,20 @@ def Textwortbestätigenbefehl():
     Textwortentry.config(text=Textworteingabe.get("1.0","1.end"))
     Textwortübergabe = Textworteingabe.get("1.0","1.end")
     Textwortübergabeganz = Textworteingabe.get("1.0","end-1c")
-    Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
+    Textwortauslesen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwort.txt", 'w', encoding='utf8')
     Textwortauslesen.write(Textwortübergabeganz)
     Textwortauslesen.close()
-    Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwortbutton.txt", 'w', encoding='utf8')
+    Textwortauslesen1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwortbutton.txt", 'w', encoding='utf8')
     Textwortauslesen1.write(Textwortübergabe)
     Textwortauslesen1.close()
-    Textwortauslesen2 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\Textwort\\1 Vers 1.txt", 'w', encoding='utf8')
+    Textwortauslesen2 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch\\Textwort\\1 Vers 1.txt", 'w', encoding='utf8')
     Textwortauslesen2.write(Textwortübergabeganz)
     Textwortauslesen2.close()
     Textwort_manager.destroy()
     Textworteingabeübergabe = False
 
 def Grifuckfürpräsantatiom():
-    if Buttonebestätigengedrückt == True:
+    if Buttonebestätigengedrückt:
         global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Stream_beenden_button, Tastensperren
         Hintregrundaktualisieren = False
         zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher, border=0)
@@ -762,16 +753,16 @@ def Grifickeingabe():
     Zusatzlied4.Grafick_Eingabe(747+41+83*Kinder_Position, "Zusatzlied4", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
     zusaetzliches_lied = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Weiters Lied", border=0)
     zusaetzliches_lied.place(x=300, y=500+83*Kinder_Position+Wie_viele_zusatzlieder+83)
-    if Zusatzlied1_obwahr == True:
+    if Zusatzlied1_obwahr:
         zusaetzliches_lied.config(command=zusaetzlicheslied1)
         zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer, border=0)
-    elif Zusatzlied2_obwahr == True:
+    elif Zusatzlied2_obwahr:
         zusaetzliches_lied.config(command=zusaetzlicheslied2)
         zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer1, border=0)
-    elif Zusatzlied3_obwahr == True:
+    elif Zusatzlied3_obwahr:
         zusaetzliches_lied.config(command=zusaetzlicheslied3)
         zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer2, border=0)
-    elif Zusatzlied4_obwahr == True:
+    elif Zusatzlied4_obwahr:
         zusaetzliches_liedzerstörer = Button(Textmanager, font=("Helvetica", 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="Zusatzlied Löschen", command=zusaetzlichesliedzerstörer3, border=0)
         zusaetzliches_lied.destroy()
     else:
@@ -789,7 +780,7 @@ def Grifickeingabe():
     Textwortentry.config(command=Textwortcommand, bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
     Aktualiesierung_Grafick()
     Stream_beenden_button.destroy()
-    Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Verskontrolle, border=0)
+    Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Lied_kontrolle.Verskontrolle, border=0)
     Verskontroll_Button.place(x=800, y=110)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten, border=0)
     Kamera_steuerung_button.place(x=800, y=750)
@@ -799,185 +790,15 @@ def Grifickeingabe():
     Hintregrundaktualisieren = True
     Textanzeiger.Grundstellung(False, False)
 
-def Verskontrolle():
-    global Verskontroller, Liedeingabe, Verseingabe, Verszahl, Liedverse_eingabe, Buchclicked, Streameinblendung, Versbestätigen, hi
-    try:
-        Liedeingabe.get()
-    except:
-        Verskontroller = Toplevel(Textmanager)
-        Verskontroller.geometry("800x800")
-        Verskontroller.title("Vers Kontrolle")
-        Verskontroller.config(bg=Textmanager_Hintergrund)
-        Liedeingabe = Entry(Verskontroller, font=("Helvetica", 24), width=4)
-        Liedeingabe.place(x=300,y=60)
-        Verseingabe = Entry(Verskontroller, font=("Helvetica", 24), width=2)
-        Verseingabe.place(x=300, y=105)
-        Verszahl = Entry(Verskontroller, font=("Helvetica", 24), width=2)
-        Verszahl.place(x=300, y=150)
-        Liedeingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Bitte geben sie ein Lied ein", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-        Liedeingabelabel.place(x=10, y=60)
-        Verseingabelabel = Label(Verskontroller, font=("Helvetica", 15), text="Welcher Vers ist das?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-        Verseingabelabel.place(x=10, y=105)
-        Verszahllabel = Label(Verskontroller, font=("Helvetica", 15), text="Wie viele Verse hat das Lied?", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-        Verszahllabel.place(x=10, y=150)
-        Liedverse_eingabe = Text(Verskontroller, font=("Helvetica", 20), height= 12, width=44, bg="#FFEBCD")
-        Liedverse_eingabe.place(y=255, x=10)
-        Buchclicked = StringVar()
-        Buchclicked.set(Buch_Listen[0])
-        OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
-        Buchopt = OptionMenu(Verskontroller, Buchclicked, *Buch_Listen)
-        Buchopt.config(width=20, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-        Buchopt.place(x=10,y=10)
-        Buch_hinzufügen = Button(Verskontroller, font=("Helvetica", 24), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text="+", command=Buch_hinzufügendef, bd=0) 
-        Buch_hinzufügen.place(y=0, x=240)
-        Versbestätigen = Button(Verskontroller, font=("Helvetica", 24), text="Bestätigen", command=Versbestätigendef, bd=0)
-        Versbestätigen.place(x=300, y=705)
-        Streameinblendung = Entry(Verskontroller, font=("Helvetica", 24), width=30, bg="#FFEBCD")
-        Streameinblendung.place(x=10, y=205)
-        hi = True
-    Verskontrolleloop()
 
-def Buch_hinzufügendef():
-    pass
-
-def Versbestätigendef():
-    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen
-    if len(Liedeingabe.get()) > 0:
-        Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'w', encoding='utf8')
-        Text.write(Liedverse_eingabe.get("1.0","end-1c"))
-        Text.close()
-        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
-        Text1.write(Verszahl.get())
-        Text1.close()
-        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
-        Text1.write(Streameinblendung.get())
-        Text1.close()
-        Versbestätigen.config(text="Gespeichert")
-        Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
-        Streameinblendungladen = Streameinblendung.get()
-        Verseingabeladen = Verseingabe.get()
-
-def Dateispeicherndef():
-    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi 
-    if len(Liedeingabe.get()) > 0:
-        Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Versgespeichert)+".txt", 'w', encoding='utf8')
-        Text.write(Liedverse_eingabe.get("1.0","end-1c"))
-        Text.close()
-        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
-        Text1.write(Verszahl.get())
-        Text1.close()
-        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
-        Text1.write(Streameinblendung.get())
-        Text1.close()
-        Versbestätigen.config(text="Gespeichert")
-        Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
-        Streameinblendungladen = Streameinblendung.get()
-        Verseingabeladen = Verseingabe.get()
-    Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
-    Streameinblendungladen = Streameinblendung.get()
-    Verseingabeladen = 100
-    hi = False
-    Verskontrollerdateispeichern.destroy()
-
-def DAtennichtspeicherndef():
-    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi
-    Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
-    Streameinblendungladen = Streameinblendung.get()
-    hi = False
-    Verseingabeladen = 100
-    Verskontrollerdateispeichern.destroy()
-
-def Abbrechendef():
-    global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi
-    Verseingabe.delete(0, "end")
-    Verseingabe.insert(END, Verseingabeladen_abbrechen)
-    hi = None
-    Verskontrollerdateispeichern.destroy()
-
-def Verskontrolleloop():
-    global Buchclickedladen, Verszahlladen, Verseingabeladen, Liedeingabeladen, Verse, Verszahlinfo, Streameinblendungladen, Liedverse_eingabeladen, hi, Verskontrollerdateispeichern, Versgespeichert, Verseingabeladen_abbrechen
-    Verszahl.get()
-    erstart = ""
-    if Verseingabe.get() == erstart:
-        Verse = 1
-    else:
-        Verse = Verseingabe.get()
-    if not Buchclicked.get() == Buchclickedladen or not Verseingabe.get() == Verseingabeladen or not Liedeingabe.get() == Liedeingabeladen:
-        if not Streameinblendungladen == Streameinblendung.get() or not Liedverse_eingabeladen == Liedverse_eingabe.get("1.0","end-1c") or not Verszahlinfo == Verszahl.get():
-            Versbestätigen.config(text="Bestätigen")
-            if hi == True:
-                Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
-                Streameinblendungladen = Streameinblendung.get()
-                Verseingabeladen = Verseingabe.get()
-                hi = False
-            elif hi == None:
-                hi = False
-            else:
-                try:
-                    Verskontrollerdateispeichern.destroy()
-                except:
-                    pass
-                Verskontrollerdateispeichern = Toplevel(Textmanager)
-                Verskontrollerdateispeichern.geometry("600x200")
-                Verskontrollerdateispeichern.title("Vers Speichern")
-                Verskontrollerdateispeichern.config(bg=Textmanager_Hintergrund)
-                Dateispeichern = Button(Verskontrollerdateispeichern, font=("Helvetica", 18), text="Speichern", command=Dateispeicherndef)
-                Dateispeichern.place(x=50, y=80)
-                Dateinichtspeichern = Button(Verskontrollerdateispeichern, font=("Helvetica", 18), text="Nicht Speichern", command=DAtennichtspeicherndef)
-                Dateinichtspeichern.place(x=200, y=80)
-                Abbrechen = Button(Verskontrollerdateispeichern, font=("Helvetica", 18), text="Abbrechen", command=Abbrechendef)
-                Abbrechen.place(x=420, y=80)
-                Infoanzeige = Label(Verskontrollerdateispeichern, font=("Helvetica", 15), text="Das Lied wurde noch nicht gespeichert", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe)
-                Infoanzeige.place(x=120, y=20)
-        else:
-            Versgespeichert = Verse
-            Versbestätigen.config(text="Bestätigen")
-            Streameinblendung.get()
-            if len(Liedeingabe.get()) > 0:
-                try:
-                    Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'r', encoding='utf8')
-                    Textfertig = Text.read()
-                    Text.close()
-                    Liedverse_eingabe.delete("1.0","end-1c")
-                    Liedverse_eingabe.insert(END,Textfertig)
-                except:
-                    Liedverse_eingabe.delete("1.0","end-1c")
-                try:
-                    Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
-                    text1 = Text1.read()
-                    Verszahl.delete(0, "end")
-                    Verszahl.insert(0, text1)
-                except:
-                    Verszahl.delete(0, "end")
-                try:
-                    Einblendung = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
-                    Einblendungfertig = Einblendung.read()
-                    Einblendung.close()
-                    Streameinblendung.delete(0, "end")
-                    Streameinblendung.insert(END,Einblendungfertig)
-                except:
-                    Streameinblendung.delete(0, "end")
-            else:
-                Liedverse_eingabe.delete("1.0","end-1c")
-                Verszahl.delete(0, "end")
-                Streameinblendung.delete(0, "end")
-            Liedverse_eingabeladen = Liedverse_eingabe.get("1.0","end-1c")
-            Streameinblendungladen = Streameinblendung.get()
-            Verseingabeladen_abbrechen = Verseingabe.get()
-        Buchclickedladen = Buchclicked.get()
-        Verseingabeladen = Verseingabe.get()
-        Verszahlladen = Liedeingabe.get()
-        Liedeingabeladen = Liedeingabe.get()
-        Verszahlinfo= Verszahl.get()
-    Liedeingabe.after(100, lambda: Verskontrolleloop())
 
 def Datei_Kontrolle(Buch, Lied):
     try:
         wieoft = 0
-        Text1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buch+"\\"+Lied+".txt", 'r', encoding='utf8')
+        Text1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Versanzahl\\{Buch}\\{Lied}.txt", 'r', encoding='utf8')
         Hi = Text1.read()
         while not wieoft == int(Hi):
-            Text = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buch+"\\"+Lied+" Vers "+str(wieoft+1)+".txt", 'r', encoding='utf8')
+            Text = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch\\{Buch}\\{Lied} Vers {wieoft+1}.txt", 'r', encoding='utf8')
             wieoft = wieoft + 1
     except:
             try:
@@ -989,7 +810,7 @@ def Datei_Kontrolle(Buch, Lied):
             Errorbild.config(bg=Textmanager_Hintergrund)
             Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
-            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text="Die Liednummer "+str(Lied)+" ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text=f"Die Liednummer {Lied} im {Buch} ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
 
 
@@ -1021,7 +842,7 @@ def zusaetzlicheslied2():
     Zusatzlied3_obwahr = True
     Zusatzlied2_obwahr = False
     Textmanager.geometry("1040x990")
-    if chromesteuereinheit.Chromeaktuell == False:
+    if not chromesteuereinheit.Chromeaktuell:
         chromesteuereinheit.Chromeupdate.place(y=940)
     Textmanager.minsize(width=1040, height=990)
     zusaetzliches_lied.config(command=zusaetzlicheslied3)
@@ -1037,7 +858,7 @@ def zusaetzlichesliedzerstörer2():
     zusaetzliches_lied.config(command=zusaetzlicheslied2)
     Aktualiesierung_Grafick()
     zusaetzliches_liedzerstörer.config(command=zusaetzlichesliedzerstörer1)
-    if chromesteuereinheit.Chromeaktuell == False:
+    if not chromesteuereinheit.Chromeaktuell:
         chromesteuereinheit.Chromeupdate.place(y=760)
     Textmanager.geometry("1040x800")
     Textmanager.minsize(width=1040, height=850)
@@ -1101,7 +922,7 @@ def Button_command():
 
 def Hintergrund_aktualisieren():
     global Testeneingeben, Zeit, Zeit1, Zeit2, Zeit3, Hintregrundaktualisierenvariable
-    if Hintregrundaktualisieren == True:
+    if Hintregrundaktualisieren:
         Einganslied.Hintergrund_aktualisierung("Einganslied")
         Textwortlied.Hintergrund_aktualisierung("Textwortlied")
         Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
@@ -1115,7 +936,7 @@ def Hintergrund_aktualisieren():
         Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
         Hintregrundaktualisierenvariable = False
     else:
-        if Testeneingeben == True:
+        if Testeneingeben:
             if keyboard.get_hotkey_name()== str(1):
                 while keyboard.get_hotkey_name()==str(1):
                     pass
@@ -1180,7 +1001,7 @@ def Hintergrund_aktualisieren():
             elif keyboard.is_pressed("."):
                 while keyboard.is_pressed("."):
                     pass
-                if Textanzeiger.Anzeige == True:
+                if Textanzeiger.Anzeige:
                     Hi = ""
                     Text_Anzeige_Label.config(text=Hi)
                     Textmanager.update()
@@ -1200,7 +1021,7 @@ def Hintergrund_aktualisieren():
             if keyboard.is_pressed("y"):
                 while keyboard.is_pressed("y"):
                     pass
-                if Testeneingeben == False:  
+                if not Testeneingeben:  
                     Testeneingeben = True
                 else:
                     Testeneingeben = False
@@ -1329,16 +1150,16 @@ def Eingabe_loeschen():
 
 def Eingabe_wiederherstellen():
     global Textwortwiederherstellen, Zeit, Zeit1, Zeit2, Zeit3
-    Zeit_laden = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Zeit.txt", 'r', encoding='utf8')
+    Zeit_laden = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Zeit.txt", 'r', encoding='utf8')
     Zeit = Zeit_laden.read()
     Zeit_laden.close()
-    Zeit_laden = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Zeit1.txt", 'r', encoding='utf8')
+    Zeit_laden = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Zeit1.txt", 'r', encoding='utf8')
     Zeit1 = Zeit_laden.read()
     Zeit_laden.close()
-    Zeit_laden = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Zeit2.txt", 'r', encoding='utf8')
+    Zeit_laden = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Zeit2.txt", 'r', encoding='utf8')
     Zeit2 = Zeit_laden.read()
     Zeit_laden.close()
-    Zeit_laden = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Zeit3.txt", 'r', encoding='utf8')
+    Zeit_laden = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Zeit3.txt", 'r', encoding='utf8')
     Zeit3 = Zeit_laden.read()
     Zeit_laden.close()
     Einganslied.Eingabe_wiederherstellen("Einganslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0,0)
@@ -1352,14 +1173,14 @@ def Eingabe_wiederherstellen():
     Zusatzlied2.Eingabe_wiederherstellen("Zusatzlied2", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 2 +83*Kinder_Position)
     Zusatzlied3.Eingabe_wiederherstellen("Zusatzlied3", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 3 +83*Kinder_Position)
     Zusatzlied4.Eingabe_wiederherstellen("Zusatzlied4", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 4 +83*Kinder_Position)
-    Textwortauslesen1 = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwortbutton.txt", 'r', encoding='utf8')
+    Textwortauslesen1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwortbutton.txt", 'r', encoding='utf8')
     Textwortübergabe = Textwortauslesen1.read()
     Textwortauslesen1.close()
     Textwortentry.config(text=Textwortübergabe)
     Textwortwiederherstellen = True
-    if Textworteingabeübergabe == True:
+    if Textworteingabeübergabe:
         try:
-            Textwortauslesen = open("C:\\Users\\" + Dateiort + "\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+            Textwortauslesen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
             Textwortvariabel = Textwortauslesen.read()
             Textworteingabe.delete("1.0", END)
             Textworteingabe.insert(END, Textwortvariabel)
