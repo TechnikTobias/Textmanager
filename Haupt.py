@@ -149,7 +149,7 @@ class Grafigfuer_ein_Lied:
             Errorbild.config(bg=Textmanager_Hintergrund)
             Error = Label(Errorbild, font=("Helvetica", 40), text="Error", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             Error.place(x=210, y=0)
-            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text=f"Dieses Liednummer im {self.clicked.get()} ist zu Groß oder ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
+            ErrorLabel = Label(Errorbild, font=("Helvetica", 20), text=f"Dieses Liednummer {self.Liednummer.get()} im {self.clicked.get()} ist zu Groß oder ist noch nicht im System", bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
             if len(self.Liednummer.get()) > 3:
                 Hi = self.Liednummer.get()
@@ -183,69 +183,38 @@ class Grafigfuer_ein_Lied:
 
 
     # Erstellt die Buchabkürzung für den Livestream und NBuchzahl für das Wiederherstellen
-    def Buchabkuerzen(self):
-        if self.clicked.get() == "Gesangbuch":
+    def Buchabkuerzen(self, welches_buch):
+        if welches_buch == "Gesangbuch":
             self.Buch = "GB"
             self.Buchzahl_clicked = 0
-        elif self.clicked.get() == "Chorbuch":
+        elif welches_buch == "Chorbuch":
             self.Buch = "CB"
             self.Buchzahl_clicked = 1
-        elif self.clicked.get() == "Jugendliederbuch":
+        elif welches_buch == "Jugendliederbuch":
             self.Buch = "JLB"
             self.Buchzahl_clicked = 2
-        elif self.clicked.get() == "Argentinisches Chorbuch":
+        elif welches_buch == "Argentinisches Chorbuch":
             self.Buch = "AC"
             self.Buchzahl_clicked = 7
-        elif self.clicked.get() == "Kinderliederbuch":
+        elif welches_buch == "Kinderliederbuch":
             self.Buch = "KLB"
             self.Buchzahl_clicked = 3
-        elif self.clicked.get() == "Sonderheft":
+        elif welches_buch == "Sonderheft":
             self.Buch = "SH"
             self.Buchzahl_clicked = 9
-        elif self.clicked.get() == "Spanisches Chorbuch":
+        elif welches_buch == "Spanisches Chorbuch":
             self.Buch = "SpC"
             self.Buchzahl_clicked = 8
-        elif self.clicked.get() == "Band 1 Singt dem Herrn":
+        elif welches_buch == "Band 1 Singt dem Herrn":
             self.Buch = "SdH Band 1"
             self.Buchzahl_clicked = 4
-        elif self.clicked.get() == "Band 2 Singt dem Herrn":
+        elif welches_buch == "Band 2 Singt dem Herrn":
             self.Buch = "SdH Band 2"
             self.Buchzahl_clicked = 5
-        elif self.clicked.get() == "Band 3 Singt dem Herrn":
+        elif welches_buch == "Band 3 Singt dem Herrn":
             self.Buch = "SdH Band 3"
             self.Buchzahl_clicked = 6
 
-    def Buchabkuerzen_Spontan(self):
-        if Textanzeiger.clicked.get() == "Gesangbuch":
-            self.Buch = "GB"
-            self.Buchzahl_clicked = 0
-        elif Textanzeiger.clicked.get() == "Chorbuch":
-            self.Buch = "CB"
-            self.Buchzahl_clicked = 1
-        elif Textanzeiger.clicked.get() == "Jugendliederbuch":
-            self.Buch = "JLB"
-            self.Buchzahl_clicked = 2
-        elif Textanzeiger.clicked.get() == "Argentinisches Chorbuch":
-            self.Buch = "AC"
-            self.Buchzahl_clicked = 7
-        elif Textanzeiger.clicked.get() == "Kinderliederbuch":
-            self.Buch = "KLB"
-            self.Buchzahl_clicked = 3
-        elif Textanzeiger.clicked.get() == "Sonderheft":
-            self.Buch = "SH"
-            self.Buchzahl_clicked = 9
-        elif Textanzeiger.clicked.get() == "Spanisches Chorbuch":
-            self.Buch = "SpC"
-            self.Buchzahl_clicked = 8
-        elif Textanzeiger.clicked.get() == "Band 1 Singt dem Herrn":
-            self.Buch = "SdH Band 1"
-            self.Buchzahl_clicked = 4
-        elif Textanzeiger.clicked.get() == "Band 2 Singt dem Herrn":
-            self.Buch = "SdH Band 2"
-            self.Buchzahl_clicked = 5
-        elif Textanzeiger.clicked.get() == "Band 3 Singt dem Herrn":
-            self.Buch = "SdH Band 3"
-            self.Buchzahl_clicked = 6
 
     def Kamerapositiondef(self):
         global Kameraposition
@@ -289,7 +258,7 @@ class Grafigfuer_ein_Lied:
             if len(Textanzeiger.Verseingabe.get()) >= 1:
                 self.Liedtextanzeige.config(text=f"{self.Buch} {Textanzeiger.Texteingabe.get()} Vers {Textanzeiger.Verseingabe.get()}\n{self.Dateiliedtext}")
             else:
-                self.Liedtextanzeige.config(text=str({self.Buch} + " " + Textanzeiger.Texteingabe.get()+"\n" + self.Dateiliedtext))
+                self.Liedtextanzeige.config(text=f"{self.Buch} {Textanzeiger.Texteingabe.get()}\n{self.Dateiliedtext}")
             Lied_Textueberabe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Einbledungen\\{Textanzeiger.clicked.get()}\\l{Textanzeiger.Texteingabe.get()}.txt", 'r', encoding='utf8')
             Lied_Text = Lied_Textueberabe.read()
             Livestream_Text = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\{Liedname}.txt", 'w', encoding='utf8')
@@ -322,7 +291,7 @@ class Grafigfuer_ein_Lied:
             else:
                 Textanzeiger.Verseingabe.delete(0, "end")
                 Textanzeiger.Verseingabe.insert(END, Textanzeiger.Versüperprüfen(Textanzeiger.clicked.get() ,Textanzeiger.Texteingabe.get(), Verseüber,Verseüber))
-            Grafigfuer_ein_Lied.Buchabkuerzen_Spontan(self)
+            Grafigfuer_ein_Lied.Buchabkuerzen(self,Textanzeiger.clicked.get())
             Grafigfuer_ein_Lied.Datein_lesen_spontan(self)
             Grafigfuer_ein_Lied.Livestream_Vorchau_spontan(self, Liedname)
             self.Daten_fürTextanderwand = [Liedposition, False, Textanzeiger.clicked.get(), Textanzeiger.Texteingabe.get(), Textanzeiger.Verseingabe.get()]
@@ -343,7 +312,7 @@ class Grafigfuer_ein_Lied:
                 else:
                     self.Liedverse.delete(0, "end")
                     self.Liedverse.insert(END, Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber))
-                Grafigfuer_ein_Lied.Buchabkuerzen(self)
+                Grafigfuer_ein_Lied.Buchabkuerzen(self, self.clicked.get())
                 Grafigfuer_ein_Lied.Datein_lesen(self)
                 Grafigfuer_ein_Lied.Livestream_Vorchau(self)
                 AktuellerText1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\{Liedname}.txt", 'r', encoding='utf8')
