@@ -6,7 +6,8 @@ import tkinter
 import Haupt
 import Textanzeiger
 
-IP_Adresse = open("C:\\Users\\" +  os.getlogin() + "\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
+IP_Adresse = open(f"C:\\Users\\{os.getlogin()}\\Desktop\\Lieder\\IP-Adresse_Kamera.txt", 'r', encoding='utf8')
+Ist_Kamer_aktiv = False
 
 IP = IP_Adresse.read()  # Camera IP address
 PORT = 8080  # Port
@@ -20,9 +21,26 @@ class ptzControl(object):
         self.media = self.mycam.create_media_service()
         self.media_profile = self.media.GetProfiles()[0]
         token = self.media_profile.token
-        self.ptz = self.mycam.create_ptz_service()
+        self.ptz = self.mycam.create_ptz_service()  
         self.requestg = self.ptz.create_type('GotoPreset')
         self.requestg.ProfileToken = self.media_profile.token
+        self.requestp = self.ptz.create_type('SetPreset')
+        self.requestp.ProfileToken = self.media_profile.token
+
+        request = self.ptz.create_type('GetConfigurationOptions')
+        request.ConfigurationToken = self.media_profile.PTZConfiguration.token
+        ptz_configuration_options = self.ptz.GetConfigurationOptions(request)
+
+
+        self.requestc = self.ptz.create_type('ContinuousMove')
+        self.requestc.ProfileToken = self.media_profile.token
+        if self.requestc.Velocity is None:
+            self.requestc.Velocity = self.ptz.GetStatus({'ProfileToken': self.media_profile.token}).Position
+            self.requestc.Velocity.PanTilt.space = ptz_configuration_options.Spaces.ContinuousPanTiltVelocitySpace[0].URI
+            self.requestc.Velocity.Zoom.space = ptz_configuration_options.Spaces.ContinuousZoomVelocitySpace[0].URI
+
+        self.requests = self.ptz.create_type('Stop')
+        self.requests.ProfileToken = self.media_profile.token
 
     def goto_preset(self, Position):
         global Errorkamera
@@ -42,13 +60,48 @@ class ptzControl(object):
                             fg=Haupt.Textmanager_Textfarbe, wraplength=560)
             ErrorLabel.place(x=0, y=80)
 
+    def stop(self):
+        self.requests.PanTilt = True
+        self.requests.Zoom = True
+        self.ptz.Stop(self.requests)
+
+    def perform_move(self, requestc):
+        # Start continuous move
+        ret = self.ptz.ContinuousMove(requestc)
+
+    def move_tilt(self, velocity):
+        self.requestc.Velocity.Zoom.x = 0.0
+        self.requestc.Velocity.PanTilt.x = 0.0
+        self.requestc.Velocity.PanTilt.y = velocity
+        self.perform_move(self.requestc)
+
+    def move_pan(self, velocity):
+        self.requestc.Velocity.Zoom.x = 0.0
+        self.requestc.Velocity.PanTilt.x = velocity
+        self.requestc.Velocity.PanTilt.y = 0.0
+        self.perform_move(self.requestc)
+
+    def zoom(self, velocity):
+        self.requestc.Velocity.Zoom.x = velocity
+        self.requestc.Velocity.PanTilt.x = 0.0
+        self.requestc.Velocity.PanTilt.y = 0.0
+        self.perform_move(self.requestc)
+
+
+
+    def set_preset(self, name):
+        self.requestp.PresetName = name
+        self.requestp.PresetToken = '1'
+        self.preset = self.ptz.SetPreset(self.requestp)  # returns the PresetToken
+
+    def get_preset(self):
+        self.ptzPresetsList = self.ptz.GetPresets(self.requestc)
 
 
 def Kamera_erstellen():
     global Kamera, Ist_Kamer_aktiv, Errorkamera
     try:
         Kamera = ptzControl()
-        Ist_Kamer_aktiv = True
     except onvif.exceptions.ONVIFError:
         Ist_Kamer_aktiv = False
         Errorkamera = tkinter.Toplevel(Haupt.Textmanager)
@@ -104,4 +157,5 @@ def Kamera_erstellen_Thread():
 def Erneut_verbinden():
     Errorkamera.destroy()
     Kamera_erstellen_Thread()
+
 

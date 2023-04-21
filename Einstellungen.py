@@ -88,10 +88,10 @@ def Einstellungen_erstellen():
     Hintergrundlabel.place(y=5, x=5)
     Textlabel = Label(Einstellungen_Textmanager, font=('Helvetica', 12), fg=Haupt.Textmanager_Textfarbe, bg=Haupt.Textmanager_Hintergrund, text="Textfarbe", bd=0)
     Textlabel.place(x=155, y=5)
-    Textfarbe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
+    Textfarbe = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
     Textfarbe.write(Haupt.Textmanager_Textfarbe)
     Textfarbe.close()
-    Hintergrunddatei = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
+    Hintergrunddatei = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
     Hintergrunddatei.write(Haupt.Textmanager_Hintergrund)
     Hintergrunddatei.close()
     if Haupt.Kinder_anzeigen == "Falsch":
@@ -669,8 +669,8 @@ def Uhrzeit_speicherndef():
         Uhrzeit = Uhreingabeclicked.get()
         print("2")
     print(Uhrzeit)
-    Zeit_laden = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Zeit.txt", 'w', encoding='utf8')
-    Zeit_laden2 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Zeit2.txt", 'w', encoding='utf8')
+    Zeit_laden = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Zeit.txt", 'w', encoding='utf8')
+    Zeit_laden2 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Zeit2.txt", 'w', encoding='utf8')
     Uhrzeit1 = Uhrzeit.split(".")
     if int(Uhrzeit1[1]) > 10:
         Zeit_laden.write(str(round(float(Uhrzeit)-0.1, 2)))
@@ -708,10 +708,10 @@ def Hintergrund():
     Textlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
     Haupt.Textwortentry.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
     Haupt.Textwortlabel.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
-    Hintergrund = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
+    Hintergrund = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
     Hintergrund.write(Hintergrund_clicked.get())
     Hintergrund.close()
-    Textfarbe = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
+    Textfarbe = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Textfarbe.txt", 'w', encoding='utf8')
     Textfarbe.write(Vordergrund_clicked.get())
     Textfarbe.close()
     Buttonfarben.config(bg=Hintergrund_clicked.get(), fg=Vordergrund_clicked.get())
@@ -723,14 +723,14 @@ def Hintergrund():
 
 
 def Browseroffen():
-    Browseröffnen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
+    Browseröffnen = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
     Browseröffnen.write("Wahr")
     Browseröffnen.close()
     Browserbutton.config(bg="green", text="Browser offen", command=Browsergeschlossen)
     chromesteuereinheit.Chromestarten_Thread()
 
 def Browsergeschlossen():
-    Browseröffnen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
+    Browseröffnen = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Chrome.txt", 'w', encoding='utf8')
     Browseröffnen.write("Falsch")
     Browseröffnen.close()
     Browserbutton.config(bg="red", text="Kein Browser", command=Browseroffen)
@@ -740,7 +740,7 @@ def Kinder_Anzeigen():
     Kinderbutton.config(bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
     Haupt.Kinder_Anzeigen_Grafig = "False"
     Haupt.Kinder_Position = 1
-    Kinderladen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
+    Kinderladen = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
     Kinderladen.write("Wahr")
     Kinderladen.close()
     Haupt.Kinderlied = Haupt.Grafigfuer_ein_Lied(166+41 +83*Haupt.Kinder_Position, "Kinderlied", "True", Haupt.Textmanager_Hintergrund, Haupt.Textmanager_Textfarbe,4,1)
@@ -754,7 +754,7 @@ def Kinder_Nicht_Anzeigen():
     Kinderbutton.config(bg="red", text="Kein Kinderlied", command=Kinder_Anzeigen)
     Haupt.Kinder_Anzeigen_Grafig = "True"
     Haupt.Kinder_Position = 0
-    Kinderladen = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
+    Kinderladen = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Kindereinstellung.txt", 'w', encoding='utf8')
     Kinderladen.write("Falsch")
     Kinderladen.close()
     Haupt.Kinderlied.Zerstören()

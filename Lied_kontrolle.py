@@ -53,13 +53,13 @@ def Buch_hinzufügendef():
 def Versbestätigendef():
     global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen
     if len(Liedeingabe.get()) > 0:
-        Text = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'w', encoding='utf8')
+        Text = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Buch\\{Buchclicked.get()}\\{Liedeingabe.get()} Vers {Verse}.txt", 'w', encoding='utf8')
         Text.write(Liedverse_eingabe.get("1.0","end-1c"))
         Text.close()
-        Text1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{Buchclicked.get()}\\{Liedeingabe.get()}.txt", 'w', encoding='utf8')
         Text1.write(Verszahl.get())
         Text1.close()
-        Text1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Einbledungen\\{Buchclicked.get()}\\l{Liedeingabe.get()}.txt", 'w', encoding='utf8')
         Text1.write(Streameinblendung.get())
         Text1.close()
         Versbestätigen.config(text="Gespeichert")
@@ -70,13 +70,13 @@ def Versbestätigendef():
 def Dateispeicherndef():
     global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen, hi 
     if len(Liedeingabe.get()) > 0:
-        Text = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Versgespeichert)+".txt", 'w', encoding='utf8')
+        Text = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Buch\\{Buchclicked.get()}\\{Liedeingabe.get()} Vers {Versgespeichert}.txt", 'w', encoding='utf8')
         Text.write(Liedverse_eingabe.get("1.0","end-1c"))
         Text.close()
-        Text1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{Buchclicked.get()}\\{Liedeingabe.get()}.txt", 'w', encoding='utf8')
         Text1.write(Verszahl.get())
         Text1.close()
-        Text1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'w', encoding='utf8')
+        Text1 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Einbledungen\\{Buchclicked.get()}\\l{Liedeingabe.get()}.txt", 'w', encoding='utf8')
         Text1.write(Streameinblendung.get())
         Text1.close()
         Versbestätigen.config(text="Gespeichert")
@@ -145,7 +145,7 @@ def Verskontrolleloop():
             Streameinblendung.get()
             if len(Liedeingabe.get()) > 0:
                 try:
-                    Text = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Buch\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+" Vers "+str(Verse)+".txt", 'r', encoding='utf8')
+                    Text = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Buch\\{Buchclicked.get()}\\{Liedeingabe.get()} Vers {Verse}.txt", 'r', encoding='utf8')
                     Textfertig = Text.read()
                     Text.close()
                     Liedverse_eingabe.delete("1.0","end-1c")
@@ -153,14 +153,14 @@ def Verskontrolleloop():
                 except:
                     Liedverse_eingabe.delete("1.0","end-1c")
                 try:
-                    Text1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\"+Buchclicked.get()+"\\"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
+                    Text1 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{Buchclicked.get()}\\{Liedeingabe.get()}.txt", 'r', encoding='utf8')
                     text1 = Text1.read()
                     Verszahl.delete(0, "end")
                     Verszahl.insert(0, text1)
                 except:
                     Verszahl.delete(0, "end")
                 try:
-                    Einblendung = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Einbledungen\\"+Buchclicked.get()+"\\l"+Liedeingabe.get()+".txt", 'r', encoding='utf8')
+                    Einblendung = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Einbledungen\\{Buchclicked.get()}\\l{Liedeingabe.get()}.txt", 'r', encoding='utf8')
                     Einblendungfertig = Einblendung.read()
                     Einblendung.close()
                     Streameinblendung.delete(0, "end")

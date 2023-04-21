@@ -25,7 +25,7 @@ Textmanager.minsize(width=1040, height=850)
 Textmanager.iconbitmap(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
-AnzeigeText.geometry("1920x1080+1920+0")
+AnzeigeText.geometry("1920x1080+1220+0")
 AnzeigeText.overrideredirect(True)
 Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
 Aktueller_Text = ""
@@ -47,9 +47,31 @@ Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
 
+Kamera_aktiv_rechts = False
+Kamera_aktiv_links = False
+Kamera_aktiv_hoch = False
+Kamera_aktiv_runter = False
+Kamera_aktiv_zoomen_raus = False
+Kamera_aktiv_zoomen_rein = False
+
+
 buchladen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buchlisten.txt", 'r', encoding='utf8')
 Buch_Listen1 = buchladen.read()
 Buch_Listen = Buch_Listen1.split(sep=",")
+
+Buch_Listen = [
+    "Gesangbuch",
+    "Chorbuch",
+    "Jugendliederbuch",
+    "Kinderliederbuch",
+    "Band 1 Singt dem Herrn",
+    "Band 2 Singt dem Herrn",
+    "Band 3 Singt dem Herrn",
+    "Argentinisches Chorbuch",
+    "Spanisches Chorbuch",
+    "Sonderheft"
+]
+
 Kameralisten = [
     "Altar",
     "Orgel",
@@ -304,7 +326,7 @@ class Grafigfuer_ein_Lied:
         if self.aktualisieren_wahl == "True":
             if not self.gespeichertestlied == self.Liednummer.get() or not self.gespeichertestvers == self.Liedverse.get() or not self.gespeichertestBuch == self.clicked.get() or Hintregrundaktualisierenvariable:
                 Verseüber = self.Liedverse.get()
-                if Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber):
+                if Textanzeiger.Versüperprüfen(self.clicked.get() ,self.Liednummer.get(), Verseüber,Verseüber) == True:
                     Hi = self.Liedverse.get()
                     Hi2 = Hi[:-1]
                     self.Liedverse.delete(0, "end")
@@ -564,15 +586,56 @@ def Textmamager_erstellen():
     Kamera_steuerung_button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Kamera", command=Kamera, border=0)
     Kamera_steuerung_button.place(x=800, y=750)
 
+def Kamera_grund_steuerung():
+    global Kamera_aktiv_zoomen_raus, Kamera_aktiv_zoomen_rein, Kamera_aktiv_runter, Kamera_aktiv_hoch, Kamera_aktiv_links, Kamera_aktiv_rechts
+    Kamera_aktiv_rechts = False
+    Kamera_aktiv_links = False
+    Kamera_aktiv_hoch = False
+    Kamera_aktiv_runter = False
+    Kamera_aktiv_zoomen_raus = False
+    Kamera_aktiv_zoomen_rein = False
+
+
+def Kamera_rechtsdef():
+    global Kamera_aktiv_rechts
+    Kamera_grund_steuerung()
+    Kamera_aktiv_rechts = True
+
+def Kamera_linksdef():
+    global Kamera_aktiv_links
+    Kamera_grund_steuerung()
+    Kamera_aktiv_links = True
+
+def Kamera_hochdef():
+    global Kamera_aktiv_hoch
+    Kamera_grund_steuerung()
+    Kamera_aktiv_hoch = True
+
+def Kamera_runterdef():
+    global Kamera_aktiv_runter
+    Kamera_grund_steuerung()
+    Kamera_aktiv_runter = True
+
+def Kamera_hereinzoomdef():
+    global Kamera_aktiv_zoomen_rein
+    Kamera_grund_steuerung()
+    Kamera_aktiv_zoomen_rein = True
+
+def Kamera_herauszoondef():
+    global Kamera_aktiv_zoomen_raus
+    Kamera_grund_steuerung()
+    Kamera_aktiv_zoomen_raus = True
+
+
 
 def Kamera():
-    global Kamera_steuerung_anzeige, Kameraclicked_aktuell
+    global Kamera_steuerung_anzeige, Kameraclicked_aktuell, Kamera_rechts
     try: 
         Kamera_steuerung_anzeige.destroy()
     except:
         pass
     Kamera_steuerung_anzeige = Toplevel(Textmanager)
-    Kamera_steuerung_anzeige.geometry("220x180")
+    Kamera_steuerung_anzeige.geometry("320x280")
     Kamera_steuerung_anzeige.config(bg=Textmanager_Hintergrund)
     Kameraclicked_aktuell = StringVar()
     Kameraclicked_aktuell.set(Kameralisten[0])
@@ -580,6 +643,18 @@ def Kamera():
     Kameraopt.place(y=0)
     Kamera_bewegen = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Steuern", command=Steuern, border=0)
     Kamera_bewegen.place(y=40)
+    Kamera_rechts = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Rechts", border=0, command = Kamera_rechtsdef)
+    Kamera_rechts.place(x=200, y=100)
+    Kamera_links = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Links", border=0, command = Kamera_linksdef)
+    Kamera_links.place(x=10, y=100)
+    Kamera_hoch = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Hoch", border=0, command = Kamera_hochdef)
+    Kamera_hoch.place(x=105, y=50)
+    Kamera_runter = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="runter", border=0, command = Kamera_runterdef)
+    Kamera_runter.place(x=105, y=150)   
+    Kamera_herauszoomen = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="hereinzoomen", border=0, command = Kamera_hereinzoomdef)
+    Kamera_herauszoomen.place(x=10, y=195)
+    Kamera_hereinzoomen = Button(Kamera_steuerung_anzeige, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="herauszoomen", border=0, command = Kamera_herauszoondef)
+    Kamera_hereinzoomen.place(x=10, y=235)
 
 def Kamera_position():
         if Kameraclicked_aktuell.get() == "Altar":
@@ -598,6 +673,7 @@ def Kamera_position():
             return 7
 
 def Steuern():
+    Kamera_grund_steuerung()
     Kamera_Steuerung.Kamera.goto_preset(Kamera_position())
 
 def info():
@@ -629,7 +705,7 @@ def Textwortcommand():
         Textwort_manager.geometry("800x600")
         Textworteingabe = Text(Textwort_manager, font=("Helvetica", 15), height= 20, width=60, bg="#FFEBCD")
         if Textwortwiederherstellen:
-            Textwortauslesen = open("C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
+            Textwortauslesen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwort.txt", 'r', encoding='utf8')
             Textwortvariabel = Textwortauslesen.read()
             Textworteingabe.insert(END, Textwortvariabel)
             Textwortauslesen.close()
@@ -1022,6 +1098,25 @@ def Hintergrund_aktualisieren():
     Zusatzlied2.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied2, 9  + Kinder_Position, "Zusatzlied2")
     Zusatzlied3.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied3, 10  + Kinder_Position, "Zusatzlied3")
     Zusatzlied4.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied4, 11 + Kinder_Position, "Zusatzlied4")
+    try:
+        Kamera_steuerung_anzeige.config(bg=Textmanager_Hintergrund)
+        while keyboard.is_pressed(" "):
+            if Kamera_aktiv_hoch:
+                Kamera_Steuerung.Kamera.move_tilt(1)
+            elif Kamera_aktiv_runter:
+                Kamera_Steuerung.Kamera.move_tilt(-1)
+            elif Kamera_aktiv_rechts:
+                Kamera_Steuerung.Kamera.move_pan(1)
+            elif Kamera_aktiv_links:
+                Kamera_Steuerung.Kamera.move_pan(-1)
+            elif Kamera_aktiv_zoomen_rein:
+                Kamera_Steuerung.Kamera.zoom(1)
+            elif Kamera_aktiv_zoomen_raus:
+                Kamera_Steuerung.Kamera.zoom(-1)
+        if Kamera_aktiv_hoch or Kamera_aktiv_runter or Kamera_aktiv_links or Kamera_aktiv_rechts or Kamera_aktiv_zoomen_rein or Kamera_aktiv_zoomen_raus:
+            Kamera_Steuerung.Kamera.stop()
+    except:
+        pass
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
@@ -1073,6 +1168,11 @@ def Streambeenden():
     keyboard.release("q")
     time.sleep(5)
     Textanzeiger.Grundstellung(True, True)
+    keyboard.press("strg")
+    keyboard.press("x")
+    time.sleep(0.5)
+    keyboard.release("strg")
+    keyboard.release("x")
     subprocess.call("taskkill /IM chrome.exe /F")
     subprocess.call("shutdown /s /t 20")
     sys.exit()

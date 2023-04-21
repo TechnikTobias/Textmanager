@@ -1,5 +1,7 @@
 from tkinter import * 
 
+if 6:
+    print("ölichduild")
 
 def nothing():
     print("hi")

@@ -26,7 +26,7 @@ Verseingabe = None
 def Versüperprüfen(Buch, Liednummer, Verseübergabe, Verse):
     global Verzanzahl1
     try:
-        Verzanzahl1 = open("C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(Buch) + "\\" + str(Liednummer) + ".txt", "r", encoding="utf-8")
+        Verzanzahl1 = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{Buch}\\{Liednummer}.txt", "r", encoding="utf-8")
     except:
         pass
     Verzanzahl = Verzanzahl1.read()
@@ -68,10 +68,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
             AusganneVerse = []
             Wieoft = 1
             while True:
-                Verzanzahl = open(
-                    "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(WelchesBuch) + "\\" + str(Welcheart) + ".txt",
-                    "r",
-                    encoding="utf-8")
+                Verzanzahl = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{WelchesBuch}\\{Welcheart}.txt", "r", encoding="utf-8")
                 Maxzahl = Verzanzahl.read()
                 if Sooft == int(Maxzahl) + 1:
                     break
@@ -137,10 +134,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
                         Versanfang = int(Versanfang) + 1
                         wieoft = wieoft + 1
                         # fügt zweite teil verse dazu
-        Verzanzahl = open(
-            "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(WelchesBuch) + "\\" + str(Welcheart) + ".txt",
-            "r",
-            encoding="utf-8")
+        Verzanzahl = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{WelchesBuch}\\{Welcheart}.txt", "r", encoding="utf-8")
         Maxzahl = Verzanzahl.read()
         AusganneVerse.sort()
         global Hai
@@ -149,10 +143,7 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
             Sooft = 0
             Wieoft = 1
             while True:
-                Verzanzahl = open(
-                    "C:\\Users\\" + Haupt.Dateiort + "\\Desktop\\Lieder\\Versanzahl\\" + str(WelchesBuch) + "\\" + str(Welcheart) + ".txt",
-                    "r",
-                    encoding="utf-8")
+                Verzanzahl = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Versanzahl\\{WelchesBuch}\\{Welcheart}.txt", "r", encoding="utf-8")
                 Maxzahl = Verzanzahl.read()
                 if Sooft == int(Maxzahl) + 1:
                     break
@@ -860,8 +851,7 @@ def Verse(Hallo123,Wieoft,WelchesBuch):
     global Anzeige
     Anzeige = True
     try:
-        Texttest = open("C:\\Users\\"+Haupt.Dateiort+"\\Desktop\\Lieder\\Buch\\"+str(WelchesBuch)+"\\"+str(Hallo123)+" Vers " + str(Wieoft) + ".txt",
-                    "r", encoding="utf-8")
+        Texttest = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Buch\\{WelchesBuch}\\{Hallo123} Vers {Wieoft}.txt", "r", encoding="utf-8")
         Aktuellertext = Texttest.read()
         Haupt.Text_Anzeige_Label.config(text=Aktuellertext)
         Haupt.Textmanager.update()
@@ -874,7 +864,7 @@ def Verse(Hallo123,Wieoft,WelchesBuch):
                       fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         Error.place(x=210, y=0)
         ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="Das Lied "+str(Hallo123)+" im Buch "+str(WelchesBuch)+" Vers "+str(Wieoft)+" Exesitert nicht", bg=Haupt.Textmanager_Hintergrund,
+                           text=f"Das Lied {Hallo123} im Buch {WelchesBuch} Vers {Wieoft} Exesitert nicht", bg=Haupt.Textmanager_Hintergrund,
                            fg=Haupt.Textmanager_Textfarbe, wraplength=560)
         ErrorLabel.place(x=0, y=80)
     optisches_fedback(Wieoftlied)
