@@ -102,6 +102,7 @@ def Kamera_erstellen():
     global Kamera, Ist_Kamer_aktiv, Errorkamera
     try:
         Kamera = ptzControl()
+        Ist_Kamer_aktiv = True
     except onvif.exceptions.ONVIFError:
         Ist_Kamer_aktiv = False
         Errorkamera = tkinter.Toplevel(Haupt.Textmanager)

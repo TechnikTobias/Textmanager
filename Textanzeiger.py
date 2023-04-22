@@ -785,7 +785,7 @@ def optisches_fedback(Liedposition):
         if Kamera_Steuerung.Ist_Kamer_aktiv:
             try:
                 Haupt.Zusatzlied1.Kamerapositiondef()
-                Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied2.Kameraposition)
+                Kamera_Steuerung.Kamera.goto_preset(Haupt.Zusatzlied1.Kameraposition)
             except:
                 print("error kei1ne Kamera")
 

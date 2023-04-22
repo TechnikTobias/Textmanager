@@ -968,110 +968,128 @@ def Button_command():
 
 def Hintergrund_aktualisieren():
     global Testeneingeben, Zeit, Zeit1, Zeit2, Zeit3, Hintregrundaktualisierenvariable
-    if Hintregrundaktualisieren:
-        Einganslied.Hintergrund_aktualisierung("Einganslied")
-        Textwortlied.Hintergrund_aktualisierung("Textwortlied")
-        Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
-        Kinderlied.Hintergrund_aktualisierung("Kinderlied")
-        Bussslied.Hintergrund_aktualisierung("Bußlied")
-        Abendmahlslied.Hintergrund_aktualisierung("Abendmahlslied")
-        Schlusslied.Hintergrund_aktualisierung("Schlusslied")
-        Zusatzlied1.Hintergrund_aktualisierung("Zusatzlied1")
-        Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
-        Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
-        Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
-        Hintregrundaktualisierenvariable = False
-    else:
-        if Testeneingeben:
-            if keyboard.get_hotkey_name()== str(1):
-                while keyboard.get_hotkey_name()==str(1):
-                    pass
-            elif keyboard.get_hotkey_name() == str(2):
-                while keyboard.get_hotkey_name() == str(2):
-                    pass
-            elif keyboard.get_hotkey_name() == str(3):
-                while keyboard.get_hotkey_name() == str(3):
-                    pass
-            elif keyboard.get_hotkey_name() == str(4):
-                while keyboard.get_hotkey_name() == str(4):
-                    pass
-            elif keyboard.get_hotkey_name()== str(5):
-                while keyboard.get_hotkey_name()== str(5):
-                    pass
-            elif keyboard.get_hotkey_name() == str(6):
-                while keyboard.get_hotkey_name() == str(6):
-                    pass
-            elif keyboard.get_hotkey_name()== str(7):
-                while keyboard.get_hotkey_name() == str(7):
-                    pass
-            elif keyboard.get_hotkey_name() == str(8):
-                while keyboard.get_hotkey_name() == str(8):
-                    pass
-            elif keyboard.get_hotkey_name()== str(9):
-                while keyboard.get_hotkey_name() == str(9):
-                    pass
-            elif keyboard.get_hotkey_name() == str(0):
-                while keyboard.get_hotkey_name() == str(0):
-                    pass
-            elif keyboard.is_pressed("page_down"):
-                while keyboard.is_pressed("page_down"):
-                    pass
-                Textanzeiger.Liedgebe()
-            elif keyboard.is_pressed("page_up"):
-                while keyboard.is_pressed("page_up"):
-                    pass
-                Textanzeiger.Versvorher()
-            elif keyboard.is_pressed("space"):
-                while keyboard.is_pressed("space"):
-                    pass
-                Textanzeiger.Liedgebe()
-            elif keyboard.is_pressed("left"):
-                while keyboard.is_pressed("left"):
-                    pass
-                Textanzeiger.Versvorher()
-            elif keyboard.is_pressed("right"):
-                while keyboard.is_pressed("right"):
-                    pass
-                Textanzeiger.Liedgebe()
-            elif keyboard.is_pressed("up"):
-                while keyboard.is_pressed("up"):
-                    pass
-                Textanzeiger.Wieoft = 0
-                Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
-                Textanzeiger.vorherübergabeTextandiewand()
-            elif keyboard.is_pressed("down"):
-                while keyboard.is_pressed("down"):
-                    pass
-                Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
-                Textanzeiger.Nächstelied()
-            elif keyboard.is_pressed("."):
-                while keyboard.is_pressed("."):
-                    pass
-                if Textanzeiger.Anzeige:
-                    Hi = ""
-                    Text_Anzeige_Label.config(text=Hi)
-                    Textmanager.update()
-                    Textanzeiger.Anzeige = False
-                    keyboard.press("0")
-                    time.sleep(0.5)
-                    keyboard.release("0")
-                    time.sleep(0.5)
-                    keyboard.press("1")
-                    time.sleep(0.5)
-                    keyboard.release("1")
-                else:
-                    Textanzeiger.Wieoft = Textanzeiger.Wieoft -1
+    try:
+        Kamera_steuerung_anzeige.config(bg=Textmanager_Hintergrund)
+        while keyboard.is_pressed(" "):
+            if Kamera_aktiv_hoch:
+                Kamera_Steuerung.Kamera.move_tilt(1)
+            elif Kamera_aktiv_runter:
+                Kamera_Steuerung.Kamera.move_tilt(-1)
+            elif Kamera_aktiv_rechts:
+                Kamera_Steuerung.Kamera.move_pan(1)
+            elif Kamera_aktiv_links:
+                Kamera_Steuerung.Kamera.move_pan(-1)
+            elif Kamera_aktiv_zoomen_rein:
+                Kamera_Steuerung.Kamera.zoom(1)
+            elif Kamera_aktiv_zoomen_raus:
+                Kamera_Steuerung.Kamera.zoom(-1)
+        if Kamera_aktiv_hoch or Kamera_aktiv_runter or Kamera_aktiv_links or Kamera_aktiv_rechts or Kamera_aktiv_zoomen_rein or Kamera_aktiv_zoomen_raus:
+            Kamera_Steuerung.Kamera.stop()
+    except:
+        if Hintregrundaktualisieren:
+            Einganslied.Hintergrund_aktualisierung("Einganslied")
+            Textwortlied.Hintergrund_aktualisierung("Textwortlied")
+            Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
+            Kinderlied.Hintergrund_aktualisierung("Kinderlied")
+            Bussslied.Hintergrund_aktualisierung("Bußlied")
+            Abendmahlslied.Hintergrund_aktualisierung("Abendmahlslied")
+            Schlusslied.Hintergrund_aktualisierung("Schlusslied")
+            Zusatzlied1.Hintergrund_aktualisierung("Zusatzlied1")
+            Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
+            Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
+            Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
+            Hintregrundaktualisierenvariable = False
+        else:
+            if Testeneingeben:
+                if keyboard.get_hotkey_name()== str(1):
+                    while keyboard.get_hotkey_name()==str(1):
+                        pass
+                elif keyboard.get_hotkey_name() == str(2):
+                    while keyboard.get_hotkey_name() == str(2):
+                        pass
+                elif keyboard.get_hotkey_name() == str(3):
+                    while keyboard.get_hotkey_name() == str(3):
+                        pass
+                elif keyboard.get_hotkey_name() == str(4):
+                    while keyboard.get_hotkey_name() == str(4):
+                        pass
+                elif keyboard.get_hotkey_name()== str(5):
+                    while keyboard.get_hotkey_name()== str(5):
+                        pass
+                elif keyboard.get_hotkey_name() == str(6):
+                    while keyboard.get_hotkey_name() == str(6):
+                        pass
+                elif keyboard.get_hotkey_name()== str(7):
+                    while keyboard.get_hotkey_name() == str(7):
+                        pass
+                elif keyboard.get_hotkey_name() == str(8):
+                    while keyboard.get_hotkey_name() == str(8):
+                        pass
+                elif keyboard.get_hotkey_name()== str(9):
+                    while keyboard.get_hotkey_name() == str(9):
+                        pass
+                elif keyboard.get_hotkey_name() == str(0):
+                    while keyboard.get_hotkey_name() == str(0):
+                        pass
+                elif keyboard.is_pressed("page_down"):
+                    while keyboard.is_pressed("page_down"):
+                        pass
                     Textanzeiger.Liedgebe()
-                    Textanzeiger.Anzeige = True
-        if keyboard.is_pressed("strg"):
-            if keyboard.is_pressed("y"):
-                while keyboard.is_pressed("y"):
-                    pass
-                if not Testeneingeben:  
-                    Testeneingeben = True
-                else:
-                    Testeneingeben = False
-        
+                elif keyboard.is_pressed("page_up"):
+                    while keyboard.is_pressed("page_up"):
+                        pass
+                    Textanzeiger.Versvorher()
+                elif keyboard.is_pressed("space"):
+                    while keyboard.is_pressed("space"):
+                        pass
+                    Textanzeiger.Liedgebe()
+                elif keyboard.is_pressed("left"):
+                    while keyboard.is_pressed("left"):
+                        pass
+                    Textanzeiger.Versvorher()
+                elif keyboard.is_pressed("right"):
+                    while keyboard.is_pressed("right"):
+                        pass
+                    Textanzeiger.Liedgebe()
+                elif keyboard.is_pressed("up"):
+                    while keyboard.is_pressed("up"):
+                        pass
+                    Textanzeiger.Wieoft = 0
+                    Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied - 1
+                    Textanzeiger.vorherübergabeTextandiewand()
+                elif keyboard.is_pressed("down"):
+                    while keyboard.is_pressed("down"):
+                        pass
+                    Textanzeiger.Wieoftlied = Textanzeiger.Wieoftlied + 1
+                    Textanzeiger.Nächstelied()
+                elif keyboard.is_pressed("."):
+                    while keyboard.is_pressed("."):
+                        pass
+                    if Textanzeiger.Anzeige:
+                        Hi = ""
+                        Text_Anzeige_Label.config(text=Hi)
+                        Textmanager.update()
+                        Textanzeiger.Anzeige = False
+                        keyboard.press("0")
+                        time.sleep(0.5)
+                        keyboard.release("0")
+                        time.sleep(0.5)
+                        keyboard.press("1")
+                        time.sleep(0.5)
+                        keyboard.release("1")
+                    else:
+                        Textanzeiger.Wieoft = Textanzeiger.Wieoft -1
+                        Textanzeiger.Liedgebe()
+                        Textanzeiger.Anzeige = True
+            if keyboard.is_pressed("strg"):
+                if keyboard.is_pressed("y"):
+                    while keyboard.is_pressed("y"):
+                        pass
+                    if not Testeneingeben: 
+                        Tastaturan()
+                    else:
+                        Tastaturaus()
+            
     if float(datetime.datetime.now().strftime("%H.%M")) == float(Zeit) or float(datetime.datetime.now().strftime("%H.%M")) == float(Zeit1):
         Textanzeiger.Grundstellung(True, False)
         Einganslied.Liedtextanzeige.config(bg="orange")
@@ -1098,25 +1116,6 @@ def Hintergrund_aktualisieren():
     Zusatzlied2.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied2, 9  + Kinder_Position, "Zusatzlied2")
     Zusatzlied3.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied3, 10  + Kinder_Position, "Zusatzlied3")
     Zusatzlied4.Spontaneingabe_Hintergrund_aktualisierung(Textanzeiger.Darf_ich_Zusatzlied4, 11 + Kinder_Position, "Zusatzlied4")
-    try:
-        Kamera_steuerung_anzeige.config(bg=Textmanager_Hintergrund)
-        while keyboard.is_pressed(" "):
-            if Kamera_aktiv_hoch:
-                Kamera_Steuerung.Kamera.move_tilt(1)
-            elif Kamera_aktiv_runter:
-                Kamera_Steuerung.Kamera.move_tilt(-1)
-            elif Kamera_aktiv_rechts:
-                Kamera_Steuerung.Kamera.move_pan(1)
-            elif Kamera_aktiv_links:
-                Kamera_Steuerung.Kamera.move_pan(-1)
-            elif Kamera_aktiv_zoomen_rein:
-                Kamera_Steuerung.Kamera.zoom(1)
-            elif Kamera_aktiv_zoomen_raus:
-                Kamera_Steuerung.Kamera.zoom(-1)
-        if Kamera_aktiv_hoch or Kamera_aktiv_runter or Kamera_aktiv_links or Kamera_aktiv_rechts or Kamera_aktiv_zoomen_rein or Kamera_aktiv_zoomen_raus:
-            Kamera_Steuerung.Kamera.stop()
-    except:
-        pass
     Einganslied.Lied.after(100, lambda: Hintergrund_aktualisieren())
 
 
