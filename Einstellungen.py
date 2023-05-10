@@ -55,7 +55,7 @@ Uhrzeit_ganz = [
 ]
 
 def Einstellungen_erstellen():
-    Haupt.Einstellungen_Laden()
+    Haupt.Einstellungen_Laden(False)
     global Hintergrund_clicked, Vordergrund_clicked, Einstellungen_Textmanager, Hintergrund_opt, Vordergrund_clicked, \
         Vordergrund_opt, Hintergrundlabel, Textlabel, Buttonfarben, Kinderbutton, Browserbutton, Uhreingabeclicked, Uhreingabe
     try:
@@ -94,7 +94,7 @@ def Einstellungen_erstellen():
     Hintergrunddatei = open(f"C:\\Users\\{Haupt.Dateiort}\\Desktop\\Lieder\\Hintergrund.txt", 'w', encoding='utf8')
     Hintergrunddatei.write(Haupt.Textmanager_Hintergrund)
     Hintergrunddatei.close()
-    if Haupt.Kinder_anzeigen == "Falsch":
+    if not Haupt.Kinder_laden_einstellung:
         Kinderbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="red", text="Kein Kinderlied", command=Kinder_Anzeigen)
     else:
         Kinderbutton = Button(Einstellungen_Textmanager, font=('Helvetica', 12), fg="Black", bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
@@ -736,7 +736,6 @@ def Browsergeschlossen():
     Browserbutton.config(bg="red", text="Kein Browser", command=Browseroffen)
 
 def Kinder_Anzeigen():
-    global Kinder_Anzeigen_Grafig, Kinder_Position, Kinderlied
     Kinderbutton.config(bg="green", text="Kinderlied", command=Kinder_Nicht_Anzeigen)
     Haupt.Kinder_Anzeigen_Grafig = "False"
     Haupt.Kinder_Position = 1
@@ -745,12 +744,12 @@ def Kinder_Anzeigen():
     Kinderladen.close()
     Haupt.Kinderlied = Haupt.Grafigfuer_ein_Lied(166+41 +83*Haupt.Kinder_Position, "Kinderlied", "True", Haupt.Textmanager_Hintergrund, Haupt.Textmanager_Textfarbe,4,1)
     if Haupt.Kindeladen:
-        Haupt.Kinderlied.Eingabe_wiederherstellen("Kinderlied", Haupt.Textmanager_Hintergrund, Haupt.Textmanager_Textfarbe,4,1, 166+41 +83*Haupt.Kinder_Position)
+        Haupt.Kinderlied.Eingabe_wiederherstellen("Kinderlied", Haupt.Textmanager_Hintergrund, Haupt.Textmanager_Textfarbe,4,1, 166+41 +83*Haupt.Kinder_Position, True)
     Haupt.Aktualiesierung_Grafick()
+    Haupt.Kinder_laden_einstellung = True
 
 
 def Kinder_Nicht_Anzeigen():
-    global Kinder_Anzeigen_Grafig, Kinder_Position
     Kinderbutton.config(bg="red", text="Kein Kinderlied", command=Kinder_Anzeigen)
     Haupt.Kinder_Anzeigen_Grafig = "True"
     Haupt.Kinder_Position = 0
@@ -759,3 +758,4 @@ def Kinder_Nicht_Anzeigen():
     Kinderladen.close()
     Haupt.Kinderlied.Zerstören()
     Haupt.Aktualiesierung_Grafick()
+    Haupt.Kinder_laden_einstellung = False

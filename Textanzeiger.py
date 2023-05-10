@@ -171,17 +171,20 @@ def Verinbterprätator(Welcheart,WelchesBuch,WelcherVers):
             AusganneVerse.pop()
         # Filter, das niht mehr als es Verse gibt
     except:
-        Errorbild = tkinter.Toplevel(Haupt.Textmanager)
-        Errorbild.geometry("560x350+500+400")
-        Errorbild.config(bg=Haupt.Textmanager_Hintergrund)
-        Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
-                      text="Error", bg=Haupt.Textmanager_Hintergrund,
-                      fg=Haupt.Textmanager_Textfarbe, wraplength=560)
-        Error.place(x=210, y=0)
-        ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text="In 0rdner Lieder im Odner Versanzahl fehlt die Datei für das Lied "+Welcheart, bg=Haupt.Textmanager_Hintergrund,
-                           fg=Haupt.Textmanager_Textfarbe, wraplength=560)
-        ErrorLabel.place(x=0, y=80)
+        try:
+            Errorbild.detroy()
+        except:
+            Errorbild = tkinter.Toplevel(Haupt.Textmanager)
+            Errorbild.geometry("560x350+500+400")
+            Errorbild.config(bg=Haupt.Textmanager_Hintergrund)
+            Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
+                        text="Error", bg=Haupt.Textmanager_Hintergrund,
+                        fg=Haupt.Textmanager_Textfarbe, wraplength=560)
+            Error.place(x=210, y=0)
+            ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
+                            text="In 0rdner Lieder im Odner Versanzahl fehlt die Datei für das Lied "+Welcheart, bg=Haupt.Textmanager_Hintergrund,
+                            fg=Haupt.Textmanager_Textfarbe, wraplength=560)
+            ErrorLabel.place(x=0, y=80)
 
 def Grundstellung(Livestreamaktualisierung, Kamera_stellung):
     global Darf_ich_Kinderlied, Darf_ich_Busslied, Darf_ich_Abendmahlslied, Darf_ich_Busslied, Darf_ich_Einganslied, Darf_ich_Textwortlied, Darf_ich_Amtswechsel, Darf_ich_Schlusslied, Darf_ich_Zusatzlied1, Darf_ich_Zusatzlied2, Darf_ich_Zusatzlied3, Darf_ich_Zusatzlied4, Anzeige
@@ -856,15 +859,18 @@ def Verse(Hallo123,Wieoft,WelchesBuch):
         Haupt.Text_Anzeige_Label.config(text=Aktuellertext)
         Haupt.Textmanager.update()
     except FileNotFoundError:
-        Errorbild = tkinter.Toplevel(Haupt.Textmanager)
-        Errorbild.geometry("560x350+500+400")
-        Errorbild.config(bg=Haupt.Textmanager_Hintergrund)
-        Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
-                      text="Error", bg=Haupt.Textmanager_Hintergrund,
-                      fg=Haupt.Textmanager_Textfarbe, wraplength=560)
-        Error.place(x=210, y=0)
-        ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
-                           text=f"Das Lied {Hallo123} im Buch {WelchesBuch} Vers {Wieoft} Exesitert nicht", bg=Haupt.Textmanager_Hintergrund,
-                           fg=Haupt.Textmanager_Textfarbe, wraplength=560)
-        ErrorLabel.place(x=0, y=80)
+        try:
+            Errorbild.destroy()
+        except:
+            Errorbild = tkinter.Toplevel(Haupt.Textmanager)
+            Errorbild.geometry("560x350+500+400")
+            Errorbild.config(bg=Haupt.Textmanager_Hintergrund)
+            Error = tkinter.Label(Errorbild, font=("Helvetica", 40),
+                        text="Error", bg=Haupt.Textmanager_Hintergrund,
+                        fg=Haupt.Textmanager_Textfarbe, wraplength=560)
+            Error.place(x=210, y=0)
+            ErrorLabel = tkinter.Label(Errorbild, font=("Helvetica", 20),
+                            text=f"Das Lied {Hallo123} im Buch {WelchesBuch} Vers {Wieoft} Exesitert nicht", bg=Haupt.Textmanager_Hintergrund,
+                            fg=Haupt.Textmanager_Textfarbe, wraplength=560)
+            ErrorLabel.place(x=0, y=80)
     optisches_fedback(Wieoftlied)

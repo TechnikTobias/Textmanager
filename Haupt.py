@@ -25,7 +25,7 @@ Textmanager.minsize(width=1040, height=850)
 Textmanager.iconbitmap(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
-AnzeigeText.geometry("1920x1080+1220+0")
+AnzeigeText.geometry("1920x1080+1520+0")
 AnzeigeText.overrideredirect(True)
 Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
 Aktueller_Text = ""
@@ -46,7 +46,7 @@ Textwortübergabe = None
 Kindeladen= False
 Textwortübergabedaten = [2, False, "Textwort", 1, ""]
 Liedpositionübergabe = 0
-
+Kinder_laden_einstellung = False
 Kamera_aktiv_rechts = False
 Kamera_aktiv_links = False
 Kamera_aktiv_hoch = False
@@ -410,8 +410,8 @@ class Grafigfuer_ein_Lied:
         Kindeladen= False
 
     # Wiederherstellt, die Alten eingaben
-    def Eingabe_wiederherstellen(self, Liedname, Hintergrund, Vordergrund , Kamera_Grund_position, Lied_standart, Position):
-        global Kindeladen, Liedpositionübergabe, Wie_viele_zusatzlieder
+    def Eingabe_wiederherstellen(self, Liedname, Hintergrund, Vordergrund , Kamera_Grund_position, Lied_standart, Position, Kinderlied_posiozion):
+        global Kindeladen, Liedpositionübergabe, Wie_viele_zusatzlieder, Kinder_Position, Kinder_anzeigen, Kinder_laden_einstellung
         Lied_optTrue = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buch{Liedname}_fexisten.txt", 'r', encoding='utf8')
         if Lied_optTrue.read() == "True":
             self.aktualisieren_wahl = "True"
@@ -419,6 +419,11 @@ class Grafigfuer_ein_Lied:
             try:
                 self.Liedverse.get()
             except:
+                if Kinderlied_posiozion:
+                    Kinder_Position = 1
+                    Kinder_laden_einstellung = True
+                else:
+                    Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
                 self.clicked = StringVar()
                 self.clicked.set(Buch_Listen[Lied_standart])
                 self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
@@ -442,7 +447,6 @@ class Grafigfuer_ein_Lied:
                 self.Liedverse.place(x=210, y=39 + Position)
                 self.aktualisieren_wahl = "True"
                 Liedpositionübergabe = Liedpositionübergabe + 1
-                Wie_viele_zusatzlieder = Wie_viele_zusatzlieder + 1
                 self.gespeichertestlied = 100
                 self.gespeichertestBuch = 100
                 self.gespeichertestvers = 100
@@ -465,6 +469,7 @@ class Grafigfuer_ein_Lied:
             self.clicked.set(Buch_Listen[int(Lied_Buch)])
             self.Kameraclicked.set(Kameralisten[int(Kamera_option.read())])
             Kindeladen= True
+
 
     def Hintergrund(self, Hintergrund, Vordergrund):
         if self.aktualisieren_wahl == "True":
@@ -512,7 +517,7 @@ class Grafigfuer_ein_Lied:
             self.Verse.place(y=40 + Position)
             self.Liednummer.place(x=210, y=0 + Position)
             self.Liedverse.place(x=210, y=39 + Position)
-            self.Eingabe_wiederherstellen(Liedname, Hintergrund, Vordergrund , Kamera_Grund_position, Lied_standart, Position)
+            self.Eingabe_wiederherstellen(Liedname, Hintergrund, Vordergrund , Kamera_Grund_position, Lied_standart, Position, False)
             Hauptbildschirmbutton.place(x=800)
             self.Liedtextanzeige.config(command="")
             self.gespeichertestBuch = 0
@@ -521,8 +526,8 @@ class Grafigfuer_ein_Lied:
 
 
 
-def Einstellungen_Laden():
-    global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder, Browseröffnen, Zeit, Zeit1, Zeit2, Zeit3
+def Einstellungen_Laden(Kinder_laden_einstellung):
+    global Textmanager_Textfarbe, Textmanager_Hintergrund, Kinder_anzeigen, Kinder_Anzeigen_Grafig, Kinder_Position, Zusatzlied1_obwahr, Zusatzlied2_obwahr, Zusatzlied3_obwahr, Zusatzlied4_obwahr, Wie_viele_zusatzlieder, Browseröffnen, Zeit, Zeit1, Zeit2, Zeit3, Kinder_anzeigen_einstellung
     Textfarbe = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textfarbe.txt", 'r', encoding='utf8')
     Textmanager_Textfarbe = Textfarbe.read()
     Textfarbe.close()
@@ -534,18 +539,21 @@ def Einstellungen_Laden():
     Kinderladen.close()
     Browseröffnen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Browseröffnen = Browseröffnen.read()
-    if Kinder_anzeigen == "Wahr":
-        Kinder_Anzeigen_Grafig = "True"
-        Kinder_Position = 1
-    else:
-        Kinder_Anzeigen_Grafig = "False"
-        Kinder_Position = 0
+    if Kinder_laden_einstellung:
+        if Kinder_anzeigen == "Wahr":
+            Kinder_Anzeigen_Grafig = "True"
+            Kinder_Position = 1
+            Kinder_anzeigen_einstellung = True
+        else:
+            Kinder_Anzeigen_Grafig = "False"
+            Kinder_Position = 0
+            Kinder_anzeigen_einstellung = False
 
 
 
 # Erstellt die Grundstruktur des Programms
 def Textmamager_erstellen():
-    Einstellungen_Laden()
+    Einstellungen_Laden(True)
     global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton, zusaetzliches_liedzerstörer, Verskontroll_Button, Stream_plan_button, Kamera_steuerung_button
     Einganslied = Grafigfuer_ein_Lied(0, "Eingangslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe,5,0)
     Textwortlied = Grafigfuer_ein_Lied(83+41, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
@@ -689,7 +697,7 @@ def info():
     Info_zum_programm = Label(Info_manager, font=("Halvetica", 15), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, text=Text_für_Info, wraplength=800)
     Info_zum_programm["justify"] = "left"
     Info_zum_programm.place(x=0,y=0)
-    Bild_für_opa1 = Image.open("Sterbe Anzeige Opa.jpg")
+    Bild_für_opa1 = Image.open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Sterbe Anzeige Opa.jpg")
     Bild_für_opa = ImageTk.PhotoImage(image=Bild_für_opa1.resize((472,341))) 
     Bild_für_opa_Label = Label(Info_manager,image=Bild_für_opa)
     Bild_für_opa_Label.place(x=0,y=100)
@@ -734,6 +742,10 @@ def Textwortbestätigenbefehl():
 def Grifuckfürpräsantatiom():
     if Buttonebestätigengedrückt:
         global Hintregrundaktualisieren, klick, zurueck, AnfangHaupt, Stream_beenden_button, Tastensperren
+        Eingabe_wiederherstellen()
+        Textmanager.update()
+        Button_command()
+        Hintergrund_aktualisieren()
         Hintregrundaktualisieren = False
         zurueck = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="zurück", command=Textanzeiger.Versvorher, border=0)
         zurueck.place(x=430, y=600)
@@ -968,38 +980,39 @@ def Button_command():
 
 def Hintergrund_aktualisieren():
     global Testeneingeben, Zeit, Zeit1, Zeit2, Zeit3, Hintregrundaktualisierenvariable
-    try:
-        Kamera_steuerung_anzeige.config(bg=Textmanager_Hintergrund)
-        while keyboard.is_pressed(" "):
-            if Kamera_aktiv_hoch:
-                Kamera_Steuerung.Kamera.move_tilt(1)
-            elif Kamera_aktiv_runter:
-                Kamera_Steuerung.Kamera.move_tilt(-1)
-            elif Kamera_aktiv_rechts:
-                Kamera_Steuerung.Kamera.move_pan(1)
-            elif Kamera_aktiv_links:
-                Kamera_Steuerung.Kamera.move_pan(-1)
-            elif Kamera_aktiv_zoomen_rein:
-                Kamera_Steuerung.Kamera.zoom(1)
-            elif Kamera_aktiv_zoomen_raus:
-                Kamera_Steuerung.Kamera.zoom(-1)
-        if Kamera_aktiv_hoch or Kamera_aktiv_runter or Kamera_aktiv_links or Kamera_aktiv_rechts or Kamera_aktiv_zoomen_rein or Kamera_aktiv_zoomen_raus:
-            Kamera_Steuerung.Kamera.stop()
-    except:
-        if Hintregrundaktualisieren:
-            Einganslied.Hintergrund_aktualisierung("Einganslied")
-            Textwortlied.Hintergrund_aktualisierung("Textwortlied")
-            Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
-            Kinderlied.Hintergrund_aktualisierung("Kinderlied")
-            Bussslied.Hintergrund_aktualisierung("Bußlied")
-            Abendmahlslied.Hintergrund_aktualisierung("Abendmahlslied")
-            Schlusslied.Hintergrund_aktualisierung("Schlusslied")
-            Zusatzlied1.Hintergrund_aktualisierung("Zusatzlied1")
-            Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
-            Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
-            Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
-            Hintregrundaktualisierenvariable = False
-        else:
+
+    if Hintregrundaktualisieren:
+        Einganslied.Hintergrund_aktualisierung("Einganslied")
+        Textwortlied.Hintergrund_aktualisierung("Textwortlied")
+        Amtswechsellied.Hintergrund_aktualisierung("Amtswechsellied")
+        Kinderlied.Hintergrund_aktualisierung("Kinderlied")
+        Bussslied.Hintergrund_aktualisierung("Bußlied")
+        Abendmahlslied.Hintergrund_aktualisierung("Abendmahlslied")
+        Schlusslied.Hintergrund_aktualisierung("Schlusslied")
+        Zusatzlied1.Hintergrund_aktualisierung("Zusatzlied1")
+        Zusatzlied2.Hintergrund_aktualisierung("Zusatzlied2")
+        Zusatzlied3.Hintergrund_aktualisierung("Zusatzlied3")
+        Zusatzlied4.Hintergrund_aktualisierung("Zusatzlied4")
+        Hintregrundaktualisierenvariable = False
+    else:
+        try:
+            Kamera_steuerung_anzeige.config(bg=Textmanager_Hintergrund)
+            while keyboard.is_pressed(" "):
+                if Kamera_aktiv_hoch:
+                    Kamera_Steuerung.Kamera.move_tilt(1)
+                elif Kamera_aktiv_runter:
+                    Kamera_Steuerung.Kamera.move_tilt(-1)
+                elif Kamera_aktiv_rechts:
+                    Kamera_Steuerung.Kamera.move_pan(1)
+                elif Kamera_aktiv_links:
+                    Kamera_Steuerung.Kamera.move_pan(-1)
+                elif Kamera_aktiv_zoomen_rein:
+                    Kamera_Steuerung.Kamera.zoom(1)
+                elif Kamera_aktiv_zoomen_raus:
+                    Kamera_Steuerung.Kamera.zoom(-1)
+            if Kamera_aktiv_hoch or Kamera_aktiv_runter or Kamera_aktiv_links or Kamera_aktiv_rechts or Kamera_aktiv_zoomen_rein or Kamera_aktiv_zoomen_raus:
+                Kamera_Steuerung.Kamera.stop()
+        except:
             if Testeneingeben:
                 if keyboard.get_hotkey_name()== str(1):
                     while keyboard.get_hotkey_name()==str(1):
@@ -1172,6 +1185,10 @@ def Streambeenden():
     time.sleep(0.5)
     keyboard.release("strg")
     keyboard.release("x")
+    time.sleep(0.5)
+    keyboard.press("1")
+    time.sleep(0.5)
+    keyboard.release("1")
     subprocess.call("taskkill /IM chrome.exe /F")
     subprocess.call("shutdown /s /t 20")
     sys.exit()
@@ -1231,17 +1248,17 @@ def Eingabe_wiederherstellen():
     Zeit_laden = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Zeit3.txt", 'r', encoding='utf8')
     Zeit3 = Zeit_laden.read()
     Zeit_laden.close()
-    Einganslied.Eingabe_wiederherstellen("Einganslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0,0)
-    Textwortlied.Eingabe_wiederherstellen("Textwortlied", Textmanager_Hintergrund, Textmanager_Textfarbe, 4,1, 83+41)
-    Amtswechsellied.Eingabe_wiederherstellen("Amtswechsellied", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 166+41,)
-    Bussslied.Eingabe_wiederherstellen("Bußlied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0, 332+41+83*Kinder_Position)
-    Abendmahlslied.Eingabe_wiederherstellen("Abendmahlslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0, 332+41+83*Kinder_Position)
-    Schlusslied.Eingabe_wiederherstellen( "Schlusslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0, 415+41+83*Kinder_Position)
-    Kinderlied.Eingabe_wiederherstellen("Kinderlied", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 249+41+83*Kinder_Position,)
-    Zusatzlied1.Eingabe_wiederherstellen("Zusatzlied1", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 1 +83*Kinder_Position)
-    Zusatzlied2.Eingabe_wiederherstellen("Zusatzlied2", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 2 +83*Kinder_Position)
-    Zusatzlied3.Eingabe_wiederherstellen("Zusatzlied3", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 3 +83*Kinder_Position)
-    Zusatzlied4.Eingabe_wiederherstellen("Zusatzlied4", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 4 +83*Kinder_Position)
+    Einganslied.Eingabe_wiederherstellen("Einganslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0,0, False)
+    Textwortlied.Eingabe_wiederherstellen("Textwortlied", Textmanager_Hintergrund, Textmanager_Textfarbe, 4,1, 83+41, False)
+    Amtswechsellied.Eingabe_wiederherstellen("Amtswechsellied", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 166+41, False)
+    Bussslied.Eingabe_wiederherstellen("Bußlied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0, 332+41+83*Kinder_Position, False)
+    Abendmahlslied.Eingabe_wiederherstellen("Abendmahlslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0, 332+41+83*Kinder_Position, False)
+    Schlusslied.Eingabe_wiederherstellen( "Schlusslied", Textmanager_Hintergrund, Textmanager_Textfarbe, 5,0, 415+41+83*Kinder_Position, False)
+    Kinderlied.Eingabe_wiederherstellen("Kinderlied", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 249+41+83*Kinder_Position, True)
+    Zusatzlied1.Eingabe_wiederherstellen("Zusatzlied1", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 1 +83*Kinder_Position, False)
+    Zusatzlied2.Eingabe_wiederherstellen("Zusatzlied2", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 2 +83*Kinder_Position, False)
+    Zusatzlied3.Eingabe_wiederherstellen("Zusatzlied3", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 3 +83*Kinder_Position, False)
+    Zusatzlied4.Eingabe_wiederherstellen("Zusatzlied4", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1, 498 + 83 * 4 +83*Kinder_Position, False)
     Textwortauslesen1 = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Textwortbutton.txt", 'r', encoding='utf8')
     Textwortübergabe = Textwortauslesen1.read()
     Textwortauslesen1.close()
