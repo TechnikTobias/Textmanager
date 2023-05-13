@@ -48,11 +48,14 @@ def Verskontrolle():
     Verskontrolleloop()
 
 def Buch_hinzufügendef():
+    global Buchhinzufügen
     Buchhinzufügen = Toplevel(Haupt.Textmanager,bg=Haupt.Textmanager_Hintergrund)
     Buchhinzufügen.geometry("600x400")
     Buchhinzufügen.title("Buch Einfügen")
     buchauswahl = Entry(Buchhinzufügen, font=("Helvetica", 24), width=30, bg="#FFEBCD")
     buchauswahl.place(x=10, y=20)
+    print(type(Haupt.Buch_Listen))
+    buchauswahl.insert(END, Haupt.Buch_Listen[0])
 
 def Versbestätigendef():
     global Liedverse_eingabeladen, Streameinblendungladen, Verseingabeladen
