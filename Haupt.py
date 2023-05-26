@@ -25,7 +25,7 @@ Textmanager.minsize(width=1040, height=850)
 Textmanager.iconbitmap(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\picture_compress 1.ico")
 AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
-AnzeigeText.geometry("1920x1080+1520+0")
+AnzeigeText.geometry("1920x1080+1920+0")
 AnzeigeText.overrideredirect(True)
 Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
 Aktueller_Text = ""
@@ -67,7 +67,10 @@ Kameralisten = [
     "Vorlesung",
     "Chor",
     "Gemeinde",
-    "Altar Schmuck"
+    "Altar Schmuck",
+    "Ochester",
+    "Abendmahl",
+    "Kelch"
 ]
 
 
@@ -242,6 +245,12 @@ class Grafigfuer_ein_Lied:
             self.Kameraposition = 6
         elif self.Kameraclicked.get() == "Altar Schmuck":
             self.Kameraposition = 7
+        elif self.Kameraclicked.get() == "Ochester":
+            self.Kameraposition = 8
+        elif self.Kameraclicked.get() == "Abendmahl":
+            self.Kameraposition = 9
+        elif self.Kameraclicked.get() == "Kelch":
+            self.Kameraposition = 10
 
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
@@ -667,6 +676,12 @@ def Kamera_position():
             return 6
         elif Kameraclicked_aktuell.get() == "Altar Schmuck":
             return 7
+        elif Kameraclicked_aktuell.get() == "Ochester":
+            return 8
+        elif Kameraclicked_aktuell.get() == "Abendmahl":
+            return 9
+        elif Kameraclicked_aktuell.get() == "Kelch":
+            return 10
 
 def Steuern():
     Kamera_grund_steuerung()
