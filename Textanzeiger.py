@@ -271,6 +271,7 @@ def Eingasliedübergabefirst():
     if len(Datenfürliedanderwand[3]) == 0:
         Eingabe()
         Darf_ich_Einganslied = True
+    
 
 def Eingasliedübergabe():
     global Datenfürliedanderwand, Wieoft, Wieoftlied, lesteslied, Darf_ich_Einganslied

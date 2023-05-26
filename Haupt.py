@@ -542,7 +542,7 @@ def Einstellungen_Laden(Kinder_laden_einstellung):
 # Erstellt die Grundstruktur des Programms
 def Textmamager_erstellen():
     Einstellungen_Laden(True)
-    global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton, zusaetzliches_liedzerstörer, Verskontroll_Button, Stream_plan_button, Kamera_steuerung_button
+    global Einganslied, Textwortlied, Amtswechsellied, Kinderlied, Bussslied, Abendmahlslied, Schlusslied, Zusatzlied1, Zusatzlied2, Zusatzlied3, Zusatzlied4, zusaetzliches_lied, Button_bestaetigen, Wie_viele_zusatzlieder, loeschenbutton, Einstellungen_button, Textwortentry, Textwortlabel, wiederherstellen, Stream_erstell_button, Hauptbildschirmbutton, zusaetzliches_liedzerstörer, Verskontroll_Button, Stream_plan_button, Kamera_steuerung_button, Info_button
     Einganslied = Grafigfuer_ein_Lied(0, "Eingangslied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe,5,0)
     Textwortlied = Grafigfuer_ein_Lied(83+41, "Textwortlied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
     Amtswechsellied = Grafigfuer_ein_Lied(166+41, "Amtswechsellied", "True", Textmanager_Hintergrund, Textmanager_Textfarbe,4,1)
@@ -577,8 +577,8 @@ def Textmamager_erstellen():
     Hauptbildschirmbutton.place(x=800, y=680)
     Verskontroll_Button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Liedkontrolle", command=Lied_kontrolle.Verskontrolle, border=0)
     Verskontroll_Button.place(x=800, y=110)
-    Info = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Info", command=info, border=0)
-    Info.place(x=800,y=800)
+    Info_button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Info", command=info, border=0)
+    Info_button.place(x=800,y=800)
     Kamera_steuerung_button = Button(Textmanager, font=("Helvetica", 15), fg="#98FB98", bg="#B22222", text="Kamera", command=Kamera, border=0)
     Kamera_steuerung_button.place(x=800, y=750)
 
@@ -774,6 +774,7 @@ def Grifuckfürpräsantatiom():
         Kamera_steuerung_button.place(y=750, x=430)
         Textmanager.minsize(width=400, height=800)
         Textmanager.geometry("600x"+str(Textmanager.winfo_height())+"")
+        Info_button.place(x=430,y=800)
         Verskontroll_Button.destroy()
         Stream_plan_button.destroy()
         Textmanager.update()
@@ -830,6 +831,7 @@ def Grifickeingabe():
     Verskontroll_Button.place(x=800, y=110)
     Stream_plan_button = Button(Textmanager, font=("Helvetica", 20), fg="#98FB98", bg="#B22222", text="Stream starten", command=Streamstarten, border=0)
     Kamera_steuerung_button.place(x=800, y=750)
+    Info_button.place(x=800,y=800)
     Tastensperren.destroy()
     Textanzeiger.Wieoft = 0
     Textanzeiger.Wieoftlied = 1
@@ -1155,6 +1157,7 @@ def Streambeenden_Thread():
 
 def Streambeenden():
     Text_Anzeige_Label.config(text="")
+    Textmanager.update()
     keyboard.press("9")
     time.sleep(0.5)
     keyboard.release("9")
@@ -1181,7 +1184,7 @@ def Streambeenden():
     time.sleep(0.5)
     keyboard.release("1")
     subprocess.call("taskkill /IM chrome.exe /F")
-    subprocess.call("shutdown /s /t 20")
+    subprocess.call("shutdown /s /t 5")
     sys.exit()
 
 def Eingabe_loeschen():
