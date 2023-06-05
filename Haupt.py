@@ -503,7 +503,6 @@ class Grafigfuer_ein_Lied:
         if self.aktualisieren_wahl == "True":
             self.clicked = StringVar()
             self.clicked.set(Buch_Listen[0])
-            OptionMenu(Textmanager, self.clicked, *Buch_Listen)
             self.opt = OptionMenu(Textmanager, self.clicked, *Buch_Listen)
             self.opt.config(width=12, font=('Helvetica', 12), bg=Textmanager_Hintergrund, fg=Textmanager_Textfarbe, bd=0)
             self.Liednummer = Entry(Textmanager, font=("Helvetica", 24), width=10, bd=0)
