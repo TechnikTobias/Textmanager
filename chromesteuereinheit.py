@@ -287,7 +287,7 @@ def stream_planen():
                 eingabe20 = driver.find_element(By.XPATH,Stream_erstellen_kopieren)
                 eingabe20.click()
                 time.sleep(1)
-                driver.get("https://rebrandly.com/links")
+                driver.get("https://app.rebrandly.com/links")
                 time.sleep(10)
                 eingabe21 = driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div[3]/div[2]/ul/li/div/div/div[1]/div/div[1]/div/a")
                 eingabe21.click()
