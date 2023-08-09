@@ -227,6 +227,9 @@ class Grafigfuer_ein_Lied:
         elif welches_buch == "Band 3 Singt dem Herrn":
             self.Buch = "SdH Band 3"
             self.Buchzahl_clicked = 6
+        elif welches_buch == "Englisches Chorbuch":
+            self.Buch = "EN GB"
+            self.Buchzahl_clicked = 10
 
 
     def Kamerapositiondef(self):
