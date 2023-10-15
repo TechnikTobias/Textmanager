@@ -12,7 +12,8 @@ import Haupt
 import os
 from Textanzeiger import Textwortübergabe
 import Zeitgeber
-selenium
+from selenium.webdriver.chrome.service import Service
+
 Dateiort = os.getlogin()
 Videobeschreibungaktionvarable = "Falsch"
 Chromeaktuell =  False
@@ -26,7 +27,8 @@ def Chromestarten():
         if Chromöffnen == "Wahr":
             options = Options()
             options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
-            driver = webdriver.Chrome("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver", chrome_options=options)
+            service_chrome = Service("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver.exe")
+            driver = webdriver.Chrome(service=service_chrome, options=options)
             driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming/manage")
             try:
                 time.sleep(3)

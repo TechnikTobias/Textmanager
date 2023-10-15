@@ -59,19 +59,10 @@ buchladen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Buchlisten.txt", 'r',
 Buch_Listen1 = buchladen.read()
 Buch_Listen = Buch_Listen1.split(sep=",")
 
+Kameraladen = open(f"C:\\Users\\{Dateiort}\\Desktop\\Lieder\\Kameralisten.txt", 'r', encoding='utf8')
+Kameralisten1 = Kameraladen.read()
+Kameralisten = Kameralisten1.split(sep=",")
 
-Kameralisten = [
-    "Altar",
-    "Orgel",
-    "Klavinova",
-    "Vorlesung",
-    "Chor",
-    "Gemeinde",
-    "Altar Schmuck",
-    "Ochester",
-    "Abendmahl",
-    "Kelch"
-]
 
 
 Zeit = 9.20
@@ -197,63 +188,17 @@ class Grafigfuer_ein_Lied:
 
     # Erstellt die Buchabkürzung für den Livestream und NBuchzahl für das Wiederherstellen
     def Buchabkuerzen(self, welches_buch):
-        if welches_buch == "Gesangbuch":
-            self.Buch = "GB"
-            self.Buchzahl_clicked = 0
-        elif welches_buch == "Chorbuch":
-            self.Buch = "CB"
-            self.Buchzahl_clicked = 1
-        elif welches_buch == "Jugendliederbuch":
-            self.Buch = "JLB"
-            self.Buchzahl_clicked = 2
-        elif welches_buch == "Argentinisches Chorbuch":
-            self.Buch = "AC"
-            self.Buchzahl_clicked = 7
-        elif welches_buch == "Kinderliederbuch":
-            self.Buch = "KLB"
-            self.Buchzahl_clicked = 3
-        elif welches_buch == "Sonderheft":
-            self.Buch = "SH"
-            self.Buchzahl_clicked = 9
-        elif welches_buch == "Spanisches Chorbuch":
-            self.Buch = "SpC"
-            self.Buchzahl_clicked = 8
-        elif welches_buch == "Band 1 Singt dem Herrn":
-            self.Buch = "SdH Band 1"
-            self.Buchzahl_clicked = 4
-        elif welches_buch == "Band 2 Singt dem Herrn":
-            self.Buch = "SdH Band 2"
-            self.Buchzahl_clicked = 5
-        elif welches_buch == "Band 3 Singt dem Herrn":
-            self.Buch = "SdH Band 3"
-            self.Buchzahl_clicked = 6
-        elif welches_buch == "Englisches Chorbuch":
-            self.Buch = "EN GB"
-            self.Buchzahl_clicked = 10
+        selected_option = welches_buch
+        self.Buchzahl_clicked = Buch_Listen.index(selected_option)
+        self.Buch = welches_buch
+
 
 
     def Kamerapositiondef(self):
         global Kameraposition
-        if self.Kameraclicked.get() == "Altar":
-            self.Kameraposition = 1
-        elif self.Kameraclicked.get() == "Orgel":
-            self.Kameraposition = 2
-        elif self.Kameraclicked.get() == "Klavinova":
-            self.Kameraposition = 3
-        elif self.Kameraclicked.get() == "Vorlesung":
-            self.Kameraposition = 4
-        elif self.Kameraclicked.get() == "Chor":
-            self.Kameraposition = 5
-        elif self.Kameraclicked.get() == "Gemeinde":
-            self.Kameraposition = 6
-        elif self.Kameraclicked.get() == "Altar Schmuck":
-            self.Kameraposition = 7
-        elif self.Kameraclicked.get() == "Ochester":
-            self.Kameraposition = 8
-        elif self.Kameraclicked.get() == "Abendmahl":
-            self.Kameraposition = 9
-        elif self.Kameraclicked.get() == "Kelch":
-            self.Kameraposition = 10
+        selected_option = self.Kameraclicked.get()
+        self.Kameraposition = Kameralisten.index(selected_option) + 1
+
 
     # Zeig im programm, welches Lied ausgewählt ist.
     def Livestream_Vorchau(self):
