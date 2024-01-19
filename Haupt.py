@@ -27,7 +27,7 @@ AnzeigeText = Toplevel(Textmanager)
 AnzeigeText.config(bg="black")
 AnzeigeText.geometry("1920x1080+1920+0")
 AnzeigeText.overrideredirect(True)
-Text_Anzeige_Label = Label(AnzeigeText, font=("Helvetica", 60), fg="white", bg="black", wraplength=1920)
+Text_Anzeige_Label = Label(AnzeigeText, font=("Aral", 60), fg="white", bg="black", wraplength=1920)
 Aktueller_Text = ""
 Text_Anzeige_Label.config(text=Aktueller_Text)
 Text_Anzeige_Label["justify"] = "left"

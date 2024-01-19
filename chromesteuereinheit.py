@@ -23,35 +23,29 @@ def Chromestarten():
     ChromeDatei = open("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\Chrome.txt", 'r', encoding='utf8')
     Chromöffnen = ChromeDatei.read()
     ChromeDatei.close()
-    try:
-        if Chromöffnen == "Wahr":
-            options = Options()
-            options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
-            service_chrome = Service("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver.exe")
-            driver = webdriver.Chrome(service=service_chrome, options=options)
-            driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming/manage")
-            try:
-                time.sleep(3)
-                suche = driver.find_element(By.ID,"video-title")
-                suche.click()
-                endesuche = driver.find_element(By.ID,"entity-back-button")
-                time.sleep(8)
-                endesuche.click()
-                Videobeschreibungaktionvarable = "Wahr"
-            except:
-                Videobeschreibungaktionvarable = "Falsch"
-                print("Kein stream")
-            Streamüperprüfen = True
-            Chromeaktuell =  True
-        else:
+    if Chromöffnen == "Wahr":
+        options = Options()
+        options.add_argument("user-data-dir=C:\\Users\\"+Dateiort+"\\AppData\\Local\\Google\\Chrome\\User Data")
+        service_chrome = Service("C:\\Users\\"+Dateiort+"\\Desktop\\Lieder\\chromedriver.exe")
+        driver = webdriver.Chrome(service=service_chrome, options=options)
+        driver.get("https://studio.youtube.com/channel/UCX5x3cxf1CitE4nfLidoxyw/livestreaming/manage")
+        try:
+            time.sleep(3)
+            suche = driver.find_element(By.ID,"video-title")
+            suche.click()
+            endesuche = driver.find_element(By.ID,"entity-back-button")
+            time.sleep(8)
+            endesuche.click()
+            Videobeschreibungaktionvarable = "Wahr"
+        except:
             Videobeschreibungaktionvarable = "Falsch"
-            Chromeaktuell =  True
-    except WebDriverException:
-        print("Error")
-        Chromeupdate = tkinter.Label(Haupt.Textmanager, font=("Helvetica", 15), text="Bitte Chromedriver aktualiesieren", bg=Haupt.Textmanager_Hintergrund, fg=Haupt.Textmanager_Textfarbe)
-        Chromeupdate.place(y=760)
+            print("Kein stream")
+        Streamüperprüfen = True
+        Chromeaktuell =  True
+    else:
         Videobeschreibungaktionvarable = "Falsch"
-        Chromeaktuell =  False
+        Chromeaktuell =  True
+
 
 def Chromestarten_Thread():
     Chromestarten_thread = Thread(target=Chromestarten)
